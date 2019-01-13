@@ -1,0 +1,8 @@
+version: '3'
+services:
+  prod:
+    restart: always
+    container_name: recruiting-web
+    build: .
+    ports:
+      - "8080:8080"

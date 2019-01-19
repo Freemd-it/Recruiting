@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 class PageContainer extends Component {
   //페이지 인가 처리용
@@ -15,6 +15,7 @@ class PageContainer extends Component {
   render() {
     const { pageLayout: LayoutComnent } = this.props;
 
+    console.log(this.props);
     return (
       <>
         <LayoutComnent {...this.props}/>

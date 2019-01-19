@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from '../Header';
 import HeaderInformationText from '../HeaderInformationText';
+import StepSection from '../StepSection';
 import Footer from '../Footer';
 
 import message from '../../../common/message'
@@ -13,16 +14,16 @@ const cx = classNames.bind(styles);
 
 const PageCommonTemplate = (props) => {
   const { children, config } = props;
-  const { showHeaderInformation } = config;
+  const { showHeaderInformation, showStepSection } = config;
 
   return (
     <div>
-      <Header/>
-        {showHeaderInformation && <HeaderInformationText messageConfig={message[config.pageType]}/>}
-      <main className={cx('container')}>
-        {children}
-      </main>
-      <Footer className={cx('container')}/>
+      <Header {...props}/>
+        { showStepSection && <StepSection className={cx('container')}/> }
+        <main className={cx('container')}>
+          {children}
+        </main>
+      <Footer/>
     </div>
   );
 };

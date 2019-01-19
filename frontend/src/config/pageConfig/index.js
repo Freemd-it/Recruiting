@@ -1,15 +1,15 @@
-import applyChoicePage from './applyChociePage'
-import applyQuestionsPage from './applyQuestionsPage'
-import interviewChoicePage from './interviewChoicePage'
-import personalQuestionsPage from './personalQuestionsPage'
-import resumeLoginPage from './resumeLoginPage'
-import resumeCompletePage from './resumeCompletePage'
+import applyChoice from './applyChocie';
+import applyQuestions from './applyQuestions';
+import interviewChoice from './interviewChoice';
+import personalQuestions from './personalQuestions';
+import resumeLogin from './resumeLogin';
+import resumeComplete from './resumeComplete';
 
 export default {
-  applyChoicePage,
-  applyQuestionsPage,
-  interviewChoicePage,
-  personalQuestionsPage,
-  resumeCompletePage,
-  resumeLoginPage
+  applyChoice,
+  applyQuestions,
+  interviewChoice,
+  personalQuestions,
+  resumeComplete,
+  resumeLogin
 }

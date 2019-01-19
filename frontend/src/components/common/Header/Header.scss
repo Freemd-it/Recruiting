@@ -14,7 +14,6 @@
   position: relative;
 
   .header-text-holder {
-    padding-left: 62px;
     padding-top: 143px;
     .header-text-title {
       font-family: "Helvetica Neue";
@@ -23,7 +22,7 @@
     }
 
     .header-text {
-      font-family: "NotoSans-Light";
+      font-weight: 300;
       font-size: 15px;
     }
   }
@@ -31,10 +30,8 @@
   .header-image {
     position: absolute;
     bottom: -30px;
-    max-width: 100%;
-    object-fit: contain;
+    max-width: calc(100% - 122px);
   }
-
 }
 
 

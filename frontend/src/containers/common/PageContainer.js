@@ -15,7 +15,6 @@ class PageContainer extends Component {
   render() {
     const { pageLayout: LayoutComnent } = this.props;
 
-    console.log(this.props);
     return (
       <>
         <LayoutComnent {...this.props}/>

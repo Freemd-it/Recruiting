@@ -9,8 +9,6 @@ const cx = classNames.bind(styles);
 class AlertModal extends Component {
 
   render() {
-    console.log(withStyles(AlertModal));
-    console.log(typeof withStyles(AlertModal));
     const { classes } = this.props;
     return (
       <>

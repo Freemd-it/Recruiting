@@ -10,26 +10,24 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 
 const {
-  PORT : port = 4000,
-  MONGO_URI: mongoURI
+  LOCAL_MONGO_URI: LOCAL_MONGO_URI
 } = process.env;
 
 // Node 의 Promise 를 사용 하도록 설정
 mongoose.Promise = global.Promise; 
 
 // 몽고디비 연결
-mongoose.connect(mongoURI, {
+mongoose.connect(LOCAL_MONGO_URI, {
   useNewUrlParser: true
 }).then(()=> {
-  console.log(`connected to mongodb ${mongoURI}`)
+  console.log(`connected to mongodb ${LOCAL_MONGO_URI}`)
 }).catch((e) => {
   console.error(e);
 });
 
-// const Post = require('./Model/PostModel');
-
 const app = express();
 
+const test = require('./routes/test')(app);
 const api = require('./routes/api')(app);
 
 // view engine setup
@@ -46,6 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/test', test);
 app.use('/api', api);
 
 // catch 404 and forward to error handler

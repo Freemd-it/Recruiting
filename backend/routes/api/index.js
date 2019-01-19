@@ -1,49 +1,21 @@
-module.exports = function(app){//함수로 만들어 객체 app을 전달받음
+module.exports = (app) => {
   const express = require('express');
   const router = express.Router();
-  const postCtrl = require('../../controllers/Post.ctrl');
+  const UserCtrl = require('../../controllers/User.ctrl');
 
-  // 리스트
-  router.get('/posts', postCtrl.list);
+  // 로그인
+  router.post('/login', UserCtrl.create);
 
-  // 조회
-  router.get('/posts/:id', postCtrl.read);
+  // 목록 조회
+  router.get('/recruits', UserCtrl.list);
 
-  // 쓰기
-  router.post('/posts', postCtrl.write);
+  // 개인 조회
+  router.get('/recruits/:user_id', UserCtrl.read);
 
-  // 수정 
-  router.put('/posts/:id', postCtrl.update);
+  // 지원서 수정
+  router.put('/recruits/:user_id', UserCtrl.update);
+  
+  // router.patch('/recruits/:user_id', UserCtrl.update);
 
   return router;
-
-
-
-
-  // const express = require('express');
-  // const router = express.Router();
-  
-  // // 전체 목록 조회
-  // router.get('/posts', function(req,res){
-  //   res.end();
-  // });
-
-  // // 상세 조회
-  // router.get('/posts/:id', function(req, res){
-  //   res.render('index', { title: 'posts/:id' });
-  //   console.log(req.params);
-  // });
-
-  // // 생성
-  // router.post('/posts', function (req, res){
-  //   res.end();
-  // });
-
-  // // 수정
-  // router.put('/posts/:id', function(req, res){
-  //   res.end();
-  // });
-
-
-	// return router;	//라우터를 리턴
-};
+}

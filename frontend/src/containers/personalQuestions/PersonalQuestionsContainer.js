@@ -10,7 +10,7 @@ class PersonalQuestionsContainer extends Component {
 
     return (
       <>
-
+        
       </>
 
     );

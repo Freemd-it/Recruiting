@@ -3,10 +3,9 @@ import pageConfig from '../config/pageConfig';
 
 const withPageConfig = (pageConfigName) => (WrappedComponent) => {
   return class extends Component {
-
     render() {
       return (
-        <WrappedComponent config={pageConfig[`${pageConfigName}Page`]} {...this.props} />
+        <WrappedComponent config={pageConfig[pageConfigName]} {...this.props} />
       )
     }
   }

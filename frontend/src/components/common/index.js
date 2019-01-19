@@ -1,7 +1,7 @@
-import PageTemplate from './PageTemplate';
+import PageCommonTemplate from './PageCommonTemplate';
 import AlertModal from './AlertModal';
 
 export {
-  PageTemplate,
+  PageCommonTemplate,
   AlertModal
 }

@@ -13,7 +13,7 @@ class PageContainer extends Component {
   }
 
   render() {
-    const { layout: LayoutComnent } = this.props;
+    const { pageLayout: LayoutComnent } = this.props;
 
     return (
       <>

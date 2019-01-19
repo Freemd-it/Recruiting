@@ -10,7 +10,7 @@ class ResumeLoginContainer extends Component {
 
     return (
       <>
-        
+
       </>
     );
   }

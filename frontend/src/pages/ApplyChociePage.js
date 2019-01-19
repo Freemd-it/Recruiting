@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PageContainer from '../containers/common/PageContainer';
-import PageTemplate from '../components/common/PageTemplate';
+import { PageCommonTemplate } from '../components/common';
+import { withPageConfig } from '../hoc';
 
 class ApplyChociePage extends Component {
   render() {
     return (
-      <PageContainer layout={PageTemplate} >
+      <PageContainer pageLayout={PageCommonTemplate} {...this.props}>
       </PageContainer>
     );
   }
 };
 
-export default ApplyChociePage;
+export default withPageConfig('applyChoice')(ApplyChociePage);

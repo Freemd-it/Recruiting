@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 const StepSection = (props) => {
 
   return (
-    <div className={cx('step-item-holder')}>
+    <div className={cx('step-item-holder', 'container')}>
       <ul>
         <NavLink to='/personalQuestions' className={cx('step-item')} activeClassName="selected">STEP 1</NavLink>
         <NavLink to='/applyChoice' className={cx('step-item')} activeClassName="selected">STEP 2</NavLink>

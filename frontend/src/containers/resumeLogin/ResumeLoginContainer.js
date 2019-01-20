@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom'
+
 import { LoginForm } from '../../components/resumeLogin';
+
 import * as userActions from '../../modules/user';
 
 class ResumeLoginContainer extends Component {
@@ -13,7 +15,12 @@ class ResumeLoginContainer extends Component {
   };
 
   handleSubmit = e => {
+    /**
+     * login post 요청, 만약 있으면 바로 넘어감
+     */
+    // axios.post('/api/login');
 
+    this.props.history.push('/personalQuestions');
   };
 
   render() {

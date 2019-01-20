@@ -1,0 +1,25 @@
+.personal-form {
+  padding-top: 113px;
+  padding-bottom: 18px;
+  font-weight: 300;
+
+  .personal-form-title {
+    font-size: 20px;
+    color: #707070;
+    line-height: 1.45;
+  }
+
+  hr { border-top:1px solid #5c5959; }
+
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 13px;
+
+  }
+}
+
+.personal-text-custom-form {
+  width: 380px;
+}

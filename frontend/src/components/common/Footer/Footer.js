@@ -7,8 +7,8 @@ const cx = classNames.bind(styles);
 
 const Footer = () => {
   return (
-    <footer className={cx('footer')}>
-
+    <footer className={cx('container', 'footer')}>
+      <hr/>
     </footer>
   );
 };

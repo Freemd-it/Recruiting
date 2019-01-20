@@ -12,7 +12,7 @@ body {
   width: 100%;
   height: 100%;
   margin:0;
-  font-family: 'NotoSans', 'NotoSans-Regular', 'NotoSansUI-Regular';
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 div.whoops-404 {
@@ -39,4 +39,14 @@ div.whoops-404 {
       text-decoration: none;
     }
   }
+}
+
+.custom-form {
+  background-color: #f8f7f7;
+}
+
+.custom-form:focus {
+  background-color: #ffffff;
+  border-color: #ff5858;
+  box-shadow: none;
 }

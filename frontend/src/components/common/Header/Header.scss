@@ -1,0 +1,38 @@
+.header-background {
+  position: absolute;
+  background-color: #F8F8F8;
+  top: 0;
+  width: 100%;
+  height: 400px;
+}
+
+.header {
+  background-color: #F8F8F8;
+  height: 400px;
+  padding-left: 61px;
+  padding-right: 61px;
+  position: relative;
+
+  .header-text-holder {
+    padding-top: 143px;
+    .header-text-title {
+      font-family: "Helvetica Neue";
+      color: #FF5858;
+      font-size: 60px;
+    }
+
+    .header-text {
+      font-weight: 300;
+      font-size: 15px;
+    }
+  }
+  .header-image {
+    position: absolute;
+    bottom: -30px;
+    max-width: calc(100% - 122px);
+  }
+}
+
+
+
+

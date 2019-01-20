@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Utils from '../../../common/Utils'
+import Utils from '../../../common/utils'
 
 import classNames from 'classnames/bind';
 import styles from './HeaderInformationText.scss';

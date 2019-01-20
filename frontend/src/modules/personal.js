@@ -1,8 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 
-const INIT_STATE = 'user/INIT_STATE';
-const CHANGE_INPUT = 'user/CHANGE_INPUT';
+const INIT_STATE = 'persona/INIT_STATE';
+const CHANGE_INPUT = 'personal/CHANGE_INPUT';
 
 export const initState = createAction(INIT_STATE);
 export const changeInput = createAction(CHANGE_INPUT);
@@ -10,8 +10,24 @@ export const changeInput = createAction(CHANGE_INPUT);
 const initialState = Map({
   fields: Map({
     name: '',
-    email: '',
-    password: '',
+    englishName: '',
+    gender: '',
+    birth: Map({
+      year: '',
+      month: '',
+      date: ''
+    }),
+    phoneNumber: Map({
+      first: '',
+      second: '',
+      third: '',
+    }),
+    address: '',
+    email: Map({
+      text: '',
+      type: ''
+    }),
+    sns: ''
   })
 });
 

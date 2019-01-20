@@ -1,5 +1,4 @@
 // date, api util 등등
-import React from 'react';
 
 const newLineSymbol = '\n';
 
@@ -8,7 +7,7 @@ class Utils {
     let customMessage = '';
 
     if (message.indexOf(newLineSymbol) !== -1) {
-      message.split(newLineSymbol).forEach((line, idx) => {
+      message.split(newLineSymbol).forEach(line => {
         customMessage += `${line}<br/>`;
       });
       return customMessage;

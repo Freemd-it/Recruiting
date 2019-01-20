@@ -1,0 +1,59 @@
+.personal-form {
+  .personal-form-title {}
+  .form-row {
+    .gender-button-holder {
+      width:380px;
+      display: inline-flex;
+      justify-content: space-between;
+    }
+
+    .birth-holder {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 380px;
+      margin-bottom:0px;
+      .birth-year {
+        width: 120px;
+        margin-bottom: -15px
+      }
+
+      .birth-month, .birth-date {
+        width: 100px;
+        margin-bottom: -15px
+      }
+    }
+
+    .phone-holder {
+      width:380px;
+      display: inline-flex;
+      justify-content: space-between;
+
+      .phone-holder-1 {
+        width:100px;
+        margin-bottom: -15px
+      }
+
+      .phone-holder-2, .phone-holder-3 {
+        width: 110px;
+        margin-bottom: -15px
+      }
+    }
+
+    .email-holder {
+      width: 380px;
+      display: inline-flex;
+      justify-content: space-between;
+
+      .email-text {
+        width: 175px;
+        margin-bottom: -15px
+      }
+
+      .email-type {
+        width: 170px;
+        margin-bottom: -15px
+      }
+    }
+  }
+}

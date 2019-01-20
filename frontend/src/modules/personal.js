@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 
-const INIT_STATE = 'persona/INIT_STATE';
+const INIT_STATE = 'personal/INIT_STATE';
 const CHANGE_INPUT = 'personal/CHANGE_INPUT';
 
 export const initState = createAction(INIT_STATE);

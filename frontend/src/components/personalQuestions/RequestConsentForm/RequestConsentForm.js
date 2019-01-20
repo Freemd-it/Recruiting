@@ -12,6 +12,7 @@ import NotCheckImage from '../../../images/circle.png'
 
 import classNames from 'classnames/bind';
 import styles from './RequestConsentForm.scss';
+import SubsectionHeader from '../../common/SubsectionHeader';
 
 
 const cx = classNames.bind({styles});
@@ -89,9 +90,7 @@ class RequestConsentForm extends Component {
 
     return (
       <div className={cx('consent-form')}>
-        <div className={cx('consent-form-title')}>
-          <span>개인 정보 수집 및 약관</span>
-        </div>
+        <SubsectionHeader title='개인 정보 수집 및 약관' noDivider={true} />
         <ExpansionPanel classes={{root:classes.expansionPanelRoot, expanded: classes.expansionPanelExpanded}}>
           <ExpansionPanelSummary classes={{root: classes.summaryPanelRoot,
             content: classes.summaryPanelContent,

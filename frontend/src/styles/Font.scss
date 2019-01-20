@@ -1,13 +1,12 @@
 @font-face {
   font-family: 'NotoSans-Regular';
   src: url("fonts/NotoSansKR/NotoSansKR_Regular.woff") format('woff'),
-  url("fonts/NotoSansKR/NotoSansKR-Regular.otf") format('otf'),
-  url("fonts/NotoSansKR/NotoSansUI-Regular.ttf") format('ttf');
 }
 
 @font-face {
   font-family: 'NotoSans-Light';
-  src: url("fonts/NotoSansKR/NotoSansKR-Light.otf") format('otf');
+  src: url("fonts/NotoSansKR/NotoSansKR-Light.otf") format('otf'),
+  url("fonts/NotoSansKR/NotoSans-Light.woff");
 }
 
 @font-face {
@@ -17,7 +16,8 @@
 
 @font-face {
   font-family: 'NotoSans-Medium';
-  src: url("fonts/NotoSansKR/NotoSansKR-Medium.otf") format('otf');
+  src: url("fonts/NotoSansKR/NotoSansKR-Medium.otf") format('otf'),
+  url("fonts/NotoSansKR/NotoSans-Medium.woff");
 }
 
 @font-face {

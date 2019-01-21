@@ -9,6 +9,7 @@ import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWi
 
 import classNames from 'classnames/bind';
 import styles from './Education.scss';
+import SubsectionHeader from '../../common/SubsectionHeader';
 
 const cx = classNames.bind(styles);
 
@@ -23,11 +24,7 @@ class PersonalInformation extends Component {
 
     return (
       <div className={cx('personal-form')}>
-        <div className={cx('personal-form-title')}>
-          <span>최종학력</span>
-        </div>
-
-        <hr/>
+        <SubsectionHeader title='최종학력' />
 
         <div className={cx('form-row')}>
             <FieldGroupWithLabelInline

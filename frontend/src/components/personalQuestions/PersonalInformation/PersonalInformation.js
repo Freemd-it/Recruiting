@@ -10,6 +10,7 @@ import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWi
 import classNames from 'classnames/bind';
 import stylesCommon from '../common/PersonalQuestions.scss';
 import styles from './PersonalInformation.scss';
+import SubsectionHeader from '../../common/SubsectionHeader';
 
 const cx = classNames.bind({...stylesCommon, ...styles});
 
@@ -35,11 +36,7 @@ class PersonalInformation extends Component {
 
     return (
       <div className={cx('personal-form')}>
-        <div className={cx('personal-form-title')}>
-          <span>인적사항</span>
-        </div>
-
-        <hr/>
+        <SubsectionHeader title='인적사항' />
 
         <div className={cx('form-row')}>
             <FieldGroupWithLabelInline

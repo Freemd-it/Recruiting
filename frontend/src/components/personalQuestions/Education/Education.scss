@@ -1,6 +1,26 @@
 .personal-form {
   .personal-form-title {}
   .form-row {
+    .school-name {
+      width: 220px;
+      margin-bottom: -15px
+    }
 
+    .school-type {
+      width: 130px
+    }
+
+    .entrance-date {
+      width: 100px;
+      margin-bottom: -15px
+    }
+    .graduation-date {
+      width: 100px;
+      margin-bottom: -15px
+    }
+
+    .graduation-status {
+      width: 120px;
+    }
   }
 }

@@ -3,10 +3,23 @@
   justify-content: space-between;
   align-items: center;
   width: 500px;
-  label {
+  .control-label {
     padding-right:30px;
     font-weight: 300;
     display: flex;
+    align-items: center;
+    margin-bottom: 0px;
+  }
+}
+
+.field-group-full-inline {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 1048px;
+  .control-label {
+    padding-right: 60px;
+    font-weight: 300;
+    display: inline-flex;
     align-items: center;
     margin-bottom: 0px;
   }

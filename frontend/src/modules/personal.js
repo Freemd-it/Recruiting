@@ -27,7 +27,28 @@ const initialState = Map({
       text: '',
       type: ''
     }),
-    sns: ''
+    sns: '',
+    education: Map({
+      schoolName: '',
+      schoolType: '',
+      major: '',
+      location: '',
+      entrance: '',
+      graduation: '',
+      status: '',
+    }),
+    career: Map({
+      division: '',
+      divisionText: '',
+      duration: '',
+      content: ''
+    }),
+    speciality: Map({
+      division: '',
+      divisionText: '',
+      grade: '',
+      content: ''
+    })
   })
 });
 

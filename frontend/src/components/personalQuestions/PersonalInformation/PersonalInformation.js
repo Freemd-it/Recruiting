@@ -58,13 +58,12 @@ class PersonalInformation extends Component {
             />
         </div>
 
-
         <div className={cx('form-row')}>
           <FieldGroupWithLabelInlineAndChildren
             id='personalInformationForm-birth'
             label='성별'
           >
-            <div className={cx('gender-button-holder')}>
+            <div className={cx('personal-form-holder')}>
               <Button variant='contained' classes={{root: classes.buttonRoot}}>
                 남성
               </Button>
@@ -78,7 +77,7 @@ class PersonalInformation extends Component {
             id='personalInformationForm-birth'
             label='생년월일'
           >
-            <div className={cx('birth-holder')}>
+            <div className={cx('personal-form-holder')}>
               <FieldGroup
                 id='personalInformationForm-birth-year'
                 type='text'
@@ -109,9 +108,8 @@ class PersonalInformation extends Component {
             id='personalInformationForm-phoneNumber'
             label='휴대전화'
           >
-            <div className={cx('phone-holder')}>
+            <div className={cx('personal-form-holder')}>
               <FormControl
-                id='personalInformationForm-phoneNumber-year'
                 componentClass='select'
                 bsClass='form-control phone-holder-1 custorm-form'
               >
@@ -152,16 +150,14 @@ class PersonalInformation extends Component {
             id='personalInformationForm-email'
             label='E-mail'
           >
-            <div className={cx('email-holder')}>
+            <div className={cx('personal-form-holder')}>
               <FieldGroup
                 id='personalInformationForm-email-text'
                 type='text'
                 bsClass='form-control email-text custom-form'
                 onChange={onInputChange('email.text')}
               />
-
               <FormControl
-                id='personalInformationForm-email-select'
                 componentClass='select'
                 bsClass='form-control email-type custorm-form'
                 onChange={onInputChange('email.type')}

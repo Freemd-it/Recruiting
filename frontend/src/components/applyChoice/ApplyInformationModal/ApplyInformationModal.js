@@ -5,7 +5,7 @@ const ApplyInformationModal = (props) => {
 
   return (
     <>
-    <div></div>
+      <div></div>
     </>
   );
 }

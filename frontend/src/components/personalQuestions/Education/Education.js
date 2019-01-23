@@ -37,16 +37,17 @@ class PersonalInformation extends Component {
                 id='personalInformationForm-education-schoolName'
                 type='text'
                 bsClass='form-control school-name custom-form'
-                onChange={onInputChange('education.schoolName')}
+                onChange={onInputChange('education.schoolName.text')}
               />
               <FormControl
                 componentClass='select'
+                defaultValue="대학교"
                 bsClass='form-control school-type custorm-form'
-                onChange={onInputChange('education.schoolType')}
+                onChange={onInputChange('education.schoolName.type')}
               >
                 <option value='중학교'> 중학교 </option>
                 <option value='고등학교'> 고등학교 </option>
-                <option value='대학교' defaultValue> 대학교 </option>
+                <option value='대학교'> 대학교 </option>
               </FormControl>
             </div>
           </FieldGroupWithLabelInlineAndChildren>
@@ -56,7 +57,7 @@ class PersonalInformation extends Component {
             type='text'
             label='계열'
             bsClass='form-control personal-text-custom-form custom-form'
-            onChange={onInputChange('major')}
+            onChange={onInputChange('education.major')}
           />
         </div>
 
@@ -66,7 +67,7 @@ class PersonalInformation extends Component {
             type='text'
             label='소재지'
             bsClass='form-control personal-text-custom-form custom-form'
-            onChange={onInputChange('location')}
+            onChange={onInputChange('education.location')}
           />
 
           <FieldGroupWithLabelInlineAndChildren
@@ -79,7 +80,7 @@ class PersonalInformation extends Component {
                 type='text'
                 placeholder='YYYY/MM'
                 bsClass='form-control entrance-date custom-form'
-                onChange={onInputChange('education.entrance')}
+                onChange={onInputChange('education.graduationYear.entrance')}
               />
               -
               <FieldGroup
@@ -87,12 +88,13 @@ class PersonalInformation extends Component {
                 type='text'
                 placeholder='YYYY/MM'
                 bsClass='form-control graduation-date custom-form'
-                onChange={onInputChange('education.graduation')}
+                onChange={onInputChange('education.graduationYear.graduation')}
               />
               <FormControl
                 componentClass='select'
+                defaultValue="졸업"
                 bsClass='form-control graduation-status custorm-form'
-                onChange={onInputChange('graduation.status')}
+                onChange={onInputChange('graduation.graduationYear.status')}
               >
                 <option value='졸업'> 졸업 </option>
                 <option value='재학'> 재학 </option>

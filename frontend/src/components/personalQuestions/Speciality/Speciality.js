@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { FormControl } from 'react-bootstrap';
-import Button from '@material-ui/core/Button';
+import { FormGroup, FormControl, Checkbox } from 'react-bootstrap';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import FieldGroup from '../../common/Form/FieldGroup';
 import FieldGroupWithLabelInline from '../../common/Form/FieldGroupWithLabelInline';
@@ -14,7 +16,21 @@ import SubsectionHeader from '../../common/SubsectionHeader';
 const cx = classNames.bind(styles);
 
 const meterialStyles = theme => ({
-
+  formLabelRoot: {
+    paddingRight: '45px',
+    marginRight: '0px',
+    marginBottom: '0px'
+  },
+  formLabelRootEnd: {
+    paddingRight: '0px',
+    marginRight: '0px',
+    marginBottom: '0px'
+  },
+  formLabel: {
+    fontFamily: `'Noto Sans KR', sans-serif`,
+    fontWeight: '300',
+    fontSize: '14px',
+  }
 });
 
 class PersonalInformation extends Component {
@@ -24,153 +40,82 @@ class PersonalInformation extends Component {
 
     return (
       <div className={cx('personal-form')}>
-        <SubsectionHeader title='최종학력' />
-
-        <div className={cx('form-row')}>
-            <FieldGroupWithLabelInline
-              id='personalInformationForm-name'
-              type='text'
-              placeholder='이름을 입력하세요.'
-              label='이름(한글)'
-              bsClass='form-control personal-text-custom-form custom-form'
-              onChange={onInputChange('name')}
-            />
-
-            <FieldGroupWithLabelInline
-              id='personalInformationForm-englishName'
-              type='text'
-              placeholder='이메일을 입력하세요.'
-              label='이름(영문)'
-              bsClass='form-control personal-text-custom-form custom-form'
-              onChange={onInputChange('englishName')}
-            />
-        </div>
-
+        <SubsectionHeader title='특기사항' />
 
         <div className={cx('form-row')}>
           <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-birth'
-            label='성별'
-          >
-            <div className={cx('gender-button-holder')}>
-              <Button variant='contained' classes={{root: classes.buttonRoot}}>
-                남성
-              </Button>
-              <Button variant='contained' classes={{root: classes.buttonRoot}}>
-                여성
-              </Button>
-            </div>
-          </FieldGroupWithLabelInlineAndChildren>
+            id='personalInformationForm-speciality-division'
+            label='활동구분'
 
-          <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-birth'
-            label='생년월일'
           >
-            <div className={cx('birth-holder')}>
-              <FieldGroup
-                id='personalInformationForm-birth-year'
-                type='text'
-                placeholder='YYYY'
-                bsClass='form-control birth-year custom-form'
-                onChange={onInputChange('birth.year')}
-              />
-              <FieldGroup
-                id='personalInformationForm-birth-month'
-                type='text'
-                placeholder='MM'
-                bsClass='form-control birth-month custom-form'
-                onChange={onInputChange('birth.month')}
-              />
-              <FieldGroup
-                id='personalInformationForm-birth-date'
-                type='text'
-                placeholder='DD'
-                bsClass='form-control birth-date custom-form'
-                onChange={onInputChange('birth.date')}
-              />
-            </div>
-          </FieldGroupWithLabelInlineAndChildren>
-        </div>
-
-        <div className={cx('form-row')}>
-          <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-phoneNumber'
-            label='휴대전화'
-          >
-            <div className={cx('phone-holder')}>
+            <div className={cx('personal-form-holder')}>
               <FormControl
-                id='personalInformationForm-phoneNumber-year'
                 componentClass='select'
-                bsClass='form-control phone-holder-1 custorm-form'
+                bsClass='form-control career-speciality-item-1 custorm-form'
               >
-                <option value='010'> 010 </option>
-                <option value='011'> 011 </option>
-                <option value='016'> 016 </option>
-                <option value='017'> 017 </option>
-                <option value='018'> 018 </option>
-                <option value='019'> 019 </option>
+                <option value='인턴'> 공인영어 </option>
               </FormControl>
               <FieldGroup
-                id='personalInformationForm-birth-month'
+                id='personalInformationForm-career-speciality-text'
                 type='text'
-                bsClass='form-control phone-holder-2 custom-form'
-                onChange={onInputChange('phoneNumber.second')}
-              />
-              <FieldGroup
-                id='personalInformationForm-birth-date'
-                type='text'
-                bsClass='form-control phone-holder-3 custom-form'
-                onChange={onInputChange('phoneNumber.third')}
+                placeholder="공인영어시험명"
+                bsClass='form-control career-speciality-item-2 placeholder-right custom-form'
+                onChange={onInputChange('career.divisionText')}
               />
             </div>
           </FieldGroupWithLabelInlineAndChildren>
 
-          <FieldGroupWithLabelInline
-            id='personalInformationForm-address'
-            type='text'
-            placeholder='동까지만 입력해주시면 됩니다.'
-            label='주소'
-            bsClass='form-control personal-text-custom-form custom-form'
-            onChange={onInputChange('address')}
-          />
+          <FieldGroupWithLabelInlineAndChildren
+            id='personalInformationForm-speciality-person-rating'
+            label='본인평가'
+          >
+            <div className={cx('personal-speciality-form-holder')}>
+              <RadioGroup
+                name="speciality"
+                row
+              >
+                <FormControlLabel
+                  classes={{root: classes.formLabelRoot, label: classes.formLabel}}
+                  value="상"
+                  control={<Radio color="primary" />}
+                  label="상"
+                  labelPlacement="end"
+                />
+                <FormControlLabel
+                  classes={{root: classes.formLabelRoot, label: classes.formLabel}}
+                  value="중"
+                  control={<Radio color="primary" />}
+                  label="중"
+                  labelPlacement="end"
+                />
+                <FormControlLabel
+                  classes={{root: classes.formLabelRootEnd, label: classes.formLabel}}
+                  value="하"
+                  control={<Radio color="primary" />}
+                  label="하"
+                  labelPlacement="end"
+                />
+              </RadioGroup>
+            </div>
+          </FieldGroupWithLabelInlineAndChildren>
         </div>
+
 
         <div className={cx('form-row')}>
           <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-email'
-            label='text'
+            id='personalInformationForm-career-speciality-text'
+            label='상세내역'
+            full={true}
           >
-            <div className={cx('email-holder')}>
-              <FieldGroup
-                id='personalInformationForm-email-text'
-                type='text'
-                bsClass='form-control email-text custom-form'
-                onChange={onInputChange('email.text')}
-              />
-
+            <div className={cx('personal-full-form-holder')}>
               <FormControl
-                id='personalInformationForm-email-select'
-                componentClass='select'
-                bsClass='form-control email-type custorm-form'
-                onChange={onInputChange('email.type')}
+                componentClass='textarea'
+                bsClass='form-control custorm-form'
               >
-                <option value=''> 직접입력 </option>
-                <option value='naver.com'> naver.com </option>
-                <option value='daum.net'> daum.net </option>
-                <option value='gmail.com'> gmail.com </option>
-                <option value='hanmail.net'> hanmail.net </option>
-                <option value='nate.com'> nate.com </option>
               </FormControl>
             </div>
-          </FieldGroupWithLabelInlineAndChildren>
 
-          <FieldGroupWithLabelInline
-            id='personalInformationForm-sns'
-            type='text'
-            label='SNS'
-            bsClass='form-control personal-text-custom-form custom-form'
-            onChange={onInputChange('sns')}
-          />
+          </FieldGroupWithLabelInlineAndChildren>
         </div>
       </div>
     );

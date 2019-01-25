@@ -6,10 +6,10 @@ import styles from './FieldGroupWithLabelInlineAndChildren.scss';
 
 const cx = classNames.bind(styles);
 
-const FieldGroupWithLabelInlineAndChildren = ({ id, label, help, children,...props }) => {
+const FieldGroupWithLabelInlineAndChildren = ({ id, label, help, children, full, ...props }) => {
   return (
     <FormGroup controlId={id}>
-      <div className={cx('field-group-inline')}>
+      <div className={cx(!full ? 'field-group-inline' : 'field-group-full-inline')}>
         {label && <ControlLabel>{label}</ControlLabel>}
         {children}
         {help && <HelpBlock>{help}</HelpBlock>}

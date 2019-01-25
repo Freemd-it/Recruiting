@@ -20,14 +20,15 @@ mongoose.Promise = global.Promise;
 mongoose.connect(LOCAL_MONGO_URI, {
   useNewUrlParser: true
 }).then(()=> {
-  console.log(`connected to mongodb ${LOCAL_MONGO_URI}`)
+  console.log(`connected to ${LOCAL_MONGO_URI}`)
 }).catch((e) => {
   console.error(e);
 });
 
 const app = express();
 
-const test = require('./routes/test')(app);
+// 라우트 연결
+// const test = require('./routes/test')(app);
 const api = require('./routes/api')(app);
 
 // view engine setup
@@ -44,8 +45,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/test', test);
 app.use('/api', api);
+// app.use('/test', test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

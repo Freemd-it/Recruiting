@@ -17,9 +17,27 @@
     align-items: center;
     padding-bottom: 13px;
 
+    .personal-form-holder {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 380px;
+    }
+    .personal-full-form-holder {
+      display: flex;
+      justify-content: flex-end;
+      width: 930px;
+    }
+
+
+
   }
 }
 
 .personal-text-custom-form {
   width: 380px;
+}
+
+.placeholder-right::-webkit-input-placeholder {
+  text-align: right
 }

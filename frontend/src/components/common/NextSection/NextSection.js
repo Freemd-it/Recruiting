@@ -9,7 +9,7 @@ import styles from './NextSection.scss';
 const cx = classNames.bind(styles);
 
 const meterialStyles = theme => ({
-  buttonCancle: {
+  buttonCancel: {
     width: '140px',
     backgroundColor: '#f8f8f8',
     boxShadow: 'none',
@@ -28,16 +28,24 @@ const meterialStyles = theme => ({
 });
 
 const NextSection = (props) => {
-  const { classes } = props;
+  const { classes, showNextSection } = props;
 
   return (
     <div className={cx('next-button-holder', 'container')}>
-      <Button variant='contained' classes={{root: classes.buttonCancle}}>
+      <Button variant='contained' classes={{root: classes.buttonCancel}}>
         취소
       </Button>
-      <Button variant='contained' classes={{root: classes.buttonNext}}>
-        다음
-      </Button>
+      {showNextSection ? 
+        (
+          <Button variant='contained' classes={{root: classes.buttonNext}}>
+            다음
+          </Button>
+        ) :
+        (
+          <Button variant='contained' classes={{root: classes.buttonNext}}>
+            제출
+          </Button>
+        )}
     </div>
   )
 };

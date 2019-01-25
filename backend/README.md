@@ -1,23 +1,25 @@
 # api 설계 
 
 ##로그인 
-이름 
-이메일 
-패스워드 
+POST : {baseURL}/login/
 
-
+body: {
+  이름 : user_name
+  이메일 : email
+  패스워드 :password
+}
 
 ## 조회 
 * 해당 파라미터를 id 를 조회 하기
-GET : {baseURL}/posts/:id
+GET : {baseURL}/recruits/:id
 
 ## 수정 
 * id로 조회 후 수정
-PUT : {baseURL}/posts/:id
+PUT : {baseURL}/recruits/:id
 
 ## 생성 
 * 포스트 만들기 
-POST : {baseURL}/posts/
+
 
 
 milestone : 
@@ -37,3 +39,8 @@ auto increment 테스트 추가
 #ec-2
 baseURL = 13.209.65.66
 port = 27017
+
+
+
+# 문제점 
+auto_increment rest 필요

@@ -13,8 +13,10 @@
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
+    "joi": "^14.3.1",
     "mongoose": "^5.4.4",
     "mongoose-auto-increment": "^5.0.1",
+    "mongoose-enumvalues": "0.0.3",
     "morgan": "~1.9.0",
     "nodemon": "^1.18.9"
   }

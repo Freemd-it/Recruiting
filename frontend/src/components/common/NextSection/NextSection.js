@@ -31,13 +31,12 @@ const meterialStyles = theme => ({
 
 const NextSection = (props) => {
   const { classes, pageType } = props;
-
   return (
     <div className={cx('next-button-holder', 'container')}>
       <Button variant='contained' classes={{ root: classes.buttonCancel }}>
         취소
       </Button>
-      {pageType === 'interviewChoice'?
+      {pageType !== 'interviewChoice' ?
         (
           <Button variant='contained' classes={{ root: classes.buttonNext }}>
             다음

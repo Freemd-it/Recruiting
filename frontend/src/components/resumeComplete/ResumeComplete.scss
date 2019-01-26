@@ -36,6 +36,9 @@
     span {
       background-color: rgba($color: #ffffff, $alpha: 0)
     }
+  }
 
+  .survey-link:hover {
+    background-color: #e20707 !important;
   }
 }

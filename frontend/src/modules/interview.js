@@ -26,9 +26,9 @@ export default handleActions({
         return state.set('interviewDates', interviewDates.set(dayIndex, newDate));
       } else {
         return state.set('interviewDates', interviewDates.push(
-          Map({
+          fromJS({
             day: day,
-            times: List([time])
+            times: [time]
           })
         ));
       }

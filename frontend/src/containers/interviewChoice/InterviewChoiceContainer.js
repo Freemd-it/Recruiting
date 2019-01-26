@@ -17,8 +17,6 @@ class InterviewChoiceContainer extends Component {
   };
 
   componentDidMount() {
-    const { interviewActions } = this.props;
-    interviewActions.initState();
   }
 
   render() {

@@ -1,0 +1,41 @@
+.resume-complete-form {
+
+  width: 100%;
+  margin-top: 126px;
+  text-align: center;
+  color: #707070;
+  font-family: 'NotoSans-Light';
+  font-size: 18px;
+
+  div {
+    margin: 10px 0px;
+  }
+
+  span {
+    background-color: rgba($color: #ff5858, $alpha: 0.09);
+  }
+
+  strong {
+    font-family: 'NotoSans-Medium';
+    font-size: 21px;
+  }
+
+  .survey-link {
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    width: 154px;
+    height: 46px;
+    margin: 82px auto 0px auto;
+    background: #ff5858;
+    border-radius: 100px;
+    color: white;
+    font-size: 15px;
+
+    span {
+      background-color: rgba($color: #ffffff, $alpha: 0)
+    }
+
+  }
+}

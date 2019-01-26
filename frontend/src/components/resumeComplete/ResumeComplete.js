@@ -19,7 +19,10 @@ const ResumeComplete = () => {
         <strong> 3월 00일에 발표</strong>됩니다.
       </div>
 
-      <Button className={cx('survey-link')} href="http://www.google.com">
+      <Button 
+        className={cx('survey-link')} 
+        href="https://docs.google.com/forms/d/e/1FAIpQLSf3iP1GTL6qbXv2cB_XuIzspMhvrpbVn1eMQ14bUpY-41si5A/viewform?c=0&w=1"
+      >
         <span>설문조사</span>
         <span>></span>
       </Button>

@@ -1,4 +1,4 @@
-import applyChoice from './applyChocie';
+import applyChoice from './applyChoice';
 import applyQuestions from './applyQuestions';
 import interviewChoice from './interviewChoice';
 import personalQuestions from './personalQuestions';

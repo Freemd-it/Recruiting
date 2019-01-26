@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom'
 
-import { RequestConsentForm } from '../../components/personalQuestions';
+import ResumeComplete from '../../components/resumeComplete/ResumeComplete';
 
 class ResumeCompleteContainer extends Component {
   render() {
@@ -11,9 +10,8 @@ class ResumeCompleteContainer extends Component {
 
     return (
       <>
-        <RequestConsentForm/>
+        <ResumeComplete />
       </>
-
     );
   }
 }

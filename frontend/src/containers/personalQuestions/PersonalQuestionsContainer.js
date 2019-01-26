@@ -38,7 +38,6 @@ class PersonalQuestionsContainer extends Component {
 
   render() {
     const { personalFields } = this.props;
-
     return (
       <>
         <RequestConsentForm/>

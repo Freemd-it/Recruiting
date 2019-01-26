@@ -21,7 +21,7 @@ const PageCommonTemplate = (props) => {
         <main className={cx('container')}>
           {children}
         </main>
-        { showNextSection && <NextSection/> }
+        { <NextSection showNextSection={showNextSection}/> }
       <Footer/>
     </div>
   );

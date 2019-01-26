@@ -2,18 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom'
-import {  } from '../../components/interviewChoice';
+import { } from '../../components/interviewChoice';
 import SectionTitle from '../../components/common/SectionTitle';
 import InterviewNotice from '../../components/interviewChoice/InterviewNotice/InterviewNotice';
+import TimeSelection from '../../components/interviewChoice/TimeSelection/TimeSelection';
+
+import * as interviewActions from '../../modules/interview';
 
 class InterviewChoiceContainer extends Component {
-  render() {
-    const { } = this.props;
 
+  handleCheckedChange = (day, time) => event => {
+    const { interviewActions } = this.props;
+    interviewActions.changeChecked({ day, time, checked: event.target.checked })
+  };
+
+  componentDidMount() {
+  }
+
+  render() {
+    const { checkedFields } = this.props;
     return (
       <>
         <SectionTitle title='인터뷰 시간 선택' />
         <InterviewNotice />
+        <TimeSelection checkedFields={checkedFields} onCheckedChange={this.handleCheckedChange} />
       </>
     );
   }
@@ -21,7 +33,9 @@ class InterviewChoiceContainer extends Component {
 
 export default withRouter(connect(
   (state) => ({
+    checkedFields: state.interview.get('interviewDates').toJS()
   }),
   (dispatch) => ({
+    interviewActions: bindActionCreators(interviewActions, dispatch)
   })
 )(InterviewChoiceContainer));

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-
+import { Route, withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 import classNames from 'classnames/bind';
@@ -27,25 +27,36 @@ const meterialStyles = theme => ({
   }
 });
 
+
+
 const NextSection = (props) => {
-  const { classes, showNextSection } = props;
+  const { classes, pageType } = props;
 
   return (
     <div className={cx('next-button-holder', 'container')}>
-      <Button variant='contained' classes={{root: classes.buttonCancel}}>
+      <Button variant='contained' classes={{ root: classes.buttonCancel }}>
         취소
       </Button>
-      {showNextSection ? 
+      {pageType === 'interviewChoice'?
         (
-          <Button variant='contained' classes={{root: classes.buttonNext}}>
+          <Button variant='contained' classes={{ root: classes.buttonNext }}>
             다음
           </Button>
         ) :
         (
-          <Button variant='contained' classes={{root: classes.buttonNext}}>
-            제출
-          </Button>
-        )}
+          <Route render={({ history }) => (
+            <Button
+              variant='contained'
+              classes={{ root: classes.buttonNext }}
+              onClick={() => { history.push('/resumeComplete') }}
+            >
+              제출
+            </Button>
+          )}
+          />
+        ) 
+
+      }
     </div>
   )
 };

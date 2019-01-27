@@ -1,0 +1,42 @@
+.personal-form {
+  padding-top: 113px;
+  padding-bottom: 18px;
+
+  .personal-form-title {
+    font-size: 20px;
+    color: #707070;
+    line-height: 1.45;
+  }
+
+  hr { border-top:1px solid #5c5959; }
+
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 13px;
+
+    .personal-form-holder {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 380px;
+    }
+    .personal-full-form-holder {
+      display: flex;
+      justify-content: flex-end;
+      width: 930px;
+    }
+
+
+
+  }
+}
+
+.personal-text-custom-form {
+  width: 380px;
+}
+
+.placeholder-right::-webkit-input-placeholder {
+  text-align: right
+}

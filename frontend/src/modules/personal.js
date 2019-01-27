@@ -11,34 +11,37 @@ export const joinKeys = createAction(JOIN_KEYS);
 
 const initialState = Map({
   fields: Map({
-    name: '',
-    englishName: '',
-    gender: '',
-    birth: Map({
-      year: '',
-      month: '',
-      date: ''
+    requestConsent: 'false',
+    personalIdentification: Map({
+      name: '',
+      englishName: '',
+      gender: '',
+      birth: Map({
+        year: '',
+        month: '',
+        date: ''
+      }),
+      birthText: '',
+      phoneNumber: Map({
+        first: '010',
+        second: '',
+        third: '',
+      }),
+      phoneNumberText: '',
+      address: '',
+      email: Map({
+        text: '',
+        type: ''
+      }),
+      emailText: '',
+      sns: '',
     }),
-    birthText: '',
-    phoneNumber: Map({
-      first: '010',
-      second: '',
-      third: '',
-    }),
-    phoneNumberText: '',
-    address: '',
-    email: Map({
-      text: '',
-      type: ''
-    }),
-    emailText: '',
-    sns: '',
     education: Map({
       schoolName: Map({
         text: '',
         type: '대학교'
       }),
-      schoolType: '',
+      schoolNameText: '',
       major: '',
       location: '',
       graduationYear: Map({
@@ -48,14 +51,15 @@ const initialState = Map({
       }),
     }),
     career: Map({
-      division: '',
-      divisionText: '',
-      duration: '',
+      activityType: '인턴',
+      activityDetail: '',
+      durationStart: '',
+      durationEnd: '',
       content: ''
     }),
     speciality: Map({
-      division: '',
-      divisionText: '',
+      activityType: '공인영어',
+      activityDetail: '',
       grade: '',
       content: ''
     })
@@ -64,9 +68,8 @@ const initialState = Map({
 
 export default handleActions({
   [INIT_STATE]: (state, action) => state = initialState,
+
   [CHANGE_INPUT]: (state, action) => {
-
-
     if (Object.keys(action.payload)[0].indexOf('.') !== -1) {
       const rootFields = Object.keys(action.payload)[0].split('.')[0];
       const keyArr = Object.keys(action.payload)[0].split('.').reverse();
@@ -81,8 +84,9 @@ export default handleActions({
     return state.set('fields', state.get('fields').merge(Map(action.payload)))
   },
   [JOIN_KEYS]: (state, action) => {
-    console.log(action.payload);
-    return state.set('fields', state.get('fields').merge(fromJS({[`${action.payload[0]}Text`]: Object.values(state.get('fields').getIn(action.payload).toJS()).join('')})));
+    const keyPath = ['fields', ...action.payload];
+    keyPath[keyPath.length - 1] = `${keyPath[keyPath.length - 1]}Text`;
+    return state.setIn(keyPath, Object.values(state.getIn(['fields', ...action.payload]).toJS()).join(''));
   }
 
 }, initialState)

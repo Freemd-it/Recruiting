@@ -47,20 +47,12 @@ class SpecialityFormGroup extends Component {
       <>
         <div className={cx('form-row')}>
           <FieldGroupWithLabelInlineAndChildren
-            label='활동구분'
+            label='구분'
           >
             <div className={cx('personal-form-holder')}>
-              <FormControl
-                componentClass='select'
-                bsClass='form-control career-speciality-item-1 custorm-form'
-                value={activityType}
-                onChange={onInputChange(`speciality.detail.${formGroupIndex}.activityType`, false)}
-              >
-                <option value='공인영어'> 공인영어 </option>
-              </FormControl>
               <FieldGroup
                 type='text'
-                placeholder="공인영어시험명"
+                placeholder='공인영어시험/자격증/수상내역/해외연수'
                 bsClass='form-control career-speciality-item-2 placeholder-right custom-form'
                 value={activityDetail}
                 onChange={onInputChange(`speciality.detail.${formGroupIndex}.activityDetail`, false)}
@@ -68,6 +60,7 @@ class SpecialityFormGroup extends Component {
             </div>
           </FieldGroupWithLabelInlineAndChildren>
 
+          
           <FieldGroupWithLabelInlineAndChildren
             label='본인평가'
           >
@@ -118,12 +111,12 @@ class SpecialityFormGroup extends Component {
               <FormControl
                 componentClass='textarea'
                 bsClass='form-control custorm-form'
+                placeholder='해외의료사업본부 지원자는 영어회화능력(상/중/하) 기재 필수'
                 value={content}
                 onChange={onInputChange(`speciality.detail.${formGroupIndex}.content`, false)}
               >
               </FormControl>
             </div>
-
           </FieldGroupWithLabelInlineAndChildren>
         </div>
       </>

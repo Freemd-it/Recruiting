@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import SubsectionHeader from '../../common/SubsectionHeader';
 import SpecialityFormGroup from '../SpecialityFormGroup';
+
+import plusImage from '../../../images/plus.png'
 
 import classNames from 'classnames/bind';
 import styles from './Speciality.scss';
@@ -10,12 +11,17 @@ const cx = classNames.bind(styles);
 
 class Speciality extends Component {
   render() {
-    const { personalFields } = this.props;
+    const { personalFields, onPlusFormGroup } = this.props;
     const { detail } = personalFields.speciality;
 
     return (
       <div className={cx('personal-form')}>
-        <SubsectionHeader title='특기사항' />
+        <div className={cx('subsection-title')}>
+          <span>특기사항</span>
+          <img src={plusImage} onClick={() => onPlusFormGroup('speciality')} />
+        </div>
+
+        <hr/>
 
         {detail.map((formGroupRow, formGroupIndex) => (
           <div key={`FormGroup__${formGroupIndex}`}>

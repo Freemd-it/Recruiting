@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { FormControl } from 'react-bootstrap';
-import Button from '@material-ui/core/Button';
 
 import FieldGroup from '../../common/Form/FieldGroup';
-import FieldGroupWithLabelInline from '../../common/Form/FieldGroupWithLabelInline';
 import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWithLabelInlineAndChildren';
 
 import classNames from 'classnames/bind';
@@ -20,7 +18,7 @@ const meterialStyles = theme => ({
 class Career extends Component {
   render() {
     const { classes, personalFields, onInputChange } = this.props;
-    const {  } = personalFields;
+    const { activityType, activityDetail, durationStart, durationEnd, content } = personalFields.career;
 
     return (
       <div className={cx('personal-form')}>
@@ -34,12 +32,13 @@ class Career extends Component {
           <FieldGroupWithLabelInlineAndChildren
             id='personalInformationForm-career-division'
             label='활동구분'
-
           >
             <div className={cx('personal-form-holder')}>
               <FormControl
                 componentClass='select'
                 bsClass='form-control career-division-item-1 custorm-form'
+                value={activityType}
+                onChange={onInputChange('career.activityType', false)}
               >
                 <option value='인턴'> 인턴 </option>
               </FormControl>
@@ -48,7 +47,8 @@ class Career extends Component {
                 type='text'
                 placeholder="회사/기관/단체명"
                 bsClass='form-control career-division-item-2 placeholder-right custom-form'
-                onChange={onInputChange('career.divisionText')}
+                value={activityDetail}
+                onChange={onInputChange('career.activityDetail', false)}
               />
             </div>
           </FieldGroupWithLabelInlineAndChildren>
@@ -63,7 +63,8 @@ class Career extends Component {
                 type='text'
                 placeholder='YYYY/MM'
                 bsClass='form-control career-duration-text custom-form'
-                onChange={onInputChange('career.duration')}
+                value={durationStart}
+                onChange={onInputChange('career.durationStart', false)}
               />
               -
               <FieldGroup
@@ -71,14 +72,8 @@ class Career extends Component {
                 type='text'
                 placeholder='YYYY/MM'
                 bsClass='form-control career-duration-text graduation-date custom-form'
-                onChange={onInputChange('career.duration')}
-              />
-              <FieldGroup
-                id='personalInformationForm-career-duration-time'
-                type='text'
-                placeholder="시간"
-                bsClass='form-control career-duration-time placeholder-right custom-form'
-                onChange={onInputChange('career.time')}
+                value={durationEnd}
+                onChange={onInputChange('career.durationEnd', false)}
               />
             </div>
           </FieldGroupWithLabelInlineAndChildren>
@@ -95,10 +90,11 @@ class Career extends Component {
               <FormControl
                 componentClass='textarea'
                 bsClass='form-control custorm-form'
+                value={content}
+                onChange={onInputChange('career.content', false)}
               >
               </FormControl>
             </div>
-
           </FieldGroupWithLabelInlineAndChildren>
         </div>
 

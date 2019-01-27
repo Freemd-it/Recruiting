@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { fromJS, Map, List } from 'immutable';
+import { fromJS } from 'immutable';
 
 const INIT_STATE = 'interview/INIT_STATE';
 const CHANGE_CHECKED = 'interview/CHANGE_CHECKED';
@@ -19,7 +19,7 @@ export default handleActions({
     const interviewDates = state.get('interviewDates');
     const { day, time, checked } = action.payload;
     if (checked) {
-      const dayIndex = interviewDates.findIndex(d => d.get('day') == day);
+      const dayIndex = interviewDates.findIndex(d => d.get('day') === day);
       if (dayIndex !== -1) {
         const newTimes = interviewDates.get(dayIndex).get('times').push(time);
         const newDate = interviewDates.get(dayIndex).set('times', newTimes);
@@ -33,7 +33,7 @@ export default handleActions({
         ));
       }
     } else {
-      const dayIndex = interviewDates.findIndex(d => d.get('day') == day);
+      const dayIndex = interviewDates.findIndex(d => d.get('day') === day);
       const timeIndex = interviewDates.get(dayIndex).get('times').findIndex(d => d === time);
       const newTimes = interviewDates.get(dayIndex).get('times').delete(timeIndex);
       const newDate = interviewDates.get(dayIndex).set('times', newTimes);

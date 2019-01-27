@@ -22,7 +22,7 @@ const TimeCheckForm = ({ date, index, onCheckedChange, checkedFields }) => {
 
   return (
     <div className={(cx('time-check-form'))}>
-      {index != 0 ? (<hr />) : ''}
+      {index !== 0 ? (<hr />) : ''}
       <div className={(cx('time-check-form-content'))}>
         <div className={(cx('form-day'))}>
           {day}

@@ -12,13 +12,13 @@ const HeaderInformationText = (props) => {
   customText = Utils.lineBreak(customText);
 
   enlargeText.forEach(text => {
-    if (customText.indexOf(text) != -1 ) {
+    if (customText.indexOf(text) !== -1 ) {
       customText = customText.replace(text, `<span class=${cx('enlarge-text')}>${text}</span>`);
     }
   });
 
   underlineText.forEach(text => {
-    if (customText.indexOf(text) != -1 ) {
+    if (customText.indexOf(text) !== -1 ) {
       customText = customText.replace(text, `<span class=${cx('underline-text')}>${text}</span>`)
     }
   });

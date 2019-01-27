@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { FormControl } from 'react-bootstrap';
 
-import FieldGroup from '../../common/Form/FieldGroup';
-import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWithLabelInlineAndChildren';
+import SubsectionHeader from '../../common/SubsectionHeader';
+import CareerFormGroup from '../CareerFormGroup';
 
 import classNames from 'classnames/bind';
 import stylesCommon from '../common/PersonalQuestions.scss';
@@ -11,100 +9,28 @@ import styles from './Career.scss';
 
 const cx = classNames.bind({...stylesCommon, ...styles});
 
-const meterialStyles = theme => ({
-
-});
-
 class Career extends Component {
   render() {
-    const { classes, personalFields, onInputChange } = this.props;
-    const { activityType, activityDetail, durationStart, durationEnd, content } = personalFields.career;
+    const { personalFields } = this.props;
+    const { detail } = personalFields.career;
 
     return (
       <div className={cx('personal-form')}>
-        <div className={cx('personal-form-title')}>
-          <span>경력</span>
-        </div>
+        <SubsectionHeader title='경력' />
 
-        <hr/>
-
-        <div className={cx('form-row')}>
-          <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-career-division'
-            label='활동구분'
-          >
-            <div className={cx('personal-form-holder')}>
-              <FormControl
-                componentClass='select'
-                bsClass='form-control career-division-item-1 custorm-form'
-                value={activityType}
-                onChange={onInputChange('career.activityType', false)}
-              >
-                <option value='인턴'> 인턴 </option>
-              </FormControl>
-              <FieldGroup
-                id='personalInformationForm-career-division-text'
-                type='text'
-                placeholder="회사/기관/단체명"
-                bsClass='form-control career-division-item-2 placeholder-right custom-form'
-                value={activityDetail}
-                onChange={onInputChange('career.activityDetail', false)}
-              />
-            </div>
-          </FieldGroupWithLabelInlineAndChildren>
-
-          <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-career-duration'
-            label='활동기간'
-          >
-            <div className={cx('personal-form-holder')}>
-              <FieldGroup
-                id='personalInformationForm-career-duration-start'
-                type='text'
-                placeholder='YYYY/MM'
-                bsClass='form-control career-duration-text custom-form'
-                value={durationStart}
-                onChange={onInputChange('career.durationStart', false)}
-              />
-              -
-              <FieldGroup
-                id='personalInformationForm-career-duration-end'
-                type='text'
-                placeholder='YYYY/MM'
-                bsClass='form-control career-duration-text graduation-date custom-form'
-                value={durationEnd}
-                onChange={onInputChange('career.durationEnd', false)}
-              />
-            </div>
-          </FieldGroupWithLabelInlineAndChildren>
-        </div>
-
-
-        <div className={cx('form-row')}>
-          <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-career-detail-text'
-            label='활동내역'
-            full={true}
-          >
-            <div className={cx('personal-full-form-holder')}>
-              <FormControl
-                componentClass='textarea'
-                bsClass='form-control custorm-form'
-                value={content}
-                onChange={onInputChange('career.content', false)}
-              >
-              </FormControl>
-            </div>
-          </FieldGroupWithLabelInlineAndChildren>
-        </div>
-
+        {detail.map((formGroupRow, formGroupIndex) => (
+          <div key={`FormGroup__${formGroupIndex}`}>
+            <CareerFormGroup formGroupIndex={formGroupIndex} {...this.props}/>
+            {(detail.length >= 2 && formGroupIndex != detail.length - 1) && <hr className={cx('form-group-divider')}/>}
+          </div>
+        ))}
 
       </div>
     );
   }
 };
 
-export default withStyles(meterialStyles)(Career);
+export default Career;
 
 
 

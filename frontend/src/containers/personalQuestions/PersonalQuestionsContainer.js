@@ -27,12 +27,21 @@ class PersonalQuestionsContainer extends Component {
     }
   };
 
+  /**
+   * 경력, 특기사항 배열 폼 대응 method
+   */
+  handleInputChangeForArray = name => event => {
+    const { personalActions } = this.props;
+    console.log(name);
+    console.log(event.currentTarget.value);
+    personalActions.changeInputArray({[name]: event.currentTarget.value})
+  };
+
   handleButtonChange = (name, value) => {
     const { personalActions } = this.props;
     console.log(name);
     console.log(value);
     personalActions.changeInput({[name] : value});
-
   };
 
   handleCheckBoxChange = name => event => {
@@ -41,6 +50,7 @@ class PersonalQuestionsContainer extends Component {
     personalActions.changeInput({[name] : event.currentTarget.checked});
 
   };
+
 
   handleStopPropagation = (e) => {
     e.stopPropagation();
@@ -67,12 +77,11 @@ class PersonalQuestionsContainer extends Component {
         />
         <Career
           personalFields={personalFields}
-          onInputChange={this.handleInputChange}
+          onInputChange={this.handleInputChangeForArray}
         />
         <Speciality
           personalFields={personalFields}
-          onInputChange={this.handleInputChange}
-          onButtonChange={this.handleButtonChange}
+          onInputChange={this.handleInputChangeForArray}
         />
       </>
 

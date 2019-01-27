@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Route, withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -29,35 +29,49 @@ const meterialStyles = theme => ({
 
 
 
-const NextSection = (props) => {
-  const { classes, pageType } = props;
-  return (
-    <div className={cx('next-button-holder', 'container')}>
-      <Button variant='contained' classes={{ root: classes.buttonCancel }}>
-        취소
-      </Button>
-      {pageType !== 'interviewChoice' ?
-        (
-          <Button variant='contained' classes={{ root: classes.buttonNext }}>
-            다음
-          </Button>
-        ) :
-        (
-          <Route render={({ history }) => (
-            <Button
-              variant='contained'
-              classes={{ root: classes.buttonNext }}
-              onClick={() => { history.push('/resumeComplete') }}
-            >
-              제출
-            </Button>
-          )}
-          />
-        ) 
+class NextSection extends Component {
 
-      }
-    </div>
-  )
+  handleNextButtonClick = e => {
+    const { history, config } = this.props;
+    history.push(config.nextRoutePath);
+  };
+
+  handleCancleButtonClick = e => {
+    const { history } = this.props;
+    history.push('/');
+  };
+
+  render() {
+    const { classes, pageType } = this.props;
+    return (
+      <div className={cx('next-button-holder', 'container')}>
+        <Button variant='contained' classes={{ root: classes.buttonCancel }} onClick={this.handleCancleButtonClick}>
+          취소
+        </Button>
+        {pageType !== 'interviewChoice' ?
+          (
+            <Button variant='contained' classes={{ root: classes.buttonNext }} onClick={this.handleNextButtonClick}>
+              다음
+            </Button>
+          ) :
+          (
+            <Route render={({ history }) => (
+              <Button
+                variant='contained'
+                classes={{ root: classes.buttonNext }}
+                onClick={this.handleNextButtonClick}
+              >
+                제출
+              </Button>
+            )}
+            />
+          )
+
+        }
+      </div>
+    )
+  }
+
 };
 
 export default withStyles(meterialStyles)(NextSection);

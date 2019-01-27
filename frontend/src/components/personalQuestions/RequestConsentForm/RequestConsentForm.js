@@ -22,7 +22,8 @@ const meterialStyles = theme => ({
     borderTop:'1px solid #5c5959',
     borderBottom:'1px solid #5c5959',
     borderRadius: '0px 0px 0px 0px',
-    minHeight: '40px'
+    minHeight: '40px',
+    width: '100%'
   },
   expansionPanelExpanded: {
     marginTop: '0px !important',
@@ -100,7 +101,7 @@ class RequestConsentForm extends Component {
               control={
                 <Checkbox
                   classes={{root: classes.checkBoxRoot, checked:classes.checked}}
-                  checked={requestConsent}
+                  checked={requestConsent === true}
                   onChange={onInputChange('requestConsent', false)}
                 />
               }

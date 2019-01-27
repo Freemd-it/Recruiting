@@ -41,7 +41,7 @@ const meterialStyles = theme => ({
 
 class PersonalInformation extends Component {
   render() {
-    const { classes, personalFields, onInputChange, onButtonChange } = this.props;
+    const { classes, personalFields, onInputChange } = this.props;
     const { activityType, activityDetail, grade, content } = personalFields.speciality;
 
     return (

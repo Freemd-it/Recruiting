@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 import classNames from 'classnames/bind';
 import styles from './FieldGroupWithLabelInlineAndChildren.scss';

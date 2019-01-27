@@ -16,33 +16,48 @@ import * as userActions from '../../modules/user';
 
 class PersonalQuestionsContainer extends Component {
 
-  handleInputChange = name => event => {
+  handleInputChange = (name, isSeperated) => event => {
     const { personalActions } = this.props;
     console.log({[name] : event.currentTarget.value});
     personalActions.changeInput({[name] : event.currentTarget.value});
-    if (name.indexOf('.') !== -1) {
+
+    if (isSeperated) {
+      console.log(name.split('.').splice(0, name.split('.').length - 1));
       personalActions.joinKeys(name.split('.').splice(0, name.split('.').length - 1));
     }
   };
 
   handleButtonChange = (name, value) => {
     const { personalActions } = this.props;
+    console.log(name);
+    console.log(value);
     personalActions.changeInput({[name] : value});
 
   };
 
+  handleCheckBoxChange = name => event => {
+    const { personalActions } = this.props;
+    console.log({[name] : event.currentTarget.checked});
+    personalActions.changeInput({[name] : event.currentTarget.checked});
 
-  componentDidMount() {
-    const { personalFields, personalActions } = this.props;
-  }
+  };
+
+  handleStopPropagation = (e) => {
+    e.stopPropagation();
+  };
+
 
   render() {
     const { personalFields } = this.props;
     return (
       <>
-        <RequestConsentForm/>
+        <RequestConsentForm
+          personalFields={personalFields}
+          onInputChange={this.handleCheckBoxChange}
+          onStopPropagation={this.handleStopPropagation}
+        />
         <PersonalInformation
-          personalFields={personalFields.toJS()}
+          personalFields={personalFields}
           onInputChange={this.handleInputChange}
           onButtonChange={this.handleButtonChange}
         />
@@ -57,6 +72,7 @@ class PersonalQuestionsContainer extends Component {
         <Speciality
           personalFields={personalFields}
           onInputChange={this.handleInputChange}
+          onButtonChange={this.handleButtonChange}
         />
       </>
 
@@ -66,7 +82,7 @@ class PersonalQuestionsContainer extends Component {
 
 export default withRouter(connect(
   (state) => ({
-    personalFields: state.personal.get('fields'),
+    personalFields: state.personal.get('fields').toJS(),
     userFields: state.user.get('fields'),
   }),
   (dispatch) => ({

@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 const PageCommonTemplate = (props) => {
   const { children, config } = props;
-  const { showHeaderInformation, showStepSection, showNextSection, pageType } = config;
+  const { showStepSection, showNextSection } = config;
 
   return (
     <div>
@@ -21,7 +21,7 @@ const PageCommonTemplate = (props) => {
         <main className={cx('container')}>
           {children}
         </main>
-        { showNextSection && <NextSection pageType={pageType}/> }
+        { showNextSection && <NextSection config={config} {...props}/> }
       <Footer/>
     </div>
   );

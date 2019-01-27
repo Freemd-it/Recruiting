@@ -36,7 +36,7 @@ const meterialStyles = theme => ({
       color: '#ff5858',
     },
   },
-  radioChecked: {},
+  checked: {},
 });
 
 class PersonalInformation extends Component {
@@ -85,7 +85,7 @@ class PersonalInformation extends Component {
                   classes={{root: classes.formLabelRoot, label: classes.formLabel}}
                   value="상"
                   checked={grade === '상'}
-                  control={<Radio classes={{root: classes.radioRoot, radioCheckd: classes.checked}} />}
+                  control={<Radio classes={{root: classes.radioRoot, checked: classes.checked}} />}
                   label="상"
                   labelPlacement="end"
                 />
@@ -93,7 +93,7 @@ class PersonalInformation extends Component {
                   classes={{root: classes.formLabelRoot, label: classes.formLabel}}
                   value="중"
                   checked={grade === '중'}
-                  control={<Radio classes={{root: classes.radioRoot, radioCheckd: classes.checked}} />}
+                  control={<Radio classes={{root: classes.radioRoot, checked: classes.checked}} />}
                   label="중"
                   labelPlacement="end"
                 />
@@ -101,7 +101,7 @@ class PersonalInformation extends Component {
                   classes={{root: classes.formLabelRootEnd, label: classes.formLabel}}
                   value="하"
                   checked={grade === '하'}
-                  control={<Radio classes={{root: classes.radioRoot, radioCheckd: classes.checked}} />}
+                  control={<Radio classes={{root: classes.radioRoot, checked: classes.checked}} />}
                   label="하"
                   labelPlacement="end"
                 />

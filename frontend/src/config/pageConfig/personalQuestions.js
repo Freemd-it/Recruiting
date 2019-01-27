@@ -3,4 +3,6 @@ export default {
   showHeaderInformation: true,
   showStepSection: true,
   showNextSection: true,
+  nextRoutePath: '/applyChoice',
+  previousRoutePath: '/',
 }

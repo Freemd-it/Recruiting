@@ -5,7 +5,6 @@ import {  } from '../../components/applyChoice';
 
 class ApplyChoiceContainer extends Component {
   render() {
-
     return (
       <>
 

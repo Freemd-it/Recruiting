@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { FormGroup, FormControl, Checkbox } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import FieldGroup from '../../common/Form/FieldGroup';
-import FieldGroupWithLabelInline from '../../common/Form/FieldGroupWithLabelInline';
 import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWithLabelInlineAndChildren';
 
 import classNames from 'classnames/bind';
@@ -27,16 +26,23 @@ const meterialStyles = theme => ({
     marginBottom: '0px'
   },
   formLabel: {
-    fontFamily: `'Noto Sans KR', sans-serif`,
-    fontWeight: '300',
+    fontFamily: `'NotoSans-Light`,
     fontSize: '14px',
-  }
+  },
+
+  radioRoot: {
+    color: '#ff5858',
+    '&$checked': {
+      color: '#ff5858',
+    },
+  },
+  radioChecked: {},
 });
 
 class PersonalInformation extends Component {
   render() {
-    const { classes, personalFields, onInputChange } = this.props;
-    const {  } = personalFields;
+    const { classes, personalFields, onInputChange, onButtonChange } = this.props;
+    const { activityType, activityDetail, grade, content } = personalFields.speciality;
 
     return (
       <div className={cx('personal-form')}>
@@ -44,54 +50,58 @@ class PersonalInformation extends Component {
 
         <div className={cx('form-row')}>
           <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-speciality-division'
             label='활동구분'
-
           >
             <div className={cx('personal-form-holder')}>
               <FormControl
                 componentClass='select'
                 bsClass='form-control career-speciality-item-1 custorm-form'
+                value={activityType}
+                onChange={onInputChange('speciality.activityType', false)}
               >
-                <option value='인턴'> 공인영어 </option>
+                <option value='공인영어'> 공인영어 </option>
               </FormControl>
               <FieldGroup
-                id='personalInformationForm-career-speciality-text'
                 type='text'
                 placeholder="공인영어시험명"
                 bsClass='form-control career-speciality-item-2 placeholder-right custom-form'
-                onChange={onInputChange('career.divisionText')}
+                value={activityDetail}
+                onChange={onInputChange('speciality.activityDetail', false)}
               />
             </div>
           </FieldGroupWithLabelInlineAndChildren>
 
           <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-speciality-person-rating'
             label='본인평가'
           >
             <div className={cx('personal-speciality-form-holder')}>
               <RadioGroup
                 name="speciality"
                 row
+                value={grade}
+                onChange={onInputChange('speciality.grade', false)}
               >
                 <FormControlLabel
                   classes={{root: classes.formLabelRoot, label: classes.formLabel}}
                   value="상"
-                  control={<Radio color="primary" />}
+                  checked={grade === '상'}
+                  control={<Radio classes={{root: classes.radioRoot, radioCheckd: classes.checked}} />}
                   label="상"
                   labelPlacement="end"
                 />
                 <FormControlLabel
                   classes={{root: classes.formLabelRoot, label: classes.formLabel}}
                   value="중"
-                  control={<Radio color="primary" />}
+                  checked={grade === '중'}
+                  control={<Radio classes={{root: classes.radioRoot, radioCheckd: classes.checked}} />}
                   label="중"
                   labelPlacement="end"
                 />
                 <FormControlLabel
                   classes={{root: classes.formLabelRootEnd, label: classes.formLabel}}
                   value="하"
-                  control={<Radio color="primary" />}
+                  checked={grade === '하'}
+                  control={<Radio classes={{root: classes.radioRoot, radioCheckd: classes.checked}} />}
                   label="하"
                   labelPlacement="end"
                 />
@@ -111,6 +121,8 @@ class PersonalInformation extends Component {
               <FormControl
                 componentClass='textarea'
                 bsClass='form-control custorm-form'
+                value={content}
+                onChange={onInputChange('speciality.content', false)}
               >
               </FormControl>
             </div>

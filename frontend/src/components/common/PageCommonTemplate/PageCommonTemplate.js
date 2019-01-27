@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 const PageCommonTemplate = (props) => {
   const { children, config } = props;
-  const { showHeaderInformation, showStepSection, showNextSection, pageType } = config;
+  const { showStepSection, showNextSection, pageType } = config;
 
   return (
     <div>

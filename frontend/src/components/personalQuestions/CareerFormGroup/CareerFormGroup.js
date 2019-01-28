@@ -53,7 +53,6 @@ class CareerFormGroup extends Component {
           >
             <div className={cx('personal-form-holder')}>
               <FieldGroup
-                id='personalInformationForm-career-duration-start'
                 type='text'
                 placeholder='YYYY/MM'
                 bsClass='form-control career-duration-text custom-form'
@@ -62,12 +61,17 @@ class CareerFormGroup extends Component {
               />
               -
               <FieldGroup
-                id='personalInformationForm-career-duration-end'
                 type='text'
                 placeholder='YYYY/MM'
                 bsClass='form-control career-duration-text graduation-date custom-form'
                 value={durationEnd}
                 onChange={onInputChange(`career.detail.${formGroupIndex}.durationEnd`, false)}
+              />
+              <FieldGroup
+                type='text'
+                placeholder="시간"
+                bsClass='form-control career-duration-time placeholder-right custom-form'
+                onChange={onInputChange(`career.detail.${formGroupIndex}.time`, false)}
               />
             </div>
           </FieldGroupWithLabelInlineAndChildren>
@@ -76,7 +80,6 @@ class CareerFormGroup extends Component {
 
         <div className={cx('form-row')}>
           <FieldGroupWithLabelInlineAndChildren
-            id='personalInformationForm-career-detail-text'
             label='활동내역'
             full={true}
           >

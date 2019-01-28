@@ -1,21 +1,15 @@
-module.exports = (app) => {
-  const express = require('express');
-  const router = express.Router();
-  const UserCtrl = require('../../controllers/User.ctrl');
+const express = require('express')
+const router = express.Router();
+const auth = require('./auth');
+const user = require('./user');
 
-  // 로그인
-  router.post('/login', UserCtrl.create);
+const authMiddleware = require('../../middlewares/Auth');
 
-  // 목록 조회
-  router.get('/recruits', UserCtrl.list);
+// /auth 로 들어오면 연결
+router.use('/auth', auth)
 
-  // 개인 조회
-  router.get('/recruits/:user_id', UserCtrl.read);
+// 해당 router 에 middleware를 적용
+router.use('/recruits', authMiddleware);
+router.use('/recruits', user);
 
-  // 지원서 수정
-  router.put('/recruits/:user_id', UserCtrl.update);
-  
-  // router.patch('/recruits/:user_id', UserCtrl.update);
-
-  return router;
-}
+module.exports = router;

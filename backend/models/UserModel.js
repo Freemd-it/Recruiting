@@ -1,68 +1,74 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
+const crypto = require('crypto')
+const config = require('../config')
 
-// const QuestionsSchema = require('./QuestionsModel');
-// const InterviewSchema = require('./InterViewModel');
 
-const interview_time = [
-  '10:00 ~ 11:00',
-  '11:00 ~ 12:00',
-  '12:00 ~ 13:00',
-  '13:00 ~ 14:00',
-  '14:00 ~ 15:00',
-  '15:00 ~ 16:00',
-  '16:00 ~ 17:00',
-  '17:00 ~ 18:00'
-]
+const ExternalActivitiesSchema = new Schema({
+  external_type:{
+    type: String,
+    enum : ['인턴', '봉사활동']
+  },
+  organizer: String, // 소속 및 주최
+  start_date: Date, // 활동을 언제부터 
+  end_date: Date, // 언제까지 했나여
+  content: String // 상세내용
+})
 
-const questionsSchema = new Schema({
-  q_id: Number,
-  type: {
-    type : String,
-    enum : ['공통질문', '본부질문', '팀질문'],
-    required: true
-  }, 
-  // 질문 내용
-  question : String,
-  // 등록일자 
-  registerDate: {
+const SpecialSchema = new Schema({
+  special_type: {
+    type: String,
+    enum: ['자격증', '어학능력', '기타능력']
+  },
+  acquisition_date: Date,
+  language_ability: {
+    type: String,
+    enum: ['상', '중', '하']
+  },
+  content: String 
+});
+// 포트폴리오
+const PortfoliosSchema = new Schema({
+  file_path: String, // 포트폴리오 파일 경로
+  registedDate: {
     type: Date,
-    default: new Date() // 현재 날짜를 기본값으로 지정 UTC
+   default: new Date() // 현재 날짜를 기본값으로 지정
+  }
+})
+
+// 질문 스키마
+const QuestionsSchema = new Schema({
+  classify: Number, //공통, 본부, 팀질문 및 어떤본부 팀인지 분류 101 102 103
+  department: String, //본부
+  team: String, //팀
+  question : String, //질문내용,
+  batch: Number, //기수
+  register: String, //등록자
+  used: Boolean, // 사용여부
+  portfolios: [PortfoliosSchema],
+  registedDate: {
+    type: Date,
+   default: new Date() // 현재 날짜를 기본값으로 지정
   }
 })
 
 const interviewSchema = new Schema({
-  "date" : {
-    type: String,
-    enum : ["토", "일"]
-  },
-  "time" : {
-    type : String,
-    enum : interview_time
-  }
-});
-
+  interview_date : Date,
+  interview_week : String,
+  interview_time : [String]
+  
+})
 
 const UserSchema = new Schema({
-  regDate: {
+  registedDate: {
     type: Date,
-    default: new Date() // 현재 날짜를 기본값으로 지정
+   default: new Date() // 현재 날짜를 기본값으로 지정
   },
   basic_info:{
-    user_name: {
-      type : String,
-      // required : true,
-    },
-    email: {
-      type : String,
-      // required : true,
-      unique: true
-    },
-    password : {
-      type : String,
-      // required : true,
-      trim : true // 공백 제거
-    },
+    user_name : String,
+    email: String,
+    password : String,
+
     english_name: String,
     is_male: Boolean,
     birth_date: Date, 
@@ -71,55 +77,17 @@ const UserSchema = new Schema({
     sns : String,
     address : String
   },
-  academic_career: { // 최종 학력
-    academic_name: {
-      type: String,
-      // default: ''
-    }, // 학교명
-    location: String, // 소재지
-    // 학교의 종류
-    degree: {
-      type : String,
-      enum : ['고등학교', '대학교', '대학원'],
-      // required : true, // save시 발동 되는 듯,
-    },
-    major: String, // 전공
-    entrance_date: Date, // 입학년도
-    graduation_date: Date // 졸업년도
+  academic_career: {
+    academic_name : String,
+    location : String,
+    degree : String,
+    major: String,
+    entrance_date : Date,
+    graduation_date: Date
   },
-
-
-  external_activities: [ // Array(document) 외부 활동 경력에 대한 내용 , 여러 개가 올 수 있음 
-    {
-      external_type: {
-        type: String,
-        enum: ['인턴', '봉사활동'],
-        default : ''
-      }, // 대회 활동 타입
-      organizer: String, // 소속 및 주최
-      start_date: Date, // 활동을 언제부터 
-      end_date: Date, // 언제까지 했나여
-      turnaround_time: Number,
-      content: String // 상세내용
-    }
-  ],
-  special_info: [ // Array(document) 특기사항
-    { // 특기사항 종류
-      special_type: {
-        type: String,
-        enum: ['자격증', '어학능력', '기타능력']
-      },
-      acquisition_date: Date, // 취득 시간
-      // 특기사항 종류가 어학능력인 경우에만 저장됨
-      language_ability: {
-        type: String,
-        enum: ['상', '중', '하']
-      },
-      content: String // 상세내용
-    }
-  ],
-  apply_info: { // 지원 관련 정보
-    // 부서
+  external_activities: [ExternalActivitiesSchema],
+  special_info: [SpecialSchema],
+  apply_info: {
     department: {
       type: String,
       enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
@@ -128,24 +96,81 @@ const UserSchema = new Schema({
       type: String,
       enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
     },
-    team: String, // 팀, 팀이 있는 부서에만 값이 부여됨
-    secondary_team: String, // 2지망 부서 중 팀이 있는 경우에만 부여됨
-    can_moved: Boolean, // 타 본부, 타 사업 이동 가능여부
-    can_multiple_interview: Boolean, // 여러 부서에 면접을 볼 수 있는지 가능여부
-    questions: [questionsSchema],
-    portfolios: [ // 포트폴리오 정보
-      {
-        file_path: String // 포트폴리오 파일 경로
-      }
-    ],
+    team: String, 
+    secondary_team: String, 
+    can_moved: Boolean, 
+    can_multiple_interview: Boolean,
+    questions : [QuestionsSchema]
+  },
+  interview_info : [interviewSchema]
+  })
 
-    // 시간
-    interview_time: [interviewSchema],
-  }
-})
 
-module.exports =  mongoose.model('User', UserSchema);
+// 몽고디비 저장
+// arrow function 이 안먹힘
+UserSchema.statics.create = function(user_name, email, password)  {
+  const secret = config.secret
 
-// embedd or reference ? 
-// enum은 어떻게 ?
-// 제출하기시 제한시간 내에 제출 가능 
+  const encrypted = crypto.createHmac('sha1', secret)
+                    .update(password)
+                    .digest('base64');
+  
+  const userinfo = new this({
+    basic_info:{
+      user_name, 
+      email, 
+      password : encrypted
+    }
+  })
+
+  return  userinfo.save()
+};
+
+// id 로 찾기
+UserSchema.statics.findOneById = function(id){
+  return this.findOne({
+    _id:id
+  }).exec();
+};
+
+// email 로 찾기
+UserSchema.statics.findOneByEmail = function(email){
+  return this.findOne({
+    'basic_info.email' : email
+  }).exec();
+};
+
+// 이름 으로 찾기
+UserSchema.statics.findOneByUsername = function(user_name) {
+  // console.log(user_name)
+  return this.findOne({
+      'basic_info.user_name' : user_name
+  }).exec();
+};
+
+// UserSchema.statics.findOneByIdBasicUpdate = function (id, english_name) {
+//   console.log(id, english_name)
+//   const set = {
+//     'basic_info.english_name' : english_name,
+//     // 'basic_info.is_male' : is_male,
+//     // 'basic_info.birth_date' : birth_date,
+//     // 'basic_info.phone' : phone,
+//     // 'basic_info.sns' : sns,
+//   }
+//   return this.findOneByIdUpdate({_id:id},{
+//     $set:set
+//   },{new:true,upsert:true}).exec();
+// }
+
+UserSchema.methods.verify = function(password) {
+  // console.log(this.password)
+  const encrypted = crypto.createHmac('sha1', config.secret)
+                          .update(password)
+                          .digest('base64');
+
+  return this.basic_info.password === encrypted
+}
+
+module.exports = mongoose.model('User', UserSchema);
+
+// module.exports = mongoose.model('External', ExternalActivitiesSchema);

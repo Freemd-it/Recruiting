@@ -1,59 +1,35 @@
-// env 연동
-require('dotenv').config();
-
-const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 
-const {
-  LOCAL_MONGO_URI: LOCAL_MONGO_URI
-} = process.env;
+// config 불러오기 
+const config = require('./config')
+const port = process.env.PORT || 4000;
 
-// Node 의 Promise 를 사용 하도록 설정
-mongoose.Promise = global.Promise; 
-
-// 몽고디비 연결
-mongoose.connect(LOCAL_MONGO_URI, {
-  useNewUrlParser: true
-}).then(()=> {
-  console.log(`connected to ${LOCAL_MONGO_URI}`)
-}).catch((e) => {
-  console.error(e);
-});
+// 라우팅
+const api = require('./routes/api');
 
 const app = express();
 
-// 라우트 연결
-// const test = require('./routes/test')(app);
-const api = require('./routes/api')(app);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
+// 설정
 app.use(logger('dev'));
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// 비밀키 
+app.set('jwt-secret', config.secret)
 
-app.use('/api', api);
-// app.use('/test', test);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.get('/', (req, res) => {
+    res.send('테스트 api 서버')
 });
 
-// error handler
+// /api요청 사용
+app.use('/api', api);
+
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -64,7 +40,18 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+app.listen(port, () => {
+  console.log(`running on port : ${port} `)
+});
 
 
 
-module.exports = app;
+mongoose.Promise = global.Promise;
+// 몽고디비 연결
+mongoose.connect(config.mongodbUri, {
+  useNewUrlParser: true
+}).then(()=> {
+  console.log(`connected to ${config.mongodbUri}`)
+}).catch((e) => {
+  console.error(e);
+});

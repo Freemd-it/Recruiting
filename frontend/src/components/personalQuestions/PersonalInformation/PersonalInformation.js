@@ -7,10 +7,11 @@ import FieldGroup from '../../common/Form/FieldGroup';
 import FieldGroupWithLabelInline from '../../common/Form/FieldGroupWithLabelInline';
 import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWithLabelInlineAndChildren';
 
+import SubsectionHeader from '../../common/SubsectionHeader';
+
 import classNames from 'classnames/bind';
 import stylesCommon from '../common/PersonalQuestions.scss';
 import styles from './PersonalInformation.scss';
-import SubsectionHeader from '../../common/SubsectionHeader';
 
 const cx = classNames.bind({...stylesCommon, ...styles});
 

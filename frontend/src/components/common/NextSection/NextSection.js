@@ -29,10 +29,10 @@ class NextSection extends Component {
   };
   
   render() {
-    const { classes, pageType } = this.props;
+    const { classes, config } = this.props;
     return (
       <div className={cx('next-button-holder', 'container')}>
-        {pageType !== 'interviewChoice' ?
+        {config.pageType !== 'interviewChoice' ?
           (
             <Button variant='contained' classes={{ root: classes.buttonNext }} onClick={this.handleNextButtonClick}>
               다음

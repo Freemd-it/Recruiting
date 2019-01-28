@@ -18,29 +18,28 @@ class PersonalQuestionsContainer extends Component {
 
   handleInputChange = (name, isSeperated) => event => {
     const { personalActions } = this.props;
-    console.log({[name] : event.currentTarget.value});
     personalActions.changeInput({[name] : event.currentTarget.value});
 
     if (isSeperated) {
-      console.log(name.split('.').splice(0, name.split('.').length - 1));
       personalActions.joinKeys(name.split('.').splice(0, name.split('.').length - 1));
     }
   };
 
   handleButtonChange = (name, value) => {
     const { personalActions } = this.props;
-    console.log(name);
-    console.log(value);
     personalActions.changeInput({[name] : value});
-
   };
 
   handleCheckBoxChange = name => event => {
     const { personalActions } = this.props;
-    console.log({[name] : event.currentTarget.checked});
     personalActions.changeInput({[name] : event.currentTarget.checked});
-
   };
+
+  handlePlusFormGroup = (type) => {
+    const { personalActions } = this.props;
+    personalActions.pushInputArray(type);
+  };
+
 
   handleStopPropagation = (e) => {
     e.stopPropagation();
@@ -68,14 +67,14 @@ class PersonalQuestionsContainer extends Component {
         <Career
           personalFields={personalFields}
           onInputChange={this.handleInputChange}
+          onPlusFormGroup={this.handlePlusFormGroup}
         />
         <Speciality
           personalFields={personalFields}
           onInputChange={this.handleInputChange}
-          onButtonChange={this.handleButtonChange}
+          onPlusFormGroup={this.handlePlusFormGroup}
         />
       </>
-
     );
   }
 }

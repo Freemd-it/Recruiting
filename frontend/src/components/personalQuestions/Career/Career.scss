@@ -1,18 +1,18 @@
 .personal-form {
   .personal-form-title {}
-  .form-row {
-    .career-division-item-1 {
-      width: 130px;
+  div.subsection-title {
+    font-size: 20px;
+    color: #707070;
+    line-height: 1.45;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    span {
+      display: flex;
+      align-items: flex-end;
     }
-    .career-division-item-2 {
-      width: 220px;
-      margin-bottom: -15px
-    }
-
-    .career-duration-text {
-      width: 170px;
-      margin-bottom: -15px
-    }
-
+  }
+  img:hover {
+    cursor: pointer;
   }
 }

@@ -9,16 +9,8 @@ import styles from './NextSection.scss';
 const cx = classNames.bind(styles);
 
 const meterialStyles = theme => ({
-  buttonCancel: {
-    width: '140px',
-    backgroundColor: '#f8f8f8',
-    boxShadow: 'none',
-    fontSize: '16px',
-    fontWeight: '500',
-    color: '#707070'
-  },
   buttonNext: {
-    width: '140px',
+    width: '180px',
     backgroundColor: '#fa6d6d',
     boxShadow: 'none',
     fontSize: '16px',
@@ -35,20 +27,12 @@ class NextSection extends Component {
     const { history, config } = this.props;
     history.push(config.nextRoutePath);
   };
-
-  handleCancleButtonClick = e => {
-    const { history } = this.props;
-    history.push('/');
-  };
-
+  
   render() {
-    const { classes, pageType } = this.props;
+    const { classes, config } = this.props;
     return (
       <div className={cx('next-button-holder', 'container')}>
-        <Button variant='contained' classes={{ root: classes.buttonCancel }} onClick={this.handleCancleButtonClick}>
-          취소
-        </Button>
-        {pageType !== 'interviewChoice' ?
+        {config.pageType !== 'interviewChoice' ?
           (
             <Button variant='contained' classes={{ root: classes.buttonNext }} onClick={this.handleNextButtonClick}>
               다음

@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom'
-import { } from '../../components/interviewChoice';
-import SectionTitle from '../../components/common/SectionTitle';
-import InterviewNotice from '../../components/interviewChoice/InterviewNotice/InterviewNotice';
-import TimeSelection from '../../components/interviewChoice/TimeSelection/TimeSelection';
+import { SectionTitle } from '../../components/common';
+import { InterviewNotice, TimeSelection } from '../../components/interviewChoice';
 
 import * as interviewActions from '../../modules/interview';
 

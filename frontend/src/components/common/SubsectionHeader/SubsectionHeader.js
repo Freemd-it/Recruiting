@@ -11,7 +11,7 @@ const SubsectionHeader = ({title, noDivider=false}) => {
       <div className={cx('subsection-title')}>
         <span>{title}</span>
       </div>
-      {noDivider ? null : <hr/>}
+      {noDivider ? null : <hr className={cx('subsection-title-underline')}/>}
     </>
   )
 };

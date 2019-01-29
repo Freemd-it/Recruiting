@@ -1,5 +1,12 @@
 import React from 'react';
 
+import {
+  withStyles,
+  FormControlLabel,
+  Checkbox
+} from '@material-ui/core';
+
+
 import { SubsectionHeader } from '../../common';
 
 import classNames from 'classnames/bind';

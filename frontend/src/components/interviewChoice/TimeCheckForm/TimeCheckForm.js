@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { FormControlLabel, Checkbox } from '@material-ui/core';
+
 import classNames from 'classnames/bind';
 import styles from './TimeCheckForm.scss';
-import { FormControlLabel, Checkbox } from '@material-ui/core';
 
 const cx = classNames.bind(styles);
 

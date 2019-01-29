@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { FormControl } from 'react-bootstrap';
 
+import { FormControl } from 'react-bootstrap';
 import {
+  withStyles,
   Radio,
   RadioGroup,
   FormControlLabel

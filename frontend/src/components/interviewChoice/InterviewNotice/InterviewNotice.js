@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { SubsectionHeader } from '../../common';
+
 import classNames from 'classnames/bind';
 import styles from './InterviewNotice.scss';
-import SubsectionHeader from '../../common/SubsectionHeader';
 
 const cx = classNames.bind(styles);
 

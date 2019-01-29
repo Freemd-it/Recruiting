@@ -53,8 +53,6 @@ const QuestionsSchema = new Schema({
 
 const interviewSchema = new Schema({
   interview_date : Date,
-  can_moved: Boolean, 
-  can_multiple_interview: Boolean,
   interview_week : String,
   interview_time : [String]
   
@@ -76,18 +74,7 @@ const UserSchema = new Schema({
     
     phone_number : String,
     sns : String,
-    address : String,
-    
-    department: {
-      type: String,
-      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
-    },
-    secondary_department: {
-      type: String,
-      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
-    },
-    team: String, 
-    secondary_team: String, 
+    address : String
   },
   academic_career: {
     academic_name : String,
@@ -99,7 +86,21 @@ const UserSchema = new Schema({
   },
   external_activities: [ExternalActivitiesSchema],
   special_info: [SpecialSchema],
-  question_info: [QuestionsSchema],
+  apply_info: {
+    department: {
+      type: String,
+      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
+    },
+    secondary_department: {
+      type: String,
+      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
+    },
+    team: String, 
+    secondary_team: String, 
+    can_moved: Boolean, 
+    can_multiple_interview: Boolean,
+    questions : [QuestionsSchema]
+  },
   interview_info : [interviewSchema]
   })
 

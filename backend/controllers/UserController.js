@@ -25,11 +25,13 @@ exports.read = async (req, res) => {
     };
 
     res.json({
+      message: 'Read Success',
       result: user
     });
 
   }catch(err){
     res.status(500).json({
+      message: 'Read Fail',
       error : err
     })
   }
@@ -43,7 +45,7 @@ exports.update = async (req, res) => {
     academic_career,
     external_activities,
     special_info,
-    apply_info,
+    question_info,
     interview_info
       } = req.body;
   
@@ -51,7 +53,7 @@ exports.update = async (req, res) => {
   let academic_set = {academic_career};
   let external_set = {external_activities};
   let special_set = {special_info};
-  let apply_set = {apply_info};
+  let question_set = {question_info};
   let interview_set = {interview_info};
 
 
@@ -86,7 +88,7 @@ exports.update = async (req, res) => {
 
     await User.findOneAndUpdate(
       {_id:id}, 
-      {$set: apply_set},
+      {$set: question_set},
       {new:true}).exec()
 
 
@@ -100,6 +102,7 @@ exports.update = async (req, res) => {
   }catch(err){
     console.log(err)
     res.status(500).json({
+      message: 'Update Fail',
       error : err
     })
   }

@@ -1,26 +1,21 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import { FormControl } from 'react-bootstrap';
-import Button from '@material-ui/core/Button';
 
 import FieldGroup from '../../common/Form/FieldGroup';
 import FieldGroupWithLabelInline from '../../common/Form/FieldGroupWithLabelInline';
 import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWithLabelInlineAndChildren';
 
+import SubsectionHeader from '../../common/SubsectionHeader';
+
 import classNames from 'classnames/bind';
 import stylesCommon from '../common/PersonalQuestions.scss';
 import styles from './Education.scss';
-import SubsectionHeader from '../../common/SubsectionHeader';
 
 const cx = classNames.bind({...stylesCommon, ...styles});
 
-const meterialStyles = theme => ({
-
-});
-
-class PersonalInformation extends Component {
+class Education extends Component {
   render() {
-    const { classes, personalFields, onInputChange } = this.props;
+    const { personalFields, onInputChange } = this.props;
     const { schoolName, major, location, graduationYear } = personalFields.education;
 
     return (
@@ -113,7 +108,7 @@ class PersonalInformation extends Component {
   }
 };
 
-export default withStyles(meterialStyles)(PersonalInformation);
+export default Education;
 
 
 

@@ -41,7 +41,7 @@ const meterialStyles = theme => ({
 class SpecialityFormGroup extends Component {
   render() {
     const { classes, personalFields, formGroupIndex, onInputChange } = this.props;
-    const { activityType, activityDetail, grade, content } = personalFields.speciality.detail[formGroupIndex];
+    const { activityDetail, grade, content } = personalFields.speciality.detail[formGroupIndex];
 
     return (
       <>

@@ -6,7 +6,6 @@ import styles from './TeamCard.scss';
 const cx = classNames.bind(styles);
 
 const TeamCard = ({ }) => {
-
   return (
     <div className={cx('team-card-item')}>
 

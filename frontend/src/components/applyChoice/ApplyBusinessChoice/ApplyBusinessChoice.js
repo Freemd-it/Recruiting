@@ -1,31 +1,45 @@
 import React from 'react';
 
-import SubsectionHeader from '../../common/SubsectionHeader';
-import TeamCard from '../TeamCard';
+import { SubsectionHeader } from '../../common';
+import ApplyChoiceTitle from '../ApplyChoiceTitle';
+import NGOBusinessChoice from '../NGOBusinessChoice';
+import MedicalBusinessChoice from '../MedicalBusinessChoice';
+
+import plusImage from '../../../images/plus.png'
+import cancleImage from '../../../images/cancel_24px.png'
 
 import classNames from 'classnames/bind';
 import styles from './ApplyBusinessChoice.scss';
 
 const cx = classNames.bind(styles);
 
-const ApplyBusinessChoice = ({ }) => {
+const ApplyBusinessChoice = (props) => {
+  const { isSecondApply, isSecondApplyChoice } = props;
 
   return (
-    <div className={cx('apply-business-choice-container')}>
-      <SubsectionHeader title="NGO 사업"/>
-
-
-      <div className={cx('team-card-holder')}>
-        <TeamCard
-          />
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
+    <>
+      <div className={cx('apply-business-choice-title')}>
+        <ApplyChoiceTitle {...props}/>
+        { isSecondApply && <img src={isSecondApplyChoice ? cancleImage : plusImage} alt=""/> }
       </div>
 
-    </div>
+      { isSecondApply && !isSecondApplyChoice && <hr className={cx('subsection-title-underline')}/> }
+
+      {
+        (!isSecondApply || (isSecondApply && isSecondApplyChoice )) && (
+          <div className={cx('apply-business-choice-container')}>
+            <div className={cx('ngo-business-form')}>
+              <SubsectionHeader title="NGO 사업"/>
+              <NGOBusinessChoice {...props}/>
+            </div>
+            <div className={cx('medical-business-form')}>
+              <SubsectionHeader title="의료 산업"/>
+              <MedicalBusinessChoice {...props}/>
+            </div>
+          </div>
+        )
+      }
+    </>
   );
 }
 

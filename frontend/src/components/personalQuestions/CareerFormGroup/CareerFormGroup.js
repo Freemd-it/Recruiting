@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import { FormControl } from 'react-bootstrap';
 
 import FieldGroup from '../../common/Form/FieldGroup';
@@ -11,13 +10,9 @@ import styles from './CareerFormGroup.scss';
 
 const cx = classNames.bind({...stylesCommon, ...styles});
 
-const meterialStyles = theme => ({
-
-});
-
 class CareerFormGroup extends Component {
   render() {
-    const { classes, personalFields, formGroupIndex, onInputChange } = this.props;
+    const { personalFields, formGroupIndex, onInputChange } = this.props;
     const { activityType, activityDetail, durationStart, durationEnd, content } = personalFields.career.detail[formGroupIndex];
 
     return (
@@ -99,7 +94,7 @@ class CareerFormGroup extends Component {
   }
 };
 
-export default withStyles(meterialStyles)(CareerFormGroup);
+export default CareerFormGroup;
 
 
 

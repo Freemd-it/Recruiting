@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Route, withRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 import classNames from 'classnames/bind';

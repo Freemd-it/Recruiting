@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { FormControl } from 'react-bootstrap';
 
-import FieldGroup from '../../common/Form/FieldGroup';
-import FieldGroupWithLabelInline from '../../common/Form/FieldGroupWithLabelInline';
-import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWithLabelInlineAndChildren';
-
-import SubsectionHeader from '../../common/SubsectionHeader';
+import {
+  SubsectionHeader,
+  FieldGroup,
+  FieldGroupWithLabelInline,
+  FieldGroupWithLabelInlineAndChildren
+} from '../../common';
 
 import classNames from 'classnames/bind';
 import stylesCommon from '../common/PersonalQuestions.scss';

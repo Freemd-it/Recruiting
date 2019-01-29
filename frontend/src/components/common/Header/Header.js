@@ -1,6 +1,7 @@
 import React from 'react';
 
 import HeaderInformationText from '../HeaderInformationText';
+
 import message from '../../../common/message'
 
 import classNames from 'classnames/bind';

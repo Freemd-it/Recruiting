@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Route } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+
+import { Button } from '@material-ui/core';
 
 import classNames from 'classnames/bind';
 import styles from './NextSection.scss';

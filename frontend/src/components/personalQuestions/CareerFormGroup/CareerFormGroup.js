@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { FormControl } from 'react-bootstrap';
 
-import FieldGroup from '../../common/Form/FieldGroup';
-import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWithLabelInlineAndChildren';
+import {
+  FieldGroup,
+  FieldGroupWithLabelInlineAndChildren
+} from '../../common';
 
 import classNames from 'classnames/bind';
 import stylesCommon from '../common/PersonalQuestions.scss';

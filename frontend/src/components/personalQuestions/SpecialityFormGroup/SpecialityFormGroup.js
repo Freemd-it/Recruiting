@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { FormControl } from 'react-bootstrap';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import FieldGroup from '../../common/Form/FieldGroup';
-import FieldGroupWithLabelInlineAndChildren from '../../common/Form/FieldGroupWithLabelInlineAndChildren';
+import {
+  Radio,
+  RadioGroup,
+  FormControlLabel
+} from '@material-ui/core';
+
+import {
+  FieldGroup,
+  FieldGroupWithLabelInlineAndChildren
+} from '../../common';
 
 import classNames from 'classnames/bind';
 import styles from './SpecialityFormGroup.scss';

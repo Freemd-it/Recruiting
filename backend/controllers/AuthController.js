@@ -23,9 +23,8 @@ exports.register = async (req, res) => {
   // respond to the client
   const respond = (user) => {
     res.json({
-        message: 'register success',
+        message: 'Register Success',
         result : user
-        // admin: isAdmin ? true : false
     })
   }
 
@@ -56,7 +55,7 @@ exports.login = async (req, res) => {
     const user_info = user.basic_info
 
     if(!user_info){
-      throw Error ('Login  : User not exists');
+      throw Error ('User not exists');
     }else {
       if(user.verify(password)) {
         const pw = new Promise((resovle, reject) => {

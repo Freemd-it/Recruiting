@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { Button } from '@material-ui/core';
+
 import classNames from 'classnames/bind';
 import styles from './ResumeComplete.scss';
-import { Button } from '@material-ui/core';
 
 const cx = classNames.bind(styles);
 

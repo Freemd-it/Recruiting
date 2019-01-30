@@ -1,0 +1,15 @@
+.team-card-item {
+  width: 134px;
+  height: 184px;
+  border-radius: 4px;
+  border: 1px solid #5c5959;
+  background-color: #f8f8f8;
+  &:hover {
+    border: 2px solid #ff6c6c;
+  }
+}
+
+
+.team-card-item.select {
+  border: 2px solid #ff6c6c;
+}

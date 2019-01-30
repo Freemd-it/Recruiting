@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-import FieldGroup from '../../common/Form/FieldGroup';
+import { FieldGroup } from '../../common';
 
 import classNames from 'classnames/bind';
 import styles from './LoginForm.scss';

@@ -1,9 +1,10 @@
 import React from 'react';
 
+import { SubsectionHeader } from '../../common';
+import TimeCheckForm from '../TimeCheckForm/TimeCheckForm';
+
 import classNames from 'classnames/bind';
 import styles from './TimeSelection.scss';
-import SubsectionHeader from '../../common/SubsectionHeader';
-import TimeCheckForm from '../TimeCheckForm/TimeCheckForm';
 
 const cx = classNames.bind(styles);
 

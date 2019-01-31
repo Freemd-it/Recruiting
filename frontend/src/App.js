@@ -19,12 +19,12 @@ class App extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path="/" component={ResumeLoginPage} />
-          <Route path="/personalQuestions" component={PersonalQuestionsPage} />
-          <Route path="/applyChoice" component={ApplyChociePage} />
-          <Route path="/applyQuestions" component={ApplyQuestionsPage} />
-          <Route path="/interviewChoice" component={InterviewChoicePage} />
-          <Route path="/resumeComplete" component={ResumeCompletePage} />
+          <Route exact path='/' component={ResumeLoginPage} />
+          <Route path='/personalQuestions' component={PersonalQuestionsPage} />
+          <Route path='/applyChoice' component={ApplyChociePage} />
+          <Route path='/applyQuestions' component={ApplyQuestionsPage} />
+          <Route path='/interviewChoice' component={InterviewChoicePage} />
+          <Route path='/resumeComplete' component={ResumeCompletePage} />
           <Route component={NotFoundPage}/>
         </Switch>
       </div>

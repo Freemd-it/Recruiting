@@ -6,7 +6,7 @@ import NGOBusinessChoice from '../NGOBusinessChoice';
 import MedicalBusinessChoice from '../MedicalBusinessChoice';
 
 import plusImage from '../../../images/plus.png'
-import cancleImage from '../../../images/cancel_24px.png'
+import minusImage from '../../../images/minus.png'
 
 import classNames from 'classnames/bind';
 import styles from './ApplyBusinessChoice.scss';
@@ -20,7 +20,7 @@ const ApplyBusinessChoice = (props) => {
     <>
       <div className={cx('apply-business-choice-title')}>
         <ApplyChoiceTitle {...props}/>
-        { isSecondApply && <img src={isSecondApplyChoice ? cancleImage : plusImage} alt=""/> }
+        { isSecondApply && <img src={isSecondApplyChoice ? minusImage : plusImage} alt=""/> }
       </div>
 
       { isSecondApply && !isSecondApplyChoice && <hr className={cx('subsection-title-underline')}/> }

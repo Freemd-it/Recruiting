@@ -12,7 +12,7 @@ const CommonQuestion = ({ questions, answers, onInputChange }) => {
 
   return (
     <>
-      <SectionTitle title="공통 질문 (BASIC QUESTIONS)" />
+      <SectionTitle title='공통 질문 (BASIC QUESTIONS)' />
       {questions.map((question, index) => (
         <div key={index} className={cx('answer-form')}>
           <SubsectionHeader title={`Q. ${question}`} />

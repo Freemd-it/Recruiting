@@ -63,7 +63,7 @@ const ApplyInformationModal = (props) => {
         </DialogTitle>
         <DialogContent classes={{root:classes.contentRoot}}>
           <DialogContentText classes={{root:classes.contentText}} id="alert-dialog-slide-description">
-            <img className={cx('content-error-image')} src={errorImage}/>
+            <img className={cx('content-error-image')} alt="" src={errorImage}/>
             <span dangerouslySetInnerHTML={{__html: customText}}/>
           </DialogContentText>
         </DialogContent>

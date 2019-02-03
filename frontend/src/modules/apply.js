@@ -14,6 +14,24 @@ const initialState = fromJS({
     ngo: false,
     medical: false
   },
+  isSecondApplyChoice: false,
+  applyChoiceFormat: {
+    department: '',
+    team: '',
+    medical: ''
+  },
+  applyChoice: [
+    {
+      department: '경영지원',
+      team: '',
+      medical: ''
+    },
+    {
+      department: '',
+      team: '',
+      medical: ''
+    },
+  ],
   common: {
 
   },

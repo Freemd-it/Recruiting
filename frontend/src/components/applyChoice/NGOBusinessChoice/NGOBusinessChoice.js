@@ -11,14 +11,21 @@ import styles from './NGOBusinessChoice.scss';
 const cx = classNames.bind(styles);
 
 const NGOBusinessChoice = (props) => {
-  const { applyBusinessData } = props;
+  const { applyChoiceFields, applyDepartmentData, onChoiceNGOBusiness } = props;
 
   return (
     <>
       <div className={cx('team-card-holder')}>
 
-        {applyBusinessData.map((dataRow, dataIndex) => (
-            <TeamCard key={`TeamCard__${dataIndex}`} data={dataRow} image={images[dataRow.imageName]}/>
+        {applyDepartmentData.map((dataRow, dataIndex) => (
+            <TeamCard
+              key={`TeamCard__${dataIndex}`}
+              data={dataRow}
+              image={images[dataRow.imageName]}
+              selected={!props.isSecondApply ? applyChoiceFields[0].department === dataRow.name : applyChoiceFields[1].department === dataRow.name}
+              isSeconApply={props.isSecondApply}
+              onChoiceNGOBusiness={onChoiceNGOBusiness}
+            />
           ))
         }
 

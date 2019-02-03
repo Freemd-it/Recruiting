@@ -1,0 +1,25 @@
+.answer-area-form {
+  margin-top: 54px;
+  position: relative;
+
+  textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: none;
+    background-color: #f8f7f7;
+    resize: none;
+  }
+
+  .text-length-view {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    font-size: 18px;
+    font-family: 'NotoSans-Light';
+    color: #707070;
+  }
+}
+
+

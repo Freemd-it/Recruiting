@@ -13,7 +13,8 @@
 
 @font-face {
   font-family: 'NotoSans-Bold';
-  src: url("fonts/NotoSansKR/NotoSansKR-Bold.otf") format('otf');
+  src: url("fonts/NotoSansKR/NotoSansKR-Bold.otf") format('otf'),
+  url("fonts/NotoSansKR/NotoSansKR-Bold-Hestia.woff") format('woff');
 }
 
 @font-face {
@@ -23,8 +24,11 @@
 }
 
 @font-face {
+  font-family: 'NotoSans-Thin';
+  src: url("fonts/NotoSansKR/NotoSans-Thin.woff") format('woff');
+}
+
+@font-face {
   font-family: 'Helvetica Neue-HeavyItalic';
   src: url("fonts/HelveticaNeue/HelveticaNeue-HeavyItalic.otf") format('otf');
 }
-
-

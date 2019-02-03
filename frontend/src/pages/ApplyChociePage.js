@@ -9,7 +9,7 @@ class ApplyChociePage extends Component {
   render() {
     return (
       <PageContainer pageLayout={PageCommonTemplate} {...this.props}>
-        <ApplyChoiceContainer />
+        <ApplyChoiceContainer {...this.props}/>
       </PageContainer>
     );
   }

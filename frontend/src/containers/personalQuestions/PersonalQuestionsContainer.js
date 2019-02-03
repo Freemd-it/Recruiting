@@ -35,19 +35,20 @@ class PersonalQuestionsContainer extends Component {
     personalActions.changeInput({[name] : event.currentTarget.checked});
   };
 
-  handlePlusFormGroup = (type) => {
+  handlePlusFormGroup = type => {
     const { personalActions } = this.props;
     personalActions.pushInputArray(type);
   };
 
 
-  handleStopPropagation = (e) => {
+  handleStopPropagation = e => {
     e.stopPropagation();
   };
 
 
   render() {
     const { personalFields } = this.props;
+
     return (
       <>
         <RequestConsentForm

@@ -53,7 +53,11 @@ export default handleActions({
   },
   [FILE_ANSWER_CHANGED]: (state, action) => {
     const { type, index, name, answerType, file } = action.payload;
-    return state.setIn([type, name, index, answerType, 'name'], file.name);
+    return state.setIn([type, name, index, answerType], 
+      {
+        'name': file.name,
+        'url': URL.createObjectURL(file)
+      });
   },
   [SELECT_ANSWER_CHANGED]: (state, action) => {
     const { type, index, name, answerType, techName, abilityIndex } = action.payload;

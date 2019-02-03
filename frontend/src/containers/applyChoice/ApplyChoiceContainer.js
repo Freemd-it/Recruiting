@@ -10,6 +10,7 @@ import {
 } from '../../components/applyChoice';
 
 import * as applyActions from '../../modules/apply';
+import * as interviewActions from '../../modules/interview';
 
 class ApplyChoiceContainer extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class ApplyChoiceContainer extends Component {
   };
 
   handleChoiceNGOBusiness = (key, value) => {
-    const { applyState, staticData, applyActions } = this.props;
+    const { applyState, staticData, applyActions, selectedDepartments } = this.props;
     const { departmentDatas } = staticData;
 
     applyActions.changeInput({[key] : value});
@@ -108,6 +109,7 @@ class ApplyChoiceContainer extends Component {
 export default withRouter(connect(
   (state) => ({
     applyState: state.apply.toJS(),
+    selectedDepartments: state.apply.toJS().applyChoice.map(d => d.department)
   }),
   (dispatch) => ({
     applyActions: bindActionCreators(applyActions, dispatch),

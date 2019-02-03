@@ -5,6 +5,7 @@ import styles from './DepartmentQuestion.scss';
 import { SectionTitle, SubsectionHeader } from '../../common';
 import AnswerArea from '../AnswerArea';
 import FileUploadForm from '../FileUploadForm';
+import TechSelectForm from '../TechSelectForm';
 
 const cx = classNames.bind(styles);
 
@@ -42,31 +43,55 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
             />
           </>
         )
+      case 'select':
+        return (
+          <>
+            <TechSelectForm
+              type={'department'}
+              index={index}
+              name={name}
+              answer={answer ? answer.select : null}
+              onInputChange={onInputChange}
+            />
+            <AnswerArea
+              type={'department'}
+              index={index}
+              name={name}
+              answer={answer ? answer.text : ''}
+              onInputChange={onInputChange}
+            />
+          </>
+        )
     }
   }
+
   const componentByModule = (questionModule, index) => (
     <div key={index} className={cx('department-question-form')}>
       <div className={cx('department-title')}>
         {questionModule.rank}지망: {questionModule.name}
       </div>
-      {questionModule.questions.map(({ question, answerType }, questionIndex) => (
-        <div key={`${index}__${questionIndex}`} className={questionIndex > 0 ? cx('noninitial-answer-form') : cx('initial-answer-form')}>
-          <SubsectionHeader title={`Q. ${question}`} />
-          {answerFormByType(
-            answerType,
-            questionIndex,
-            questionModule.name,
-            answers[questionModule.name] ? answers[questionModule.name][questionIndex] : '',
-            onInputChange)}
-        </div>
-      ))}
+      <div>
+        {questionModule.questions.map(({ question, answerType }, questionIndex) => (
+          <div key={`${index}__${questionIndex}`} className={cx('department-answer-form')}>
+            <SubsectionHeader title={`Q. ${question}`} />
+            {answerFormByType(
+              answerType,
+              questionIndex,
+              questionModule.name,
+              answers[questionModule.name] ? answers[questionModule.name][questionIndex] : '',
+              onInputChange)}
+          </div>
+        ))}
+      </div>
     </div>
   )
 
   return (
     <>
       <SectionTitle title='모집 단위별 질문' />
-      {questionModules.map((questionModule, index) => componentByModule(questionModule, index))}
+      <div>
+        {questionModules.map((questionModule, index) => componentByModule(questionModule, index))}
+      </div>
     </>
   )
 }

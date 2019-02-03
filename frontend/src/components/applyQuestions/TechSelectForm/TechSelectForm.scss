@@ -1,0 +1,36 @@
+.tech-select-form {
+  border-top: 1px solid #5c5959;
+  border-bottom: 1px solid #5c5959;
+  width: 870px;
+  margin: 34px auto 0px auto;
+  font-family: 'NotoSans-Light';
+  font-size: 16px;
+
+  .select-form-row {
+    display: flex;
+    border-bottom: 1px solid #d5d5d5;
+    align-items: center;
+    height: 45px;
+
+    .name-cell {
+      display: flex;
+      background-color: #f8f7f7;
+      justify-content: center;
+      align-items: center;
+      width: 240px;
+      height: 100%;
+    }
+
+    .select-cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: calc(100% - 240px);
+      height: 100%;
+    }
+
+    .select-form-row-title {
+      font-family: 'NotoSans-Medium' !important;
+    }
+  }
+}

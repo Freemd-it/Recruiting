@@ -1,10 +1,23 @@
+const defaultPageTitle = {
+  fullText: `본 서식을 작성하기 앞서 제 20기 신입 단원\n공개 선발 안내문 필히 숙지해 주시길 바랍니다.`,
+  underlineText: ['공개 선발 안내문'],
+};
+
+const loginPageTitle = {
+  fullText: `설정하고자 하는 비밀번호를 신중히 입력 후\n지원서를 작성해주세요`,
+  enlargeText: ['비밀번호'],
+};
+
 // page static data
 export default {
   resumeLogin: {
+    ...loginPageTitle
   },
   personalQuestions: {
+    ...defaultPageTitle
   },
   applyChoice: {
+    ...defaultPageTitle,
     departmentDatas: [
       {
         name: '경영지원',
@@ -63,9 +76,12 @@ export default {
     medicalAllOptions: ['무료진료소', '보건교육', '해외의료', '참여안함']
   },
   applyQuestions: {
+    ...defaultPageTitle
   },
   interviewChoice: {
+    ...defaultPageTitle
   },
   resumeComplete: {
+    ...defaultPageTitle
   }
 }

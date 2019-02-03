@@ -49,7 +49,7 @@ const TechSelectForm = ({ onInputChange, type, index, name, answer, classes }) =
           <div className={cx('select-cell')}>
             <RadioGroup
               row
-              defaultChecked={'3'}
+              defaultValue={'3'}
               value={answer ? answer[techName] : '3'}
               onChange={onInputChange({ type, index, name, techName, answerType: 'select'})}
             >

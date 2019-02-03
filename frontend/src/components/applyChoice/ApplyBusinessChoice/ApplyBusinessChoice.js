@@ -5,8 +5,9 @@ import ApplyChoiceTitle from '../ApplyChoiceTitle';
 import NGOBusinessChoice from '../NGOBusinessChoice';
 import MedicalBusinessChoice from '../MedicalBusinessChoice';
 
-import plusImage from '../../../images/plus.png'
-import minusImage from '../../../images/minus.png'
+import plusImage from '../../../images/plus.png';
+import minusImage from '../../../images/minus.png';
+import errorImage from '../../../images/error.png';
 
 import classNames from 'classnames/bind';
 import styles from './ApplyBusinessChoice.scss';
@@ -14,7 +15,7 @@ import styles from './ApplyBusinessChoice.scss';
 const cx = classNames.bind(styles);
 
 const ApplyBusinessChoice = (props) => {
-  const { isSecondApply, isSecondApplyChoice } = props;
+  const { isSecondApply, isSecondApplyChoice, onShowModal } = props;
 
   return (
     <>
@@ -33,7 +34,13 @@ const ApplyBusinessChoice = (props) => {
               <NGOBusinessChoice {...props}/>
             </div>
             <div className={cx('medical-business-form')}>
-              <SubsectionHeader title="의료 산업"/>
+              <div className={cx('mediacal-title-form')}>
+                <div className={cx('subsection-title')}>
+                  <span>의료 산업</span>
+                </div>
+                <img src={errorImage} alt="" onClick={onShowModal}/>
+              </div>
+              <hr className={cx('subsection-title-underline')}/>
               <MedicalBusinessChoice {...props}/>
             </div>
           </div>

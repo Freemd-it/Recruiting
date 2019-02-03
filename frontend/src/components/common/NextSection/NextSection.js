@@ -22,8 +22,6 @@ const meterialStyles = theme => ({
   }
 });
 
-
-
 class NextSection extends Component {
 
   handleNextButtonClick = e => {
@@ -53,12 +51,10 @@ class NextSection extends Component {
             )}
             />
           )
-
         }
       </div>
     )
   }
-
 };
 
 export default withStyles(meterialStyles)(NextSection);

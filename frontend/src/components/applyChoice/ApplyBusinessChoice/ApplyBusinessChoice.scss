@@ -1,0 +1,35 @@
+.apply-business-choice-title {
+  display: flex;
+  justify-content: space-between;
+  img:hover {
+    cursor: pointer;
+  }
+}
+
+.apply-business-choice-container {
+  padding-top: 25px;
+  .ngo-business-form {
+
+  }
+  .medical-business-form {
+    padding-top: 178px;
+    margin-bottom: 287px;
+  }
+
+  .mediacal-title-form {
+    display: inline-flex;
+    align-items: center;
+    img {
+      margin-left: 28px;
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+
+    }
+    .subsection-title {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+

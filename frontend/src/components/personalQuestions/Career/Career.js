@@ -19,15 +19,15 @@ class Career extends Component {
       <div className={cx('personal-form')}>
         <div className={cx('subsection-title')}>
           <span>경력</span>
-          <img src={plusImage} onClick={() => onPlusFormGroup('career')}/>
+          <img src={plusImage} onClick={() => onPlusFormGroup('career')} alt=""/>
         </div>
 
-        <hr/>
+        <hr className={cx('subsection-title-underline')}/>
 
         {detail.map((formGroupRow, formGroupIndex) => (
           <div key={`FormGroup__${formGroupIndex}`}>
             <CareerFormGroup formGroupIndex={formGroupIndex} {...this.props}/>
-            {(detail.length >= 2 && formGroupIndex != detail.length - 1) && <hr className={cx('form-group-divider')}/>}
+            {(detail.length >= 2 && formGroupIndex !== detail.length - 1) && <hr className={cx('form-group-divider')}/>}
           </div>
         ))}
 

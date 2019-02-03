@@ -9,7 +9,7 @@ class PersonalQuestionsPage extends Component {
   render() {
     return (
       <PageContainer pageLayout={PageCommonTemplate} {...this.props}>
-        <PersonalQuestionsContainer/>
+        <PersonalQuestionsContainer {...this.props}/>
       </PageContainer>
     );
   }

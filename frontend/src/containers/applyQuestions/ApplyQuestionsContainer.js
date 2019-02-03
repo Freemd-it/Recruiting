@@ -47,7 +47,7 @@ class ApplyQuestionsContainer extends Component {
     state.applyChoice.forEach((choice, index) => {
       if (choice.department != '') {
         questionData.department.push({
-          name: `${choice.department}본부`,
+          name: `${choice.department}본부 (${choice.team})`,
           rank: index + 1,
           questions: [
             {

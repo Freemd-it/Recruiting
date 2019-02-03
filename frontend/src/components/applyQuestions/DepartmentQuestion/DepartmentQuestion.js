@@ -70,17 +70,19 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
       <div className={cx('department-title')}>
         {questionModule.rank}지망: {questionModule.name}
       </div>
-      {questionModule.questions.map(({ question, answerType }, questionIndex) => (
-        <div key={`${index}__${questionIndex}`} className={questionIndex > 0 ? cx('noninitial-answer-form') : cx('initial-answer-form')}>
-          <SubsectionHeader title={`Q. ${question}`} />
-          {answerFormByType(
-            answerType,
-            questionIndex,
-            questionModule.name,
-            answers[questionModule.name] ? answers[questionModule.name][questionIndex] : '',
-            onInputChange)}
-        </div>
-      ))}
+      <div>
+        {questionModule.questions.map(({ question, answerType }, questionIndex) => (
+          <div key={`${index}__${questionIndex}`} className={cx('department-answer-form')}>
+            <SubsectionHeader title={`Q. ${question}`} />
+            {answerFormByType(
+              answerType,
+              questionIndex,
+              questionModule.name,
+              answers[questionModule.name] ? answers[questionModule.name][questionIndex] : '',
+              onInputChange)}
+          </div>
+        ))}
+      </div>
     </div>
   )
 

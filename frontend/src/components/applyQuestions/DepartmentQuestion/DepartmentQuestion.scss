@@ -8,7 +8,7 @@
     margin: 18px 0px;
   }
 
-  .noninitial-answer-form {
+  .department-answer-form:not(:first-child) {
     margin-top: 80px;
   }
 

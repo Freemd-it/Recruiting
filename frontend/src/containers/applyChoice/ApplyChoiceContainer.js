@@ -33,7 +33,7 @@ class ApplyChoiceContainer extends Component {
   };
 
   handleChoiceNGOBusiness = (key, value) => {
-    const { applyState, staticData, applyActions } = this.props;
+    const { staticData, applyActions } = this.props;
     const { departmentDatas } = staticData;
 
     applyActions.changeInput({[key] : value});
@@ -99,6 +99,7 @@ class ApplyChoiceContainer extends Component {
           onHide={this.handleMedicalDescriptionHide}
           message={medicalModalMessage}
         />
+
       </>
 
     );

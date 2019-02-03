@@ -65,6 +65,8 @@ export default {
   applyQuestions: {
   },
   interviewChoice: {
+    firstDayDepartments: ['디자인', 'IT기획', '해외의료사업'],
+    secondDayDepartments: ['경영지원', '브랜드마케팅', '무료진료소사업', '보건교육사업']
   },
   resumeComplete: {
   }

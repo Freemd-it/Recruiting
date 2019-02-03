@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Route, withRouter } from 'react-router-dom';
 
 import {
   withStyles,
@@ -25,8 +26,11 @@ const meterialStyles = theme => ({
 class NextSection extends Component {
 
   handleNextButtonClick = e => {
-    const { history, config } = this.props;
-    history.push(config.nextRoutePath);
+    const { history, config, state } = this.props;
+    const actionModule = state[config.validationModuleKey].toJS()
+    if (actionModule.validate) {
+      history.push(config.nextRoutePath);
+    }
   };
   
   render() {
@@ -57,4 +61,12 @@ class NextSection extends Component {
   }
 };
 
-export default withStyles(meterialStyles)(NextSection);
+export default withRouter(connect(
+  (state) => ({
+    state: state
+  }),
+  (dispatch) => ({
+
+  })
+)(withStyles(meterialStyles)(NextSection)));
+// export default withStyles(meterialStyles)(NextSection);

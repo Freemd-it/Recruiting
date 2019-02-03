@@ -33,12 +33,18 @@ class ApplyChoiceContainer extends Component {
   };
 
   handleChoiceNGOBusiness = (key, value) => {
-    const { applyActions } = this.props;
+    const { applyState, staticData, applyActions } = this.props;
+    const { departmentDatas } = staticData;
+
     applyActions.changeInput({[key] : value});
+    applyActions.changeInput({[key.replace('department', 'team')]: departmentDatas.find(row => row.name === value).teams[0]})
+    applyActions.changeInput({[key.replace('department', 'medical')]: departmentDatas.find(row => row.name === value).medicalOptions[0]})
+
   };
 
-  handleChoiceNGOTeam = e => {
-    
+  handleChoiceSelectBox = (key, value) => {
+    const { applyActions } = this.props;
+    applyActions.changeInput({[key] : value});
   };
 
   handleChoiceMedicalBusiness = e => {
@@ -57,25 +63,29 @@ class ApplyChoiceContainer extends Component {
 
   render() {
     const { applyChoice, otherAssignConsent, isSecondApplyChoice } = this.props.applyState;
-    const { applyDepartmentData, medicalModalMessage } = this.props.staticData;
+    const { departmentDatas, medicalAllOptions, medicalModalMessage } = this.props.staticData;
 
     return (
       <>
         <ApplyBusinessChoice
           title="1지망 지원 (필수)"
-          applyChoiceFields={applyChoice}
-          applyDepartmentData={applyDepartmentData}
+          departmentDatas={departmentDatas}
+          medicalAllOptions={medicalAllOptions}
+          applyChoice={applyChoice}
           onShowModal={this.handleMedicalDescriptionClick}
           onChoiceNGOBusiness={this.handleChoiceNGOBusiness}
+          onChoiceSelectBox={this.handleChoiceSelectBox}
         />
         <ApplyBusinessChoice
           title="2지망 지원 (선택)"
           isSecondApply={true}
+          departmentDatas={departmentDatas}
+          medicalAllOptions={medicalAllOptions}
           isSecondApplyChoice={isSecondApplyChoice}
-          applyChoiceFields={applyChoice}
-          applyDepartmentData={applyDepartmentData}
+          applyChoice={applyChoice}
           onShowModal={this.handleMedicalDescriptionClick}
           onChoiceNGOBusiness={this.handleChoiceNGOBusiness}
+          onChoiceSelectBox={this.handleChoiceSelectBox}
           onClickSecondApply={this.handleClickSecondApply}
         />
         <OtherAssignConsent

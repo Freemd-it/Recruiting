@@ -22,7 +22,7 @@ const initialState = fromJS({
   },
   applyChoice: [
     {
-      department: '경영지원',
+      department: '',
       team: '',
       medical: ''
     },

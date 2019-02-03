@@ -7,9 +7,10 @@ import styles from './TeamCard.scss';
 
 const cx = classNames.bind(styles);
 
-const TeamCard = ({ data, image }) => {
+const TeamCard = ({ data, image, selected, isSeconApply, onChoiceNGOBusiness}) => {
   return (
-    <div className={cx('team-card-item')}>
+    <div className={!selected ? cx('team-card-item') : cx('team-card-item', 'selected')}
+         onClick={() => onChoiceNGOBusiness(`applyChoice.${isSeconApply ? 1 : 0}.department`, data.name)}>
       <img src={image}/>
       <div className={cx('team-card-name')}><span>{data.name}</span></div>
       <div className={cx('team-card-description')} dangerouslySetInnerHTML={{__html: `<span>${Utils.lineBreak(data.description)}</span>`}}/>

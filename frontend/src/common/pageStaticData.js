@@ -5,7 +5,7 @@ export default {
   personalQuestions: {
   },
   applyChoice: {
-    applyBusinessData: [
+    applyDepartmentData: [
       {
         name: '경영지원',
         description: '내부 행사 진행 업무 주관',
@@ -56,7 +56,7 @@ export default {
         imageName: 'overseasImage'
       }
     ],
-    medicalModal: {
+    medicalModalMessage: {
       fullText: `무료진료소사업본부는 무료진료소, 보건교육사업은 보건의료, 해외의료본부는 해외의료 사업으로만 참여하실 수 있습니다.\n디자인본부와 IT본부는 의료 사업이 필수 참여가 아니며,  그 외 본부는 무료진료소사업과 보건교육사업 택 1 필수입니다.`,
       enlargeText: ['무료진료소사업본부', '무료진료소', '보건교육사업', '보건의료', '해외의료본부', '해외의료', '디자인본부와 IT본', '필수 참여가 아니며', '긔 외 본부', '무료진료소사업과 보건교육사업 택 1 필수'],
     }

@@ -15,5 +15,11 @@
   -moz-appearance: none;
   background: url('../../../images/chevron-down.png') no-repeat 97% 50%; /* 화살표 아이콘 추가 */
   padding-left: 24px;
+}
+
+.no-team {
+  background-color: #fbfbfb;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.16);
+  color: #b5b5b5;
 
 }

@@ -15,6 +15,21 @@
     padding-top: 178px;
     margin-bottom: 287px;
   }
+
+  .mediacal-title-form {
+    display: inline-flex;
+    align-items: center;
+    img {
+      margin-left: 28px;
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+
+    }
+    .subsection-title {
+      margin-bottom: 0px;
+    }
+  }
 }
 
 

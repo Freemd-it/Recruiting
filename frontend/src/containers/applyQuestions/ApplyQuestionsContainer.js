@@ -12,7 +12,7 @@ class ApplyQuestionsContainer extends Component {
 
   handleInputChange = (props) => event => {
     const { applyActions } = this.props;
-    const { type, name, answerType, index } = props;
+    const { type, name, answerType, index, techName } = props;
     switch (type) {
       case 'common':
         applyActions.textAnswerChanged({ type, index, content: event.target.value.substring(0, 500) });
@@ -25,7 +25,8 @@ class ApplyQuestionsContainer extends Component {
           case 'file':
             applyActions.fileAnswerChanged({ type, index, name, answerType, file: event.target.files[0] });
             break;
-          case 'ratio':
+          case 'select':
+            applyActions.selectAnswerChanged({ type, index, name, answerType, techName, abilityIndex: event.target.value })
             break;
         }
         break;
@@ -71,6 +72,25 @@ class ApplyQuestionsContainer extends Component {
                 어떠한 해결책을 제시하고자 하는지 구체적으로 서술해 주십시오. 혹은 문제점과 별개로 
                 프리메드에서 진행하고 싶은 사업이 있다면 자유롭게 서술해주십시오.`,
               answerType: 'text'
+            }
+          ]
+        },
+        {
+          name: 'IT기획본부',
+          rank: 3,
+          questions: [
+            {
+              question: '다음의 기술들에 대한 사용 가능 여부와 얼마나 이해하고 활용 할 수 있는지 표기하여 주십시오.',
+              answerType: 'select'
+            },
+            {
+              question: `프리메드에서 자신의 공학적 지식을 바탕으로 의료 서비스는 물론 프리메드 전반적인 사업에 있어서 어떻게 도움을 줄 수 있고\
+                어떤 일을 새로이 하고 싶은지 구체적으로 서술해 주십시오.`,
+              answerType: 'text'
+            },
+            {
+              question: '자유형식의 포트폴리오를 제출하세요',
+              answerType: 'file'
             }
           ]
         }

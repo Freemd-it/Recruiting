@@ -35,29 +35,20 @@ class ApplyQuestionsContainer extends Component {
 
   render() {
     const { state } = this.props;
-    const questionData = {
-      common: [
-        '간략한 본인 소개와 함께 프리메드 제 19기 리크루팅에 지원하신 동기를 서술해 주십시오.',
-        '이제까지 가장 소속감을 느꼈던 조직은 무엇이었으며, 그 조직의 발전을 위해 헌신적으로 노력했던 것 중 가장 기억에 남는 경험은 무엇입니까?'
-      ],
-      department: [
-        {
-          name: '경영지원본부',
-          rank: 1,
-          questions: [
-            {
-              question: '간략한 본인 소개와 함께 프리메드 제 19기 리크루팅에 지원하신 동기를 서술해주십시오.',
-              answerType: 'text'
-            },
-            {
-              question: '어떤 단체에서 활동을 했던 경험이 있으시면 다른 사람과의 협력을 중심으로 서술해주십시오.',
-              answerType: 'text'
-            }
-          ]
-        },
-        {
-          name: '디자인본부',
-          rank: 2,
+    let questionData = {
+        common: [
+          '간략한 본인 소개와 함께 프리메드 제 19기 리크루팅에 지원하신 동기를 서술해 주십시오.',
+          '이제까지 가장 소속감을 느꼈던 조직은 무엇이었으며, 그 조직의 발전을 위해 헌신적으로 노력했던 것 중 가장 기억에 남는 경험은 무엇입니까?'
+        ],
+        department: [
+
+        ]
+    }
+    state.applyChoice.forEach((choice, index) => {
+      if (choice.department != '') {
+        questionData.department.push({
+          name: `${choice.department}본부 (${choice.team})`,
+          rank: index + 1,
           questions: [
             {
               question: '사용할 수 있는 그래픽 툴은 무엇이 있는지 작성해주십시오.(ex- Adobe Photoshop, Adobe illustrator 등등)',
@@ -74,33 +65,14 @@ class ApplyQuestionsContainer extends Component {
               answerType: 'text'
             }
           ]
-        },
-        {
-          name: 'IT기획본부',
-          rank: 3,
-          questions: [
-            {
-              question: '다음의 기술들에 대한 사용 가능 여부와 얼마나 이해하고 활용 할 수 있는지 표기하여 주십시오.',
-              answerType: 'select'
-            },
-            {
-              question: `프리메드에서 자신의 공학적 지식을 바탕으로 의료 서비스는 물론 프리메드 전반적인 사업에 있어서 어떻게 도움을 줄 수 있고\
-                어떤 일을 새로이 하고 싶은지 구체적으로 서술해 주십시오.`,
-              answerType: 'text'
-            },
-            {
-              question: '자유형식의 포트폴리오를 제출하세요',
-              answerType: 'file'
-            }
-          ]
-        }
-      ]
-    }
+        })
+      }
+    })
     return (
       <>
-        <CommonQuestion 
-          answers={state.common} 
-          questions={questionData.common} 
+        <CommonQuestion
+          answers={state.common}
+          questions={questionData.common}
           onInputChange={this.handleInputChange}
         />
         <DepartmentQuestion

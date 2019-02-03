@@ -28,7 +28,11 @@ class ApplyQuestionsContainer extends Component {
           case 'select':
             applyActions.selectAnswerChanged({ type, index, name, answerType, techName, abilityIndex: event.target.value })
             break;
+          default:
+            break;
         }
+        break;
+      default:
         break;
     }
   };
@@ -45,7 +49,7 @@ class ApplyQuestionsContainer extends Component {
         ]
     }
     state.applyChoice.forEach((choice, index) => {
-      if (choice.department != '') {
+      if (choice.department !== '') {
         questionData.department.push({
           name: `${choice.department}본부 (${choice.team})`,
           rank: index + 1,

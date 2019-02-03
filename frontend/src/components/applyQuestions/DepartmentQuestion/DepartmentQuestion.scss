@@ -1,7 +1,5 @@
 .department-question-form {
-
   margin-top: 52px;
-  margin-bottom: 220px;
 
   .department-title {
     font-size: 26px;
@@ -14,4 +12,10 @@
     margin-top: 80px;
   }
 
+  &:not(:first-child) {
+    margin-top: 220px !important;
+  }
 }
+
+
+

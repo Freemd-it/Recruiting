@@ -5,6 +5,7 @@ import styles from './DepartmentQuestion.scss';
 import { SectionTitle, SubsectionHeader } from '../../common';
 import AnswerArea from '../AnswerArea';
 import FileUploadForm from '../FileUploadForm';
+import TechSelectForm from '../TechSelectForm';
 
 const cx = classNames.bind(styles);
 
@@ -42,8 +43,28 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
             />
           </>
         )
+      case 'select':
+        return (
+          <>
+            <TechSelectForm
+              type={'department'}
+              index={index}
+              name={name}
+              answer={answer ? answer.select : null}
+              onInputChange={onInputChange}
+            />
+            <AnswerArea
+              type={'department'}
+              index={index}
+              name={name}
+              answer={answer ? answer.text : ''}
+              onInputChange={onInputChange}
+            />
+          </>
+        )
     }
   }
+
   const componentByModule = (questionModule, index) => (
     <div key={index} className={cx('department-question-form')}>
       <div className={cx('department-title')}>
@@ -66,7 +87,9 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
   return (
     <>
       <SectionTitle title='모집 단위별 질문' />
-      {questionModules.map((questionModule, index) => componentByModule(questionModule, index))}
+      <div>
+        {questionModules.map((questionModule, index) => componentByModule(questionModule, index))}
+      </div>
     </>
   )
 }

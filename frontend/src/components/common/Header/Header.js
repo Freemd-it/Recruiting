@@ -5,7 +5,7 @@ import HeaderInformationText from '../HeaderInformationText';
 import classNames from 'classnames/bind';
 import styles from './Header.scss';
 
-import headerImage from '../../../images/mainimage_1200.png';
+import headerImage from '../../../images/header_image.png';
 
 const cx = classNames.bind(styles);
 

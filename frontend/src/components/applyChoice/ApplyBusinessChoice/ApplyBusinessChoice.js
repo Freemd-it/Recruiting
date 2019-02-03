@@ -15,13 +15,13 @@ import styles from './ApplyBusinessChoice.scss';
 const cx = classNames.bind(styles);
 
 const ApplyBusinessChoice = (props) => {
-  const { isSecondApply, isSecondApplyChoice, onShowModal } = props;
+  const { isSecondApply, isSecondApplyChoice, onClickSecondApply, onShowModal } = props;
 
   return (
     <>
       <div className={cx('apply-business-choice-title')}>
         <ApplyChoiceTitle {...props}/>
-        { isSecondApply && <img src={isSecondApplyChoice ? minusImage : plusImage} alt=""/> }
+        { isSecondApply && <img src={isSecondApplyChoice ? minusImage : plusImage} alt="" onClick={onClickSecondApply}/> }
       </div>
 
       { isSecondApply && !isSecondApplyChoice && <hr className={cx('subsection-title-underline')}/> }

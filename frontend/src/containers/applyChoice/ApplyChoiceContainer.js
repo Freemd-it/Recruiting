@@ -32,26 +32,64 @@ class ApplyChoiceContainer extends Component {
     applyActions.changeInput({[name] : event.currentTarget.checked});
   };
 
+  handleChoiceNGOBusiness = (key, value) => {
+    const { applyState, staticData, applyActions } = this.props;
+    const { departmentDatas } = staticData;
+
+    applyActions.changeInput({[key] : value});
+    applyActions.changeInput({[key.replace('department', 'team')]: departmentDatas.find(row => row.name === value).teams[0]})
+    applyActions.changeInput({[key.replace('department', 'medical')]: departmentDatas.find(row => row.name === value).medicalOptions[0]})
+
+  };
+
+  handleChoiceSelectBox = (key, value) => {
+    const { applyActions } = this.props;
+    applyActions.changeInput({[key] : value});
+  };
+
+  handleChoiceMedicalBusiness = e => {
+
+  };
+
+  handleClickSecondApply = e => {
+    const { applyActions, applyState } = this.props;
+    const { isSecondApplyChoice, applyChoiceFormat } = applyState;
+    applyActions.changeInput({'isSecondApplyChoice' : !isSecondApplyChoice});
+
+    if (!isSecondApplyChoice) {
+      applyActions.changeInput({'applyChoice.1' : applyChoiceFormat});
+    }
+  };
+
   render() {
-    const { otherAssignConsentFields } = this.props;
-    const { applyBusinessData, medicalModal } = this.props.staticData;
+    const { applyChoice, otherAssignConsent, isSecondApplyChoice } = this.props.applyState;
+    const { departmentDatas, medicalAllOptions, medicalModalMessage } = this.props.staticData;
 
     return (
       <>
         <ApplyBusinessChoice
           title="1지망 지원 (필수)"
-          applyBusinessData={applyBusinessData}
+          departmentDatas={departmentDatas}
+          medicalAllOptions={medicalAllOptions}
+          applyChoice={applyChoice}
           onShowModal={this.handleMedicalDescriptionClick}
+          onChoiceNGOBusiness={this.handleChoiceNGOBusiness}
+          onChoiceSelectBox={this.handleChoiceSelectBox}
         />
         <ApplyBusinessChoice
           title="2지망 지원 (선택)"
           isSecondApply={true}
-          isSecondApplyChoice={true}
-          applyBusinessData={applyBusinessData}
+          departmentDatas={departmentDatas}
+          medicalAllOptions={medicalAllOptions}
+          isSecondApplyChoice={isSecondApplyChoice}
+          applyChoice={applyChoice}
           onShowModal={this.handleMedicalDescriptionClick}
+          onChoiceNGOBusiness={this.handleChoiceNGOBusiness}
+          onChoiceSelectBox={this.handleChoiceSelectBox}
+          onClickSecondApply={this.handleClickSecondApply}
         />
         <OtherAssignConsent
-          otherAssignConsentFields={otherAssignConsentFields}
+          otherAssignConsentFields={otherAssignConsent}
           open={this.state.applyInformationModalVisible}
           onHide={this.handleLogoutCompleteModalHide}
           onInputChange={this.handleCheckBoxChange}
@@ -59,7 +97,7 @@ class ApplyChoiceContainer extends Component {
         <ApplyInformationModal
           open={this.state.applyInformationModalVisible}
           onHide={this.handleMedicalDescriptionHide}
-          message={medicalModal}
+          message={medicalModalMessage}
         />
       </>
 
@@ -69,7 +107,7 @@ class ApplyChoiceContainer extends Component {
 
 export default withRouter(connect(
   (state) => ({
-    otherAssignConsentFields: state.apply.get('otherAssignConsent').toJS(),
+    applyState: state.apply.toJS(),
   }),
   (dispatch) => ({
     applyActions: bindActionCreators(applyActions, dispatch),

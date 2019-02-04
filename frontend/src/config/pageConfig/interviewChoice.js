@@ -7,4 +7,9 @@ export default {
   nextRoutePath: '/resumeComplete',
   previousRoutePath: '/applyQuestions',
   validationModuleKey: 'interview',
+  validation: {
+    required: [
+
+    ],
+  },
 }

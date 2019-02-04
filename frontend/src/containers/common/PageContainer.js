@@ -25,12 +25,14 @@ class PageContainer extends Component {
 
     const validateResult = this._validateByPage(match, actionModule, config.validation);
 
-    if (actionModule.validate || validateResult) {
+    if (validateResult) {
       history.push(config.nextRoutePath);
     }
   };
 
   _validateByPage = (match, actionModule, { required }) => {
+    const { state } = this.props;
+
     let hasNotValidatedItem = false;
 
     switch(match.path) {
@@ -38,6 +40,18 @@ class PageContainer extends Component {
       case '/applyChoice':
         hasNotValidatedItem = this._validate(actionModule, required);
         return !hasNotValidatedItem;
+      case '/interviewChoice':
+        const selectedDepartments = state.apply.toJS().applyChoice.map(d => d.department);
+        const shouldInterviews = interviewActions.checkInterviewDates(selectedDepartments);
+        let hasNotValidatedItem = !shouldInterviews.every((shouldInterview, index) => {
+          let timeCount = actionModule.interviewDates[index].times.length;
+          return (timeCount >= 2 || !shouldInterview) && (timeCount === 0 || shouldInterview)
+        });
+        if (hasNotValidatedItem) {
+          window.alert('각 본부에 맞게 인터뷰 날짜를 최소 2개 이상 선정하셔야 합니다.');
+        }
+        return !hasNotValidatedItem;
+
       default:
         return !hasNotValidatedItem;
     }

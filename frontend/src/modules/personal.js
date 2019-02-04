@@ -85,7 +85,6 @@ const initialState = fromJS({
       content: '',
     }]
   },
-  validate: false,
 });
 
 export default handleActions({

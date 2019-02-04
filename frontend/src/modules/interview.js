@@ -21,10 +21,9 @@ const initialState = fromJS({
       times: [],
     }
   ],
-  validate: false,
 });
 
-const checkInterviewDates = (selectedDepartments) => {
+export const checkInterviewDates = (selectedDepartments) => {
   const interviewChoiceData = staticData.default.interviewChoice;
   let shouldInterviews = [false, false];
   for (let department of selectedDepartments) {
@@ -40,16 +39,14 @@ export default handleActions({
   },
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
-    const { day, time, index, checked, selectedDepartments } = action.payload;
-    const shouldInterviews = checkInterviewDates(selectedDepartments);
-    let updated = null;
+    const { day, time, index, checked } = action.payload;
     if (checked) {
       if (interviewDates.get(index).get('times').count() > 0) {
         const newTimes = interviewDates.get(index).get('times').push(time);
         const newDate = interviewDates.get(index).set('times', newTimes);
-        updated = state.set('interviewDates', interviewDates.set(index, newDate));
+        return state.set('interviewDates', interviewDates.set(index, newDate));
       } else {
-        updated = state.setIn(['interviewDates', index.toString()],
+        return state.setIn(['interviewDates', index.toString()],
           fromJS({
             day: day,
             times: [time]
@@ -60,31 +57,7 @@ export default handleActions({
       const timeIndex = interviewDates.get(index).get('times').findIndex(d => d === time);
       const newTimes = interviewDates.get(index).get('times').delete(timeIndex);
       const newDate = interviewDates.get(index).set('times', newTimes);
-      updated = state.set('interviewDates', interviewDates.set(index, newDate));
+      return state.set('interviewDates', interviewDates.set(index, newDate));
     }
-
-    let validate = true;
-    for (let valIndex = 0; valIndex < shouldInterviews.length; valIndex++) {
-      let haveToValidate = shouldInterviews[valIndex];
-      let timeCount = updated.get('interviewDates').get(valIndex).get('times').count();
-      if ((timeCount < 2 && haveToValidate) || (timeCount > 0 && !haveToValidate)) {
-        validate = false;
-      }
-    }
-    return updated.set('validate', validate);
   },
-
-  [VALIDATE]: (state, action) => {
-    const { selectedDepartments } = action.payload;
-    const shouldInterviews = checkInterviewDates(selectedDepartments);
-    let validate = true;
-    for (let valIndex = 0; valIndex < shouldInterviews.length; valIndex++) {
-      let haveToValidate = shouldInterviews[valIndex];
-      let timeCount = state.get('interviewDates').get(valIndex).get('times').count();
-      if ((timeCount < 2 && haveToValidate) || (timeCount > 0 && !haveToValidate)) {
-        validate = false;
-      }
-    }
-    return state.set('validate', validate);
-  }
 }, initialState)

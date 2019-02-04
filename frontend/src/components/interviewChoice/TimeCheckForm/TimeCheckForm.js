@@ -20,7 +20,6 @@ const isChecked = (checkedFields, day, time) => {
 const TimeCheckForm = ({ date, index, onCheckedChange, checkedFields }) => {
 
   const { day, times } = date;
-
   return (
     <div className={(cx('time-check-form'))}>
       {index !== 0 ? (<hr />) : ''}
@@ -29,11 +28,11 @@ const TimeCheckForm = ({ date, index, onCheckedChange, checkedFields }) => {
           {day}
         </div>
         <div className={(cx('form-times'))}>
-          {times.map((time, index) => (
-            <div key={`CheckBox__${index}`} className={(cx('time-check-box'))}>
+          {times.map((time, timeIndex) => (
+            <div key={`CheckBox__${timeIndex}`} className={(cx('time-check-box'))}>
               <FormControlLabel
                 control={
-                  <Checkbox onChange={onCheckedChange(day, time)} checked={isChecked(checkedFields, day, time)}/>
+                  <Checkbox onChange={onCheckedChange({day, time, index})} checked={isChecked(checkedFields, day, time)}/>
                 }
                 label={
                   time

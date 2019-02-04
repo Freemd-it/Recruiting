@@ -1,6 +1,7 @@
 const User = require('../models/UserModel');
 
 exports.list = async(req, res) => {
+  console.log(req.decoded)
   try {
    const user = await User.find({})
    .sort({_id: -1})
@@ -17,6 +18,7 @@ exports.read = async (req, res) => {
   try{
 
     const user = await User.findOneById(id)
+
     if(!user) {
       res.status(404).json({error: 'User not exist'});
     };
@@ -35,8 +37,17 @@ exports.read = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
+  console.log(`=========update start=============`)
   const {id} = req.params;
-
+  const {
+    basic_info,
+    academic_career,
+    external_activities,
+    special_info,
+    question_info,
+    interview_info
+      } = req.body;
+  
   const respond = (user) => {
     res.json({
       message: 'Update Success',
@@ -45,14 +56,21 @@ exports.update = async (req, res) => {
   }
 
   try {
+   await User.findById({_id:id}, function(err, user) {
+      user
+          .multiUpdate({
+            basic_info: basic_info,
+            academic_career: academic_career,
+            external_activities : external_activities,
+            special_info : special_info,
+            question_info : question_info,
+            interview_info: interview_info
+          })
+          .save();
 
-    await User.findByIdAndUpdate({_id : id}, 
-      req.body, 
-      {new: true})
-    .then(respond);
+  }).then(respond);
   
   }catch(err){
-    console.log(err)
     res.status(500).json({
       message: 'Update Fail',
       error : err
@@ -60,5 +78,54 @@ exports.update = async (req, res) => {
   }
 
 console.log(`=========update end=============`)
+}
 
+
+// 스토어 데이터 확인 
+exports.readStoreData = async(req, res) => {
+  const {id} = req.params;
+
+  try{
+    const user = await User.findOneById(id)
+    if(!user) {
+      res.status(404).json({error: 'User not exist'});
+    };
+
+    res.json({
+      message: 'Read Origin Success',
+      result: user.origin
+    });
+
+  }catch(err){
+    res.status(500).json({
+      message: 'Read Origin Fail',
+      error : err
+    })
+  }}
+
+// 스토어 데이터 수정 
+
+exports.updateStoreData = async(req, res) => {
+  const {id} = req.params;
+ 
+  const respond = (user) => {
+    res.json({
+      message: 'Update Origin Success',
+      result: user.origin
+    })
+  }
+
+  try {
+    await User.findByIdAndUpdate(
+      {_id : id},
+      req.body,
+      {new:true, upsert: true}
+    ).then(respond)
+   
+   }catch(err){
+     res.status(500).json({
+       message: 'Update Origin Fail',
+       error : err
+     })
+   }
 }

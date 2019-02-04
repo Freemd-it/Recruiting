@@ -4,15 +4,11 @@ const jwt = require('jsonwebtoken');
 // POST: baseUrl/api/auth/register
 // body : {user_name, email, password}
 exports.register = async (req, res) => {
-  
-  let newUser = 0
-
-  const {user_name, email, password} = req.body;
+   const {user_name, email, password} = req.body;
 
   // 가입자 생성
   // TODO: 중복여부 체크 해야함.
   const create = (user) => {
-    console.log(user)
     if(user) {
       throw new Error('User exists')
     } else {
@@ -38,22 +34,16 @@ exports.register = async (req, res) => {
 }
 
 
-
-
-
-
-
-
 // POST: baseUrl/api/auth/login
 // body : {user_name, email, password}
 
 exports.login = async (req, res) => {
-  const {user_name, password} = req.body;
+  const {user_name, email, password} = req.body;
   const secret = req.app.get('jwt-secret');
 
   const check = (user) => {
-    const user_info = user.basic_info
-
+    const user_info = user
+    console.log('user_info', user_info)
     if(!user_info){
       throw Error ('User not exists');
     }else {
@@ -80,7 +70,6 @@ exports.login = async (req, res) => {
   }
 
   const respond = (token) => {
-    console.log(token)
     res.json({
       message: 'Login Success',
       results: token,
@@ -89,14 +78,11 @@ exports.login = async (req, res) => {
 
   try {
   
-    await User.findOneByUsername(user_name)
-
-    // await User.findOneById(user._id)
+    await User.findOneByEmail(email)
     .then(check)
     .then(respond)
 
   } catch(err) {
-    // console.log(err)
     res.status(403).json({
       message: err.message
     })

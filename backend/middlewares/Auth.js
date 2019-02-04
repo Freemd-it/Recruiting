@@ -18,13 +18,6 @@ const authMiddleware = async (req, res, next) => {
     });
   });
   
-  // const respond = (token)=> {
-  //   res.json({
-  //     success: true,
-  //     token : token
-  //   })
-  // };
-
   try{
     await tokenDecoding.then((decoded) => {
       req.decoded = decoded

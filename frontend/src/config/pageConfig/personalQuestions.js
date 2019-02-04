@@ -5,4 +5,5 @@ export default {
   showNextSection: true,
   nextRoutePath: '/applyChoice',
   previousRoutePath: '/',
+  validationModuleKey: 'personal'
 }

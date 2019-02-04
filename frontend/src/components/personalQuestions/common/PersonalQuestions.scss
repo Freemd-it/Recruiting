@@ -29,6 +29,12 @@
       justify-content: flex-end;
       width: 930px;
     }
+    .custorm-form {
+      &:focus {
+        border-color: #ff5858;
+        box-shadow: 0 1px 1px 0 rgba(255, 88, 88, 0.16);
+      }
+    }
   }
 }
 

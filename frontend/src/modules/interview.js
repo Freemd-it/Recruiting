@@ -14,14 +14,14 @@ const initialState = fromJS({
   interviewDates: [
     {
       day: '',
-      times: []
+      times: [],
     },
     {
       day: '',
-      times: []
+      times: [],
     }
   ],
-  validate: false
+  validate: false,
 });
 
 const checkInterviewDates = (selectedDepartments) => {

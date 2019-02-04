@@ -16,12 +16,12 @@ import * as userActions from '../../modules/user';
 
 class PersonalQuestionsContainer extends Component {
 
-  handleInputChange = (name, isSeperated) => event => {
+  handleInputChange = (name, isSeperated, delimiter) => event => {
     const { personalActions } = this.props;
     personalActions.changeInput({[name] : event.currentTarget.value});
 
     if (isSeperated) {
-      personalActions.joinKeys(name.split('.').splice(0, name.split('.').length - 1));
+      personalActions.joinKeys({key: name.split('.').splice(0, name.split('.').length - 1), delimiter: delimiter});
     }
   };
 

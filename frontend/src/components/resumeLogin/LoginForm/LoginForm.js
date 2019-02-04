@@ -22,6 +22,7 @@ const LoginForm = (props) => {
           bsClass="form-control login-custom-form custom-form"
           value={name}
           onChange={onInputChange('name')}
+          required
         />
 
         <FieldGroup
@@ -31,6 +32,7 @@ const LoginForm = (props) => {
           bsClass="form-control login-custom-form custom-form"
           value={email}
           onChange={onInputChange('email')}
+          required
         />
 
         <FieldGroup
@@ -40,6 +42,7 @@ const LoginForm = (props) => {
           bsClass="form-control login-custom-form custom-form"
           value={password}
           onChange={onInputChange('password')}
+          required
         />
 
         <Button bsClass="btn btn-default login-form-button" type="submit">지원서 작성</Button>

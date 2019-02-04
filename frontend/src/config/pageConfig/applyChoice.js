@@ -16,11 +16,6 @@ export default {
       validationType: validationType.EMPTY,
       checkLavel: checkLavel.VALUE,
     },{
-      key: 'applyChoice.0.team',
-      message: 'NGO 사업 팀을 선택해 주세요.',
-      validationType: validationType.EMPTY,
-      checkLavel: checkLavel.VALUE,
-    },{
       key: 'applyChoice.0.medical',
       message: '의료 산업을 선택해 주세요.',
       validationType: validationType.EMPTY,

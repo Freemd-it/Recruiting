@@ -5,5 +5,5 @@ export default {
   showNextSection: true,
   nextRoutePath: '/applyQuestions',
   previousRoutePath: '/personalQuestions',
-  validateModuleKey: 'apply'
+  validationModuleKey: 'apply'
 }

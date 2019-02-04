@@ -48,11 +48,11 @@ class PageContainer extends Component {
   };
 
   render() {
-    const { pageLayout: LayoutComnent } = this.props;
+    const { pageLayout: LayoutComponent } = this.props;
 
     return (
       <>
-        <LayoutComnent onNextButtonClick={this.handleNextButtonClick} onPreviousButtonClick={this.handlePreviousButtonClick} {...this.props} />
+        <LayoutComponent onNextButtonClick={this.handleNextButtonClick} onPreviousButtonClick={this.handlePreviousButtonClick} {...this.props} />
       </>
     );
   }

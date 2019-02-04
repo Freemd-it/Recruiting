@@ -82,7 +82,7 @@ class PersonalQuestionsContainer extends Component {
 
 export default withRouter(connect(
   (state) => ({
-    personalFields: state.personal.get('fields').toJS(),
+    personalFields: state.personal.toJS(),
     userFields: state.user.get('fields'),
   }),
   (dispatch) => ({

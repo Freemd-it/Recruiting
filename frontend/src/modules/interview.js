@@ -24,14 +24,14 @@ const initialState = fromJS({
   validate: false
 });
 
-const checkValidates = (selectedDepartments) => {
+const checkInterviewDates = (selectedDepartments) => {
   const interviewChoiceData = staticData.default.interviewChoice;
-  let haveToValidates = [false, false];
+  let shouldInterviews = [false, false];
   for (let department of selectedDepartments) {
-    haveToValidates[0] = haveToValidates[0] || interviewChoiceData.firstDayDepartments.includes(department);
-    haveToValidates[1] = haveToValidates[1] || interviewChoiceData.secondDayDepartments.includes(department);
+    shouldInterviews[0] = shouldInterviews[0] || interviewChoiceData.firstDayDepartments.includes(department);
+    shouldInterviews[1] = shouldInterviews[1] || interviewChoiceData.secondDayDepartments.includes(department);
   }
-  return haveToValidates;
+  return shouldInterviews;
 }
 
 export default handleActions({
@@ -41,7 +41,7 @@ export default handleActions({
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
     const { day, time, index, checked, selectedDepartments } = action.payload;
-    const haveToValidates = checkValidates(selectedDepartments);
+    const shouldInterviews = checkInterviewDates(selectedDepartments);
     let updated = null;
     if (checked) {
       if (interviewDates.get(index).get('times').count() > 0) {
@@ -64,8 +64,8 @@ export default handleActions({
     }
 
     let validate = true;
-    for (let valIndex = 0; valIndex < haveToValidates.length; valIndex++) {
-      let haveToValidate = haveToValidates[valIndex];
+    for (let valIndex = 0; valIndex < shouldInterviews.length; valIndex++) {
+      let haveToValidate = shouldInterviews[valIndex];
       let timeCount = updated.get('interviewDates').get(valIndex).get('times').count();
       if ((timeCount < 2 && haveToValidate) || (timeCount > 0 && !haveToValidate)) {
         validate = false;
@@ -76,10 +76,10 @@ export default handleActions({
 
   [VALIDATE]: (state, action) => {
     const { selectedDepartments } = action.payload;
-    const haveToValidates = checkValidates(selectedDepartments);
+    const shouldInterviews = checkInterviewDates(selectedDepartments);
     let validate = true;
-    for (let valIndex = 0; valIndex < haveToValidates.length; valIndex++) {
-      let haveToValidate = haveToValidates[valIndex];
+    for (let valIndex = 0; valIndex < shouldInterviews.length; valIndex++) {
+      let haveToValidate = shouldInterviews[valIndex];
       let timeCount = state.get('interviewDates').get(valIndex).get('times').count();
       if ((timeCount < 2 && haveToValidate) || (timeCount > 0 && !haveToValidate)) {
         validate = false;

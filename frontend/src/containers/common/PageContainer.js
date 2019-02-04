@@ -8,7 +8,10 @@ import { personalActions, applyActions, interviewActions } from '../../reducers'
 import validation from '../../common/validation';
 
 class PageContainer extends Component {
-  //페이지 인가 처리용
+  //Todo login시 redux 및 스토리지 서버 가져와서 연동.
+  componentDidMount() {
+
+  };
 
   handlePreviousButtonClick = e => {
     const { history, config } = this.props;
@@ -16,11 +19,11 @@ class PageContainer extends Component {
   };
 
   handleNextButtonClick = e => {
-    const { match, history, config, state, staticData } = this.props;
+    const { match, history, config, state } = this.props;
 
     const actionModule = state[config.validationModuleKey].toJS();
 
-    const validateResult = this.validateByPage(match, actionModule, staticData.validation);
+    const validateResult = this.validateByPage(match, actionModule, config.validation);
 
     if (actionModule.validate || validateResult) {
       history.push(config.nextRoutePath);
@@ -31,7 +34,7 @@ class PageContainer extends Component {
     switch(match.path){
       case '/personalQuestions':
         const hasNotValidatedItem = required.find(row => {
-            if (!validation[row.validationType](_.get(actionModule, ['fields', ...row.name.split('.')]))) {
+            if (!validation[row.validationType](_.get(actionModule, ['fields', ...row.key.split('.')]))) {
               window.alert(row.message);
               return true;
             }

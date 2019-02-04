@@ -83,7 +83,11 @@ class PageContainer extends Component {
 
     return (
       <>
-        <LayoutComponent onNextButtonClick={this.handleNextButtonClick} onPreviousButtonClick={this.handlePreviousButtonClick} {...this.props} />
+        <LayoutComponent
+          onNextButtonClick={this.handleNextButtonClick}
+          onPreviousButtonClick={this.handlePreviousButtonClick}
+          {...this.props}
+        />
       </>
     );
   }

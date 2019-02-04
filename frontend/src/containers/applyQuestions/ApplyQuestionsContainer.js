@@ -26,7 +26,7 @@ class ApplyQuestionsContainer extends Component {
             applyActions.fileAnswerChanged({ type, index, name, answerType, file: event.target.files[0] });
             break;
           case 'select':
-            applyActions.selectAnswerChanged({ type, index, name, answerType, techName, abilityIndex: event.target.value })
+            applyActions.selectAnswerChanged({ type, index, name, answerType, techName, abilityIndex: event.target.value });
             break;
           default:
             break;

@@ -21,7 +21,7 @@ const initialState = Map({
       birth: Map({
         year: '',
         month: '',
-        date: ''
+        date: '',
       }),
       birthText: '',
       phoneNumber: Map({
@@ -59,16 +59,15 @@ const initialState = Map({
         activityDetail: '',
         durationStart: '',
         durationEnd: '',
-        content: ''
+        content: '',
       },
       detail: [{
         activityType: '인턴',
         activityDetail: '',
         durationStart: '',
         durationEnd: '',
-        content: ''
-      }]
-
+        content: '',
+      }],
     }),
     speciality: fromJS({
       count: '1',
@@ -76,13 +75,13 @@ const initialState = Map({
         activityType: '공인영어',
         activityDetail: '',
         grade: '',
-        content: ''
+        content: '',
       },
       detail: [{
         activityType: '공인영어',
         activityDetail: '',
         grade: '',
-        content: ''
+        content: '',
       }]
     })
   })
@@ -101,5 +100,5 @@ export default handleActions({
   },
   [PUSH_INPUT_ARRAY]: (state, action) => {
     return state.setIn(['fields', action.payload, 'detail'], state.getIn(['fields', action.payload, 'detail']).push(state.getIn(['fields', action.payload, 'detailFormat'])))
-  }
+  },
 }, initialState)

@@ -27,6 +27,7 @@ class NextSection extends Component {
 
   handleNextButtonClick = e => {
     const { history, config, state } = this.props;
+    console.log(config);
     const actionModule = state[config.validationModuleKey].toJS()
     if (actionModule.validate) {
       history.push(config.nextRoutePath);

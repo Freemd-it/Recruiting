@@ -66,7 +66,7 @@ export default {
       checkLavel: checkLavel.VALUE,
     },{
       key: 'education.major',
-      message: '계열을 입력해 주세요.',
+      message: '전공/계열을 입력해 주세요.',
       validationType: validationType.EMPTY,
       checkLavel: checkLavel.VALUE,
     },{

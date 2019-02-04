@@ -6,6 +6,7 @@ export const validationType  = {
   PHONE: 'phone',
   GENDER: 'gender',
   YEAR_MONTH: 'yearMonth',
+  NOT_EQUAL: 'notEqual'
 };
 
 export default {
@@ -28,4 +29,7 @@ export default {
   [validationType.YEAR_MONTH]: value => (
     /^(19|20)\d{2}\/(0[1-9]|1[012])$/.test(value)
   ),
+  [validationType.NOT_EQUAL]: (value1, value2) => (
+    value1 == value2
+  )
 }

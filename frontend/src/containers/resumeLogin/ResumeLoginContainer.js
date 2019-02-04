@@ -40,7 +40,7 @@ class ResumeLoginContainer extends Component {
 
 export default withRouter(connect(
   (state) => ({
-    userFields: state.user.get('fields'),
+    userFields: state.user.toJS(),
   }),
   (dispatch) => ({
     userActions: bindActionCreators(userActions, dispatch),

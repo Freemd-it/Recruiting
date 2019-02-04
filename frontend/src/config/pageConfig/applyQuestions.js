@@ -7,4 +7,9 @@ export default {
   nextRoutePath: '/interviewChoice',
   previousRoutePath: '/applyChoice',
   validationModuleKey: 'apply',
+  validation: {
+    required: [
+
+    ],
+  },
 }

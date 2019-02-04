@@ -26,9 +26,13 @@ class ApplyQuestionsContainer extends Component {
             applyActions.fileAnswerChanged({ type, index, name, answerType, file: event.target.files[0] });
             break;
           case 'select':
-            applyActions.selectAnswerChanged({ type, index, name, answerType, techName, abilityIndex: event.target.value })
+            applyActions.selectAnswerChanged({ type, index, name, answerType, techName, abilityIndex: event.target.value });
+            break;
+          default:
             break;
         }
+        break;
+      default:
         break;
     }
   };
@@ -45,7 +49,7 @@ class ApplyQuestionsContainer extends Component {
         ]
     }
     state.applyChoice.forEach((choice, index) => {
-      if (choice.department != '') {
+      if (choice.department !== '') {
         questionData.department.push({
           name: `${choice.department}본부 (${choice.team})`,
           rank: index + 1,

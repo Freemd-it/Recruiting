@@ -11,10 +11,10 @@ const StepSection = (props) => {
   return (
     <div className={cx('step-item-holder', 'container')}>
       <ul>
-        <NavLink to='/personalQuestions' className={cx('step-item')} activeClassName="selected">STEP 1</NavLink>
-        <NavLink to='/applyChoice' className={cx('step-item')} activeClassName="selected">STEP 2</NavLink>
-        <NavLink to='/applyQuestions' className={cx('step-item')} activeClassName="selected">STEP 3</NavLink>
-        <NavLink to='/interviewChoice' className={cx('step-item')} activeClassName="selected">STEP 4</NavLink>
+        <NavLink onClick={e => e.preventDefault()} to='/personalQuestions' className={cx('step-item')} activeClassName="selected">STEP 1</NavLink>
+        <NavLink onClick={e => e.preventDefault()} to='/applyChoice' className={cx('step-item')} activeClassName="selected">STEP 2</NavLink>
+        <NavLink onClick={e => e.preventDefault()} to='/applyQuestions' className={cx('step-item')} activeClassName="selected">STEP 3</NavLink>
+        <NavLink onClick={e => e.preventDefault()} to='/interviewChoice' className={cx('step-item')} activeClassName="selected">STEP 4</NavLink>
       </ul>
     </div>
   )

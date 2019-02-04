@@ -8,7 +8,7 @@ import styles from './HeaderInformationText.scss';
 const cx = classNames.bind(styles);
 
 const HeaderInformationText = (props) => {
-  let { fullText: customText, enlargeText =[],  underlineText=[] } = props.messageConfig;
+  let { fullText: customText, enlargeText =[],  underlineText=[] } = props.staticData;
   customText = Utils.lineBreak(customText);
 
   enlargeText.forEach(text => {

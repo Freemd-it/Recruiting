@@ -11,5 +11,5 @@ export default {
   interviewChoice,
   personalQuestions,
   resumeComplete,
-  resumeLogin
+  resumeLogin,
 }

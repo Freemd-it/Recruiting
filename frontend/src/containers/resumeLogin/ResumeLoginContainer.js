@@ -15,6 +15,7 @@ class ResumeLoginContainer extends Component {
   };
 
   handleSubmit = e => {
+    const { userFields } = this.props;
     /**
      * login post 요청, 만약 있으면 바로 넘어감
      */

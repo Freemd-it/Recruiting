@@ -1,3 +1,8 @@
+export const checkLavel = {
+  VALUE: 'value',
+  COMPARE: 'compare'
+};
+
 export const validationType  = {
   CONSENT: 'consent',
   EMAIL: 'email',
@@ -30,6 +35,6 @@ export default {
     /^(19|20)\d{2}\/(0[1-9]|1[012])$/.test(value)
   ),
   [validationType.NOT_EQUAL]: (value1, value2) => (
-    value1 == value2
+    value1 !== value2
   )
 }

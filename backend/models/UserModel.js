@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const crypto = require('crypto')
 const config = require('../config')
+const multiUpdate = require('mongoose-multi-update')
 
-
+// 경력사항
 const ExternalActivitiesSchema = new Schema({
   external_type:{
     type: String,
@@ -15,7 +16,7 @@ const ExternalActivitiesSchema = new Schema({
   turnaround_time: Number,
   content: String 
 })
-
+// 자격증
 const SpecialSchema = new Schema({
   special_type: {
     type: String,
@@ -43,6 +44,7 @@ const QuestionsSchema = new Schema({
   department: String, //본부
   team: String, //팀
   question : String, //질문내용,
+  content: String,
   batch: Number, //기수
   portfolios: [PortfoliosSchema],
   registedDate: {
@@ -53,8 +55,6 @@ const QuestionsSchema = new Schema({
 
 const interviewSchema = new Schema({
   interview_date : Date,
-  can_moved: Boolean, 
-  can_multiple_interview: Boolean,
   interview_week : String,
   interview_time : [String]
   
@@ -67,8 +67,15 @@ const UserSchema = new Schema({
   },
   basic_info:{
     user_name : String,
-    email: String,
+    email: {
+      type : String,
+      unique : true
+    },
     password : String,
+    
+    can_moved: Boolean, 
+    can_multiple_interview: Boolean,
+    support_status: Number,
 
     english_name: String,
     is_male: Boolean,
@@ -146,7 +153,7 @@ UserSchema.statics.findOneByUsername = function(user_name) {
   }).exec();
 };
 
-
+// 비밀번호 암호화
 UserSchema.methods.verify = function(password) {
   // console.log(this.password)
   const encrypted = crypto.createHmac('sha1', config.secret)
@@ -156,6 +163,7 @@ UserSchema.methods.verify = function(password) {
   return this.basic_info.password === encrypted
 }
 
+UserSchema.plugin(multiUpdate);
+
 module.exports = mongoose.model('User', UserSchema);
 
-// module.exports = mongoose.model('External', ExternalActivitiesSchema);

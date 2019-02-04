@@ -6,8 +6,8 @@ router.get('/list', usercontroller.list);
 router.get('/:id', usercontroller.read);
 router.put('/:id', usercontroller.update);
 
-router.get('/:id/origin', usercontroller.readStoreData);
-router.put('/:id/origin', usercontroller.updateStoreData);
+router.get('/:id/clientStoreData', usercontroller.readStoreData);
+router.put('/:id/clientStoreData', usercontroller.updateStoreData);
 
 
 module.exports=router;

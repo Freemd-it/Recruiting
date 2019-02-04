@@ -93,7 +93,7 @@ exports.readStoreData = async(req, res) => {
 
     res.json({
       message: 'Read Origin Success',
-      result: user.origin
+      result: user.clientStoreData
     });
 
   }catch(err){
@@ -104,14 +104,13 @@ exports.readStoreData = async(req, res) => {
   }}
 
 // 스토어 데이터 수정 
-
 exports.updateStoreData = async(req, res) => {
   const {id} = req.params;
  
   const respond = (user) => {
     res.json({
       message: 'Update Origin Success',
-      result: user.origin
+      result: user.clientStoreData
     })
   }
 

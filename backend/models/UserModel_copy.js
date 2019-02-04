@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const crypto = require('crypto')
 const config = require('../config')
-const multiUpdate = require('mongoose-multi-update')
 
-// 경력사항
+
 const ExternalActivitiesSchema = new Schema({
   external_type:{
     type: String,
@@ -16,7 +15,7 @@ const ExternalActivitiesSchema = new Schema({
   turnaround_time: Number,
   content: String 
 })
-// 자격증
+
 const SpecialSchema = new Schema({
   special_type: {
     type: String,
@@ -44,7 +43,6 @@ const QuestionsSchema = new Schema({
   department: String, //본부
   team: String, //팀
   question : String, //질문내용,
-  content: String,
   batch: Number, //기수
   portfolios: [PortfoliosSchema],
   registedDate: {
@@ -61,22 +59,14 @@ const interviewSchema = new Schema({
 })
 
 const UserSchema = new Schema({
-  clientStoreData:{},
   registedDate: {
     type: Date,
    default: new Date() // 현재 날짜를 기본값으로 지정
   },
   basic_info:{
     user_name : String,
-    email: {
-      type : String,
-      unique : true
-    },
+    email: String,
     password : String,
-    
-    can_moved: Boolean, 
-    can_multiple_interview: Boolean,
-    support_status: Number,
 
     english_name: String,
     is_male: Boolean,
@@ -84,18 +74,7 @@ const UserSchema = new Schema({
     
     phone_number : String,
     sns : String,
-    address : String,
-    
-    department: {
-      type: String,
-      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
-    },
-    secondary_department: {
-      type: String,
-      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
-    },
-    team: String, 
-    secondary_team: String, 
+    address : String
   },
   academic_career: {
     academic_name : String,
@@ -107,7 +86,21 @@ const UserSchema = new Schema({
   },
   external_activities: [ExternalActivitiesSchema],
   special_info: [SpecialSchema],
-  question_info: [QuestionsSchema],
+  apply_info: {
+    department: {
+      type: String,
+      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
+    },
+    secondary_department: {
+      type: String,
+      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
+    },
+    team: String, 
+    secondary_team: String, 
+    can_moved: Boolean, 
+    can_multiple_interview: Boolean,
+    questions : [QuestionsSchema]
+  },
   interview_info : [interviewSchema]
   })
 
@@ -154,7 +147,7 @@ UserSchema.statics.findOneByUsername = function(user_name) {
   }).exec();
 };
 
-// 비밀번호 암호화
+
 UserSchema.methods.verify = function(password) {
   // console.log(this.password)
   const encrypted = crypto.createHmac('sha1', config.secret)
@@ -164,7 +157,6 @@ UserSchema.methods.verify = function(password) {
   return this.basic_info.password === encrypted
 }
 
-UserSchema.plugin(multiUpdate);
-
 module.exports = mongoose.model('User', UserSchema);
 
+// module.exports = mongoose.model('External', ExternalActivitiesSchema);

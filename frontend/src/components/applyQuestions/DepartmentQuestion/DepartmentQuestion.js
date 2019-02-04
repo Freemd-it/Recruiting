@@ -62,6 +62,8 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
             />
           </>
         )
+      default:
+        break;
     }
   }
 

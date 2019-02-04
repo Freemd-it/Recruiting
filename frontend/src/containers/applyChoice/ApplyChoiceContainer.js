@@ -10,6 +10,7 @@ import {
 } from '../../components/applyChoice';
 
 import * as applyActions from '../../modules/apply';
+import * as interviewActions from '../../modules/interview';
 
 class ApplyChoiceContainer extends Component {
   constructor(props) {
@@ -33,13 +34,12 @@ class ApplyChoiceContainer extends Component {
   };
 
   handleChoiceNGOBusiness = (key, value) => {
-    const { applyState, staticData, applyActions } = this.props;
+    const { staticData, selectedDepartments, applyActions } = this.props;
     const { departmentDatas } = staticData;
 
     applyActions.changeInput({[key] : value});
-    applyActions.changeInput({[key.replace('department', 'team')]: departmentDatas.find(row => row.name === value).teams[0]})
-    applyActions.changeInput({[key.replace('department', 'medical')]: departmentDatas.find(row => row.name === value).medicalOptions[0]})
-
+    applyActions.changeInput({[key.replace('department', 'team')]: departmentDatas.find(row => row.name === value).teams[0]});
+    applyActions.changeInput({[key.replace('department', 'medical')]: departmentDatas.find(row => row.name === value).medicalOptions[0]});
   };
 
   handleChoiceSelectBox = (key, value) => {
@@ -47,12 +47,8 @@ class ApplyChoiceContainer extends Component {
     applyActions.changeInput({[key] : value});
   };
 
-  handleChoiceMedicalBusiness = e => {
-
-  };
-
   handleClickSecondApply = e => {
-    const { applyActions, applyState } = this.props;
+    const { applyState, applyActions } = this.props;
     const { isSecondApplyChoice, applyChoiceFormat } = applyState;
     applyActions.changeInput({'isSecondApplyChoice' : !isSecondApplyChoice});
 
@@ -99,6 +95,7 @@ class ApplyChoiceContainer extends Component {
           onHide={this.handleMedicalDescriptionHide}
           message={medicalModalMessage}
         />
+
       </>
 
     );
@@ -108,6 +105,7 @@ class ApplyChoiceContainer extends Component {
 export default withRouter(connect(
   (state) => ({
     applyState: state.apply.toJS(),
+    selectedDepartments: state.apply.toJS().applyChoice.map(d => d.department)
   }),
   (dispatch) => ({
     applyActions: bindActionCreators(applyActions, dispatch),

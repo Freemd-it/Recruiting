@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
 
 import {
   withStyles,
@@ -12,46 +11,46 @@ import styles from './NextSection.scss';
 const cx = classNames.bind(styles);
 
 const meterialStyles = theme => ({
+  buttonCancel: {
+    width: '140px',
+    backgroundColor: '#f8f8f8',
+    boxShadow: 'none',
+    fontSize: '16px',
+    fontWeight: '500',
+    color: '#707070'
+  },
   buttonNext: {
+    width: '140px',
+    backgroundColor: '#fa6d6d',
+    boxShadow: 'none',
+    fontSize: '16px',
+    fontWeight: '500',
+    color: '#ffffff'
+  },
+  buttonNextFullWidth: {
     width: '180px',
     backgroundColor: '#fa6d6d',
     boxShadow: 'none',
     fontSize: '16px',
     fontWeight: '500',
     color: '#ffffff'
-  }
+  },
 });
 
 class NextSection extends Component {
 
-  handleNextButtonClick = e => {
-    const { history, config } = this.props;
-    history.push(config.nextRoutePath);
-  };
-  
   render() {
-    const { classes, config } = this.props;
+    const { classes, config, onPreviousButtonClick, onNextButtonClick } = this.props;
     return (
       <div className={cx('next-button-holder', 'container')}>
-        {config.pageType !== 'interviewChoice' ?
-          (
-            <Button variant='contained' classes={{ root: classes.buttonNext }} onClick={this.handleNextButtonClick}>
-              다음
-            </Button>
-          ) :
-          (
-            <Route render={({ history }) => (
-              <Button
-                variant='contained'
-                classes={{ root: classes.buttonNext }}
-                onClick={this.handleNextButtonClick}
-              >
-                제출
-              </Button>
-            )}
-            />
-          )
+        { config.showPreviousSection &&
+          <Button variant='contained' classes={{ root: classes.buttonCancel }} onClick={onPreviousButtonClick}>
+            이전
+          </Button>
         }
+        <Button variant='contained' classes={{ root: config.showPreviousSection ? classes.buttonNext : classes.buttonNextFullWidth}} onClick={onNextButtonClick}>
+          {config.pageType !== 'interviewChoice' ? '다음' : '제출'}
+        </Button>
       </div>
     )
   }

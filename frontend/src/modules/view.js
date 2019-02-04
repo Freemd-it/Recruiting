@@ -11,7 +11,7 @@ export const setView = createAction(SET_VIEW); // view
 
 const initialState = Map({
   prevView: '',
-  view: 'index'
+  view: 'index',
 });
 
 export default handleActions({

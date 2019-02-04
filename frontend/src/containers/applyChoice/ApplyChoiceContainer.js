@@ -34,7 +34,7 @@ class ApplyChoiceContainer extends Component {
   };
 
   handleChoiceNGOBusiness = (key, value) => {
-    const { applyState, staticData, applyActions, selectedDepartments } = this.props;
+    const { staticData, selectedDepartments, applyActions } = this.props;
     const { departmentDatas } = staticData;
 
     applyActions.changeInput({[key] : value});
@@ -47,12 +47,8 @@ class ApplyChoiceContainer extends Component {
     applyActions.changeInput({[key] : value});
   };
 
-  handleChoiceMedicalBusiness = e => {
-
-  };
-
   handleClickSecondApply = e => {
-    const { applyActions, applyState } = this.props;
+    const { applyState, applyActions } = this.props;
     const { isSecondApplyChoice, applyChoiceFormat } = applyState;
     applyActions.changeInput({'isSecondApplyChoice' : !isSecondApplyChoice});
 

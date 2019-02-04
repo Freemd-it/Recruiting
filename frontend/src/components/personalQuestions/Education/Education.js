@@ -52,7 +52,7 @@ class Education extends Component {
           <FieldGroupWithLabelInline
             id='personalInformationForm-major'
             type='text'
-            label='계열'
+            label='전공/계열'
             bsClass='form-control personal-text-custom-form custom-form'
             value={major}
             onChange={onInputChange('education.major', false)}

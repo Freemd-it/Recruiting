@@ -10,13 +10,12 @@ import * as interviewActions from '../../modules/interview';
 class InterviewChoiceContainer extends Component {
 
   handleCheckedChange = ({day, time, index}) => event => {
-    const { interviewActions, selectedDepartments } = this.props;
+    const { interviewActions } = this.props;
     interviewActions.changeChecked({ 
       day, 
       time, 
       index, 
       checked: event.target.checked, 
-      selectedDepartments
     });
   };
 
@@ -38,7 +37,6 @@ class InterviewChoiceContainer extends Component {
 export default withRouter(connect(
   (state) => ({
     checkedFields: state.interview.get('interviewDates').toJS(),
-    selectedDepartments: state.apply.toJS().applyChoice.map(d => d.department),
   }),
   (dispatch) => ({
     interviewActions: bindActionCreators(interviewActions, dispatch)

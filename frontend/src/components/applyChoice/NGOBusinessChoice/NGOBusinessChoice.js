@@ -47,13 +47,12 @@ const NGOBusinessChoice = (props) => {
   );
 
   const options = selectedDepartment && selectedDepartment.teams.length > 0 ?
-    selectedDepartment.teams.map(dataRow => ({value: dataRow, label: dataRow})) : [{value: "팀 없음", label: "팀 없음"}];
+    selectedDepartment.teams.map(dataRow => ({value: dataRow, label: dataRow})) : [{value: '팀 없음', label: '팀 없음'}];
 
   const currentValue = {
-      value: applyChoice[props.isSecondApply ? 1 : 0].team,
-      label: applyChoice[props.isSecondApply ? 1 : 0].team,
+      value: applyChoice[props.isSecondApply ? 1 : 0].team || '팀 없음',
+      label: applyChoice[props.isSecondApply ? 1 : 0].team || '팀 없음',
   };
-
   return (
     <>
       <div className={cx('team-card-holder')}>

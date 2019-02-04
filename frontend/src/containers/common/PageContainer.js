@@ -44,15 +44,10 @@ class PageContainer extends Component {
         return true;
       case '/interviewChoice':
         const selectedDepartments = state.apply.toJS().applyChoice.map(d => d.department);
-        console.log({selectedDepartments});
         const shouldInterviews = interviewActions.checkInterviewDates(selectedDepartments);
-        console.log({shouldInterviews});
-        let validate = true;
-        shouldInterviews.forEach((shouldInterview, index) => {
+        let validate = shouldInterviews.every((shouldInterview, index) => {
           let timeCount = actionModule.interviewDates[index].times.length;
-          if ((timeCount < 2 && shouldInterview) || (timeCount > 0 && !shouldInterview)) {
-            validate = false;
-          }
+          return (timeCount >= 2 || !shouldInterview) && (timeCount === 0 || shouldInterview)
         });
         if (!validate) {
           window.alert('각 본부에 맞게 인터뷰 날짜를 최소 2개 이상 선정하셔야 합니다.');

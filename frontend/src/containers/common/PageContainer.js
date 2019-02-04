@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
 import { personalActions, applyActions, interviewActions } from '../../reducers'
-import validation from '../../common/validation';
+import validation, { checkLavel } from '../../common/validation';
 
 class PageContainer extends Component {
   //Todo login시 redux 및 스토리지 서버 가져와서 연동.
@@ -23,28 +23,45 @@ class PageContainer extends Component {
 
     const actionModule = state[config.validationModuleKey].toJS();
 
-    const validateResult = this.validateByPage(match, actionModule, config.validation);
+    const validateResult = this._validateByPage(match, actionModule, config.validation);
 
     if (actionModule.validate || validateResult) {
       history.push(config.nextRoutePath);
     }
   };
 
-  validateByPage = (match, actionModule, { required }) => {
-    switch(match.path){
+  _validateByPage = (match, actionModule, { required }) => {
+    let hasNotValidatedItem = false;
+
+    switch(match.path) {
       case '/personalQuestions':
-        const hasNotValidatedItem = required.find(row => {
-            if (!validation[row.validationType](_.get(actionModule, ['fields', ...row.key.split('.')]))) {
-              window.alert(row.message);
-              return true;
-            }
-          });
-        return !hasNotValidatedItem;
       case '/applyChoice':
-        break;
+        hasNotValidatedItem = this._validate(actionModule, required);
+        return !hasNotValidatedItem;
       default:
-        break;
+        return !hasNotValidatedItem;
     }
+  };
+
+  _validate = (actionModule, required) => {
+    let hasNotValidatedItem;
+    return required.find(row => {
+      switch(row.checkLavel) {
+        case checkLavel.VALUE:
+          hasNotValidatedItem = !validation[row.validationType](_.get(actionModule, [...row.key.split('.')]));
+          break;
+        case checkLavel.COMPARE:
+          hasNotValidatedItem = !validation[row.validationType](_.get(actionModule, [...row.key1.split('.')]), _.get(actionModule, [...row.key2.split('.')]));
+          break;
+        default:
+          hasNotValidatedItem = false;
+          break;
+      }
+      if (hasNotValidatedItem) {
+        window.alert(row.message);
+      }
+      return hasNotValidatedItem;
+    });
   };
 
   render() {

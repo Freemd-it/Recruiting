@@ -9,9 +9,14 @@ import * as interviewActions from '../../modules/interview';
 
 class InterviewChoiceContainer extends Component {
 
-  handleCheckedChange = (day, time) => event => {
+  handleCheckedChange = ({day, time, index}) => event => {
     const { interviewActions } = this.props;
-    interviewActions.changeChecked({ day, time, checked: event.target.checked })
+    interviewActions.changeChecked({ 
+      day, 
+      time, 
+      index, 
+      checked: event.target.checked, 
+    });
   };
 
   componentDidMount() {
@@ -31,7 +36,7 @@ class InterviewChoiceContainer extends Component {
 
 export default withRouter(connect(
   (state) => ({
-    checkedFields: state.interview.get('interviewDates').toJS()
+    checkedFields: state.interview.get('interviewDates').toJS(),
   }),
   (dispatch) => ({
     interviewActions: bindActionCreators(interviewActions, dispatch)

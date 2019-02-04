@@ -13,23 +13,24 @@ exports.list = async(req, res) => {
 }
 
 exports.read = async (req, res) => {
-  // console.log(req.decoded)
   const {id} = req.params;
 
   try{
-    // const user = await User.findOne({_id:id}).exec();
+
     const user = await User.findOneById(id)
-    console.log(user)
+
     if(!user) {
       res.status(404).json({error: 'User not exist'});
     };
 
     res.json({
+      message: 'Read Success',
       result: user
     });
 
   }catch(err){
     res.status(500).json({
+      message: 'Read Fail',
       error : err
     })
   }
@@ -43,18 +44,10 @@ exports.update = async (req, res) => {
     academic_career,
     external_activities,
     special_info,
-    apply_info,
+    question_info,
     interview_info
       } = req.body;
   
-  let basic_set= {basic_info};
-  let academic_set = {academic_career};
-  let external_set = {external_activities};
-  let special_set = {special_info};
-  let apply_set = {apply_info};
-  let interview_set = {interview_info};
-
-
   const respond = (user) => {
     res.json({
       message: 'Update Success',
@@ -63,47 +56,75 @@ exports.update = async (req, res) => {
   }
 
   try {
-    console.log(interview_set)
-    await User.findOneAndUpdate(
-      {_id:id}, 
-      {$set: basic_set},
-      {new:true}).exec()
+   await User.findById({_id:id}, function(err, user) {
+      user
+          .multiUpdate({
+            basic_info: basic_info,
+            academic_career: academic_career,
+            external_activities : external_activities,
+            special_info : special_info,
+            question_info : question_info,
+            interview_info: interview_info
+          })
+          .save();
 
-    await User.findOneAndUpdate(
-      {_id:id}, 
-      {$set: external_set},
-      {new:true}).exec()
-
-    await User.findOneAndUpdate(
-      {_id:id}, 
-      {$set: academic_set},
-      {new:true}).exec()
-
-    await User.findOneAndUpdate(
-      {_id:id}, 
-      {$set: special_set},
-      {new:true}).exec()
-
-    await User.findOneAndUpdate(
-      {_id:id}, 
-      {$set: apply_set},
-      {new:true}).exec()
-
-
-    await User.findOneAndUpdate(
-      {_id:id}, 
-      {$set: interview_set},
-      {new:true}).exec()
-      
-        .then(respond);   
-
+  }).then(respond);
+  
   }catch(err){
-    console.log(err)
     res.status(500).json({
+      message: 'Update Fail',
       error : err
     })
   }
 
 console.log(`=========update end=============`)
+}
 
+
+// 스토어 데이터 확인 
+exports.readStoreData = async(req, res) => {
+  const {id} = req.params;
+
+  try{
+    const user = await User.findOneById(id)
+    if(!user) {
+      res.status(404).json({error: 'User not exist'});
+    };
+
+    res.json({
+      message: 'Read Origin Success',
+      result: user.clientStoreData
+    });
+
+  }catch(err){
+    res.status(500).json({
+      message: 'Read Origin Fail',
+      error : err
+    })
+  }}
+
+// 스토어 데이터 수정 
+exports.updateStoreData = async(req, res) => {
+  const {id} = req.params;
+ 
+  const respond = (user) => {
+    res.json({
+      message: 'Update Origin Success',
+      result: user.clientStoreData
+    })
+  }
+
+  try {
+    await User.findByIdAndUpdate(
+      {_id : id},
+      req.body,
+      {new:true, upsert: true}
+    ).then(respond)
+   
+   }catch(err){
+     res.status(500).json({
+       message: 'Update Origin Fail',
+       error : err
+     })
+   }
 }

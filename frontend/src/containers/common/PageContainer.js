@@ -22,28 +22,39 @@ class PageContainer extends Component {
     const { match, history, config, state } = this.props;
 
     const actionModule = state[config.validationModuleKey].toJS();
-
     const validateResult = this.validateByPage(match, actionModule, config.validation);
 
-    if (actionModule.validate || validateResult) {
+    if (validateResult) {
       history.push(config.nextRoutePath);
     }
   };
 
   validateByPage = (match, actionModule, { required }) => {
-    switch(match.path){
+    const { state } = this.props;
+    switch (match.path) {
       case '/personalQuestions':
         const hasNotValidatedItem = required.find(row => {
-            if (!validation[row.validationType](_.get(actionModule, ['fields', ...row.key.split('.')]))) {
-              window.alert(row.message);
-              return true;
-            }
-          });
+          if (!validation[row.validationType](_.get(actionModule, ['fields', ...row.key.split('.')]))) {
+            window.alert(row.message);
+            return true;
+          }
+        });
         return !hasNotValidatedItem;
       case '/applyChoice':
-        break;
+        return true;
+      case '/interviewChoice':
+        const selectedDepartments = state.apply.toJS().applyChoice.map(d => d.department);
+        const shouldInterviews = interviewActions.checkInterviewDates(selectedDepartments);
+        let validate = shouldInterviews.every((shouldInterview, index) => {
+          let timeCount = actionModule.interviewDates[index].times.length;
+          return (timeCount >= 2 || !shouldInterview) && (timeCount === 0 || shouldInterview)
+        });
+        if (!validate) {
+          window.alert('각 본부에 맞게 인터뷰 날짜를 최소 2개 이상 선정하셔야 합니다.');
+        }
+        return validate;
       default:
-        break;
+        return true;
     }
   };
 

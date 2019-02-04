@@ -6,4 +6,5 @@ export default {
   nextRoutePath: '/applyChoice',
   previousRoutePath: '/',
   validationModuleKey: 'personal',
+
 }

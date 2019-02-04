@@ -1,58 +1,61 @@
 import { createAction, handleActions } from 'redux-actions';
-import { fromJS, Map } from 'immutable';
+import { fromJS } from 'immutable';
+import validation from '../common/validation';
 
 const INIT_STATE = 'personal/INIT_STATE';
 const CHANGE_INPUT = 'personal/CHANGE_INPUT';
 const PUSH_INPUT_ARRAY = 'personal/PUSH_INPUT_ARRAY';
 const JOIN_KEYS = 'personal/JOIN_KEYS';
+const VALIDATE = 'personal/VALIDATE';
 
 export const initState = createAction(INIT_STATE);
 export const changeInput = createAction(CHANGE_INPUT);
 export const pushInputArray = createAction(PUSH_INPUT_ARRAY);
 export const joinKeys = createAction(JOIN_KEYS);
+export const validate = createAction(VALIDATE);
 
-const initialState = Map({
-  fields: Map({
-    requestConsent: 'false',
-    personalIdentification: Map({
+const initialState = fromJS({
+  fields: ({
+    requestConsent: false,
+    personalIdentification: {
       name: '',
       englishName: '',
       gender: '',
-      birth: Map({
+      birth: {
         year: '',
         month: '',
         date: '',
-      }),
+      },
       birthText: '',
-      phoneNumber: Map({
+      phoneNumber: {
         first: '010',
         second: '',
         third: '',
-      }),
+      },
       phoneNumberText: '',
       address: '',
-      email: Map({
+      email: {
         text: '',
         type: ''
-      }),
+      },
       emailText: '',
       sns: '',
-    }),
-    education: Map({
-      schoolName: Map({
+    },
+    education: {
+      schoolName: ({
         text: '',
         type: '대학교'
       }),
       schoolNameText: '',
       major: '',
       location: '',
-      graduationYear: Map({
+      graduationYear: {
         entrance: '',
         graduation: '',
         status: '졸업',
-      }),
-    }),
-    career: fromJS({
+      },
+    },
+    career: {
       count: '1',
       detailFormat: {
         activityType: '인턴',
@@ -68,8 +71,8 @@ const initialState = Map({
         durationEnd: '',
         content: '',
       }],
-    }),
-    speciality: fromJS({
+    },
+    speciality: {
       count: '1',
       detailFormat: {
         activityType: '공인영어',
@@ -83,8 +86,9 @@ const initialState = Map({
         grade: '',
         content: '',
       }]
-    })
-  })
+    }
+  }),
+  validate: false,
 });
 
 export default handleActions({
@@ -94,9 +98,9 @@ export default handleActions({
     return state.setIn(keyPath, Object.values(action.payload)[0]);
   },
   [JOIN_KEYS]: (state, action) => {
-    const keyPath = ['fields', ...action.payload];
+    const keyPath = ['fields', ...action.payload.key];
     keyPath[keyPath.length - 1] = `${keyPath[keyPath.length - 1]}Text`;
-    return state.setIn(keyPath, Object.values(state.getIn(['fields', ...action.payload]).toJS()).join(''));
+    return state.setIn(keyPath, Object.values(state.getIn(['fields', ...action.payload.key]).toJS()).join(action.payload.delimiter || ''));
   },
   [PUSH_INPUT_ARRAY]: (state, action) => {
     return state.setIn(['fields', action.payload, 'detail'], state.getIn(['fields', action.payload, 'detail']).push(state.getIn(['fields', action.payload, 'detailFormat'])))

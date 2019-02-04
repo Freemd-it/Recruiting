@@ -95,21 +95,21 @@ class PersonalInformation extends Component {
                 placeholder='YYYY'
                 bsClass='form-control birth-year custom-form'
                 value={birth.year}
-                onChange={onInputChange('personalIdentification.birth.year', true)}
+                onChange={onInputChange('personalIdentification.birth.year', true, '-')}
               />
               <FieldGroup
                 type='text'
                 placeholder='MM'
                 bsClass='form-control birth-month custom-form'
                 value={birth.month}
-                onChange={onInputChange('personalIdentification.birth.month', true)}
+                onChange={onInputChange('personalIdentification.birth.month', true, '-')}
               />
               <FieldGroup
                 type='text'
                 placeholder='DD'
                 bsClass='form-control birth-date custom-form'
                 value={birth.date}
-                onChange={onInputChange('personalIdentification.birth.date', true)}
+                onChange={onInputChange('personalIdentification.birth.date', true, '-')}
               />
             </div>
           </FieldGroupWithLabelInlineAndChildren>
@@ -124,7 +124,7 @@ class PersonalInformation extends Component {
                 componentClass='select'
                 bsClass='form-control phone-holder-1 custorm-form'
                 value={phoneNumber.first}
-                onChange={onInputChange('personalIdentification.phoneNumber.first', true)}
+                onChange={onInputChange('personalIdentification.phoneNumber.first', true, '-')}
               >
                 <option value='010'> 010 </option>
                 <option value='011'> 011 </option>
@@ -137,13 +137,13 @@ class PersonalInformation extends Component {
                 type='text'
                 bsClass='form-control phone-holder-2 custom-form'
                 value={phoneNumber.second}
-                onChange={onInputChange('personalIdentification.phoneNumber.second', true)}
+                onChange={onInputChange('personalIdentification.phoneNumber.second', true, '-')}
               />
               <FieldGroup
                 type='text'
                 bsClass='form-control phone-holder-3 custom-form'
                 value={phoneNumber.third}
-                onChange={onInputChange('personalIdentification.phoneNumber.third', true)}
+                onChange={onInputChange('personalIdentification.phoneNumber.third', true, '-')}
               />
             </div>
           </FieldGroupWithLabelInlineAndChildren>

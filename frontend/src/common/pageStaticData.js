@@ -1,3 +1,5 @@
+import { validationType } from './validation';
+
 const defaultPageTitle = {
   fullText: `본 서식을 작성하기 앞서 제 20기 신입 단원\n공개 선발 안내문 필히 숙지해 주시길 바랍니다.`,
   underlineText: ['공개 선발 안내문'],
@@ -15,6 +17,61 @@ export default {
   },
   personalQuestions: {
     ...defaultPageTitle,
+    validation: {
+      required: [{
+        name: 'requestConsent',
+        message: '개인 정보를 동의해주세요.',
+        validationType: validationType.CONSENT,
+      },{
+        name: 'personalIdentification.name',
+        message: '이름을 입력해 주세요.',
+        validationType: validationType.EMPTY,
+      },{
+        name: 'personalIdentification.englishName',
+        message: '영어 이름을 입력해 주세요.',
+        validationType: validationType.EMPTY,
+      },{
+        name: 'personalIdentification.gender',
+        message: '성별 체크를 해주세요.',
+        validationType: validationType.GENDER,
+      },{
+        name: 'personalIdentification.birthText',
+        message: '생년월일을 정확히 입력해 주세요.(ex: 2001 01 01)',
+        validationType: validationType.DATE_OF_BIRTH,
+      },{
+        name: 'personalIdentification.phoneNumberText',
+        message: '휴대폰 번호를 정확히 입력해 주세요.',
+        validationType: validationType.PHONE,
+      },{
+        name: 'personalIdentification.address',
+        message: '주소를 입력해 주세요.',
+        validationType: validationType.EMPTY,
+      },{
+        name: 'personalIdentification.emailText',
+        message: '이메일을 정확히 입력해 주세요.',
+        validationType: validationType.EMAIL,
+      },{
+        name: 'education.schoolNameText',
+        message: '학교명을 입력해 주세요.',
+        validationType: validationType.EMPTY
+      },{
+        name: 'education.major',
+        message: '계열을 입력해 주세요.',
+        validationType: validationType.EMPTY
+      },{
+        name: 'education.location',
+        message: '소재지를 입력해 주세요.',
+        validationType: validationType.EMPTY
+      },{
+        name: 'education.graduationYear.entrance',
+        message: '입학 년월을 정확히 입력해 주세요.(ex: 2001/01)',
+        validationType: validationType.YEAR_MONTH
+      },{
+        name: 'education.graduationYear.graduation',
+        message: '졸업 년월을 정확히 입력해 주세요.(ex: 2001/01)',
+        validationType: validationType.YEAR_MONTH
+      }]
+    }
   },
   applyChoice: {
     ...defaultPageTitle,

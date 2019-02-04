@@ -23,6 +23,9 @@
 }
 
 .step-item:hover {
-  cursor: pointer;
+  text-decoration: none;
+}
+
+.step-item:focus {
   text-decoration: none;
 }

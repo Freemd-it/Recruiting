@@ -61,7 +61,7 @@ const interviewSchema = new Schema({
 })
 
 const UserSchema = new Schema({
-  origin:{},
+  clientStoreData:{},
   registedDate: {
     type: Date,
    default: new Date() // 현재 날짜를 기본값으로 지정

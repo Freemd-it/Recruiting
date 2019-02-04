@@ -16,24 +16,24 @@ export const changeInput = createAction(CHANGE_INPUT);
 const initialState = fromJS({
   otherAssignConsent: {
     ngo: false,
-    medical: false
+    medical: false,
   },
   isSecondApplyChoice: false,
   applyChoiceFormat: {
     department: '',
     team: '',
-    medical: ''
+    medical: '',
   },
   applyChoice: [
     {
       department: '',
       team: '',
-      medical: ''
+      medical: '',
     },
     {
       department: '',
       team: '',
-      medical: ''
+      medical: '',
     },
   ],
   common: {
@@ -41,7 +41,7 @@ const initialState = fromJS({
   },
   department: {
 
-  }
+  },
 });
 
 export default handleActions({

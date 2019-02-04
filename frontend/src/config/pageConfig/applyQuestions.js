@@ -5,5 +5,5 @@ export default {
   showNextSection: true,
   nextRoutePath: '/interviewChoice',
   previousRoutePath: '/applyChoice',
-  validationModuleKey: 'apply'
+  validationModuleKey: 'apply',
 }

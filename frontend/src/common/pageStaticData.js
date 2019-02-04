@@ -38,14 +38,14 @@ export default {
       {
         name: '디자인',
         description: '단체의 시각적\n정체성을 구축',
-        teams: ['팀 없음'],
+        teams: [],
         medicalOptions: ['무료진료소', '보건교육', '참여안함'],
         imageName: 'designImage',
       },
       {
         name: 'IT기획',
         description: '소외계층 환자 관리 등\n소프웨어를 기획, 개발',
-        teams: ['팀 없음'],
+        teams: [],
         medicalOptions: ['무료진료소', '참여안함'],
         imageName: 'itImage',
       },
@@ -66,7 +66,7 @@ export default {
       {
         name: '해외의료사업',
         description: '해외의료사업\n총 운영 업무 주관',
-        teams: ['팀 없음'],
+        teams: [],
         medicalOptions: ['해외의료'],
         imageName: 'overseasImage',
       }

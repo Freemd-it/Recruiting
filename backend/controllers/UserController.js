@@ -84,16 +84,22 @@ exports.update = async (req, res) => {
 exports.readStoreData = async(req, res) => {
   const {id} = req.params;
 
+  const respond = (user) => {
+    const {clientStoreData} = user
+    const value =  clientStoreData === null ? '': clientStoreData
+    res.json({
+      message: 'Read StoreData Success',
+      result: value
+    })
+  }
+
   try{
     const user = await User.findOneById(id)
+                  .then(respond)
+   
     if(!user) {
       res.status(404).json({error: 'User not exist'});
     };
-
-    res.json({
-      message: 'Read StoreData Success',
-      result: user.clientStoreData 
-    });
 
   }catch(err){
     res.status(500).json({
@@ -123,10 +129,11 @@ exports.updateStoreData = async(req, res) => {
     ).then(respond)
    
    }catch(err){
-     console.log(err)
      res.status(500).json({
        message: 'Update StoreData Fail',
        error : err
      })
    }
 }
+
+

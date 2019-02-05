@@ -83,7 +83,7 @@ exports.update = async (req, res) => {
 // 스토어 데이터 확인 
 exports.readStoreData = async(req, res) => {
   const {id} = req.params;
-
+  
   try{
     const user = await User.findOneById(id);
 
@@ -113,7 +113,8 @@ exports.updateStoreData = async(req, res) => {
  
   const respond = (user) => {
     const {clientStoreData} = user
-    const value =  !clientStoreData ? '': clientStoreData
+    const value =  !clientStoreData  ? {}: clientStoreData
+
     res.json({
       message: 'Update StoreData Success',
       result: value

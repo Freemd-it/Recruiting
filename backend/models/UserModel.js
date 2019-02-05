@@ -65,10 +65,11 @@ const interviewSchema = new Schema({
 
 const UserSchema = new Schema({
   clientStoreData:{
+
   },
   support_status: {
     type: Number,
-    default: '0'
+    default: '200'
   },
   registedDate: {
     type: Date,

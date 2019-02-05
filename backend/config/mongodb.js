@@ -8,7 +8,8 @@ const {MONGO_URL} = envConfig(node_env)
 
 try {
   mongoose.connect(MONGO_URL,{
-    useNewUrlParser : true
+    useNewUrlParser : true,
+    useCreateIndex: true,
   })
 } catch (err) {
   mongoose.createConnection(MONGO_URL)

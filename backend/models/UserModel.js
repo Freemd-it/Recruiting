@@ -11,8 +11,8 @@ const ExternalActivitiesSchema = new Schema({
     enum : ['인턴', '봉사활동']
   },
   organizer: String, 
-  start_date: Date, 
-  end_date: Date, 
+  start_date: String, // 2019/03
+  end_date: String, 
   turnaround_time: Number,
   content: String 
 })
@@ -22,7 +22,7 @@ const SpecialSchema = new Schema({
     type: String,
     enum: ['자격증', '어학능력', '기타능력']
   },
-  acquisition_date: Date,
+  // acquisition_date: Date,
   self_evaluation_ability: {
     type: String,
     enum: ['상', '중', '하']
@@ -62,6 +62,10 @@ const interviewSchema = new Schema({
 
 const UserSchema = new Schema({
   clientStoreData:{},
+  support_status: {
+    type: Number,
+    default: '0'
+  },
   registedDate: {
     type: Date,
    default: new Date() // 현재 날짜를 기본값으로 지정
@@ -76,11 +80,10 @@ const UserSchema = new Schema({
     
     can_moved: Boolean, 
     can_multiple_interview: Boolean,
-    support_status: Number,
 
     english_name: String,
     is_male: Boolean,
-    birth_date: Date, 
+    birth_date: String, // yyyy-mm-dd
     
     phone_number : String,
     sns : String,
@@ -102,8 +105,8 @@ const UserSchema = new Schema({
     location : String,
     degree : String,
     major: String,
-    entrance_date : Date,
-    graduation_date: Date
+    entrance_date : String,
+    graduation_date: String
   },
   external_activities: [ExternalActivitiesSchema],
   special_info: [SpecialSchema],
@@ -139,6 +142,14 @@ UserSchema.statics.findOneById = function(id){
   }).exec();
 };
 
+UserSchema.statics.findOneUserInfo = function(user_name, email){
+  console.log(user_name, email)
+  return this.findOne({
+    'basic_info.user_name':user_name,
+    'basic_info.email' : email
+  }).exec();
+};
+
 // email 로 찾기
 UserSchema.statics.findOneByEmail = function(email){
   return this.findOne({
@@ -148,7 +159,6 @@ UserSchema.statics.findOneByEmail = function(email){
 
 // 이름 으로 찾기
 UserSchema.statics.findOneByUsername = function(user_name) {
-  // console.log(user_name)
   return this.findOne({
       'basic_info.user_name' : user_name
   }).exec();

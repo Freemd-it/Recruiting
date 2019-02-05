@@ -2,11 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const database = require('./config/mongodb');
+const cors = require('cors')
 
 // config 불러오기 
 const {defaultConfig, envConfig} = require('./config/constants');
-
-const port = process.env.PORT || 3002;
 
 // 라우팅
 const api = require('./routes/api');
@@ -35,16 +34,15 @@ app.get('/', (req, res) => {
 app.use('/api', api);
 
 // cors
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 
+}
+
+app.use(cors(corsOptions))
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  if (req.method === 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', '*');
-      return res.status(200).json({});
-  }
+  console.log(res.header);
+  console.log(req.header);
   next();
 });
 

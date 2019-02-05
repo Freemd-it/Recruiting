@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const crypto = require('crypto')
-const config = require('../config')
+// const config = require('../config')
+const { envConfig} = require('../config/constants');
+const node_env = process.env.NODE_ENV
+const {JWT_SECRET} = envConfig(node_env)
 const multiUpdate = require('mongoose-multi-update')
 
 // 경력사항
@@ -61,7 +64,9 @@ const interviewSchema = new Schema({
 })
 
 const UserSchema = new Schema({
-  clientStoreData:{},
+  clientStoreData:{
+    default: ''
+  },
   support_status: {
     type: Number,
     default: '0'
@@ -118,7 +123,7 @@ const UserSchema = new Schema({
 // 몽고디비 저장
 // arrow function 이 안먹힘
 UserSchema.statics.create = function(user_name, email, password)  {
-  const secret = config.secret
+  const secret = JWT_SECRET
 
   const encrypted = crypto.createHmac('sha1', secret)
                     .update(password)
@@ -143,7 +148,6 @@ UserSchema.statics.findOneById = function(id){
 };
 
 UserSchema.statics.findOneUserInfo = function(user_name, email){
-  console.log(user_name, email)
   return this.findOne({
     'basic_info.user_name':user_name,
     'basic_info.email' : email
@@ -167,7 +171,7 @@ UserSchema.statics.findOneByUsername = function(user_name) {
 // 비밀번호 암호화
 UserSchema.methods.verify = function(password) {
   // console.log(this.password)
-  const encrypted = crypto.createHmac('sha1', config.secret)
+  const encrypted = crypto.createHmac('sha1', JWT_SECRET)
                           .update(password)
                           .digest('base64');
 

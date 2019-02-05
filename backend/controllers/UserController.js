@@ -91,13 +91,13 @@ exports.readStoreData = async(req, res) => {
     };
 
     res.json({
-      message: 'Read Origin Success',
-      result: user.clientStoreData
+      message: 'Read StoreData Success',
+      result: user.clientStoreData 
     });
 
   }catch(err){
     res.status(500).json({
-      message: 'Read Origin Fail',
+      message: 'Read StoreData Fail',
       error : err
     })
   }}
@@ -108,7 +108,7 @@ exports.updateStoreData = async(req, res) => {
  
   const respond = (user) => {
     res.json({
-      message: 'Update Origin Success',
+      message: 'Update StoreData Success',
       result: user.clientStoreData
     })
   }
@@ -122,7 +122,7 @@ exports.updateStoreData = async(req, res) => {
    
    }catch(err){
      res.status(500).json({
-       message: 'Update Origin Fail',
+       message: 'Update StoreData Fail',
        error : err
      })
    }

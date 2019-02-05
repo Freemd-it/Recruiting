@@ -2,60 +2,6 @@ const User = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
 
 
-
-
-exports.test = async(req, res) => {
-  const {user_name, email, password} = req.body;
-
-  // 유저 정보 유무 확인 
-
-  // 있다면 로그인 
-
-  // 없다면 회원가입 후 로그인 
-  try {
-    await User.findOneByEmail(email)
-    .then(create)
-    .then(respond)
-  }catch(err){
-    res.status(409).json({message: err.message});
-  }
-}
-
-
-
-// POST: baseUrl/api/auth/register
-// body : {user_name, email, password}
-exports.register = async (req, res) => {
-   const {user_name, email, password} = req.body;
-
-  // 가입자 생성
-  // TODO: 중복여부 체크 해야함.
-  const create = (user) => {
-    if(user) {
-      throw new Error('User exists')
-    } else {
-      return User.create(user_name, email, password)
-    }
-  }
-
-  // respond to the client
-  const respond = (user) => {
-    res.json({
-        message: 'Register Success',
-        result : user
-    })
-  }
-
-  try {
-    await User.findOneByEmail(email)
-    .then(create)
-    .then(respond)
-  }catch(err){
-    res.status(409).json({message: err.message});
-  }
-}
-
-
 // POST: baseUrl/api/auth/login
 // body : {user_name, email, password}
 exports.login = async (req, res) => {
@@ -117,6 +63,7 @@ exports.login = async (req, res) => {
     .then(respond)
 
   } catch(err) {
+    console.log(err)
     res.status(403).json({
       message: err.message
     })

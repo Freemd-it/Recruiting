@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "pm2-dev start ecosystem.config.js",
+    "deploy" : "npm install && pm2 start ecosystem.config.js --env production",
+    "start:local": "cross-env NODE_ENV=local nodemon app.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon app.js",
+    "start:prod": "cross-env NODE_ENV=production nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,6 +16,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
     "eslint": "^5.12.1",
     "express": "^4.16.4",
     "joi": "^14.3.1",

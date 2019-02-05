@@ -1,16 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const mongoose = require('mongoose');
+const database = require('./config/mongodb');
 
 // config 불러오기 
-const config = require('./config')
+const {defaultConfig, envConfig} = require('./config/constants');
+
 const port = process.env.PORT || 3002;
 
 // 라우팅
 const api = require('./routes/api');
 
 const app = express();
+const node_env = process.env.NODE_ENV
+const {MONGO_URL, JWT_SECRET} = envConfig(node_env)
 
 // 설정
 app.use(logger('dev'));
@@ -22,11 +25,10 @@ app.use(bodyParser.json());
 
 
 // 비밀키 
-app.set('jwt-secret', config.secret)
-
+app.set('jwt-secret', JWT_SECRET)
 
 app.get('/', (req, res) => {
-    res.send('테스트 api 서버')
+    res.send('api 서버')
 });
 
 // /api요청 사용
@@ -40,7 +42,7 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   if (req.method === 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+      res.header('Access-Control-Allow-Methods', '*');
       return res.status(200).json({});
   }
   next();
@@ -56,18 +58,18 @@ app.use(function(err, req, res, next) {
   res.json({message : err.message})
 });
 
-app.listen(port, () => {
-  console.log(`running on port : ${port} `)
-});
-
-
-
-mongoose.Promise = global.Promise;
-// 몽고디비 연결
-mongoose.connect(config.mongodbUri_dev, {
-  useNewUrlParser: true
-}).then(()=> {
-  console.log(`connected to ${config.mongodbUri_dev}`)
-}).catch((e) => {
-  console.error(e);
+app.listen(defaultConfig.PORT, err => {
+  if(err){
+    throw err;
+  } else {
+    console.log(`
+    Server running on port: ${defaultConfig.PORT}
+    ---
+    NODE_ENV :${node_env}
+    ---
+    Running on ${MONGO_URL} 
+    ---
+    Freemed Online!!!
+    `);
+  };
 });

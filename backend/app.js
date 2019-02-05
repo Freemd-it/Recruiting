@@ -30,22 +30,20 @@ app.get('/', (req, res) => {
     res.send('api 서버')
 });
 
-// /api요청 사용
-app.use('/api', api);
 
 // cors
 const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200 
 }
-
 app.use(cors(corsOptions))
 app.use((req, res, next) => {
   console.log(res.header);
   console.log(req.header);
   next();
 });
-
+// /api요청 사용
+app.use('/api', api);
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;

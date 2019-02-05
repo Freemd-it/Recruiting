@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const crypto = require('crypto')
-const config = require('../config')
+// const config = require('../config')
+const { envConfig} = require('../config/constants');
+const node_env = process.env.NODE_ENV
+const {JWT_SECRET} = envConfig(node_env)
 const multiUpdate = require('mongoose-multi-update')
 
 // 경력사항
@@ -11,8 +14,8 @@ const ExternalActivitiesSchema = new Schema({
     enum : ['인턴', '봉사활동']
   },
   organizer: String, 
-  start_date: Date, 
-  end_date: Date, 
+  start_date: String, // 2019/03
+  end_date: String, 
   turnaround_time: Number,
   content: String 
 })
@@ -22,7 +25,7 @@ const SpecialSchema = new Schema({
     type: String,
     enum: ['자격증', '어학능력', '기타능력']
   },
-  acquisition_date: Date,
+  // acquisition_date: Date,
   self_evaluation_ability: {
     type: String,
     enum: ['상', '중', '하']
@@ -61,7 +64,12 @@ const interviewSchema = new Schema({
 })
 
 const UserSchema = new Schema({
-  clientStoreData:{},
+  clientStoreData:{
+  },
+  support_status: {
+    type: Number,
+    default: '0'
+  },
   registedDate: {
     type: Date,
    default: new Date() // 현재 날짜를 기본값으로 지정
@@ -76,11 +84,10 @@ const UserSchema = new Schema({
     
     can_moved: Boolean, 
     can_multiple_interview: Boolean,
-    support_status: Number,
 
     english_name: String,
     is_male: Boolean,
-    birth_date: Date, 
+    birth_date: String, // yyyy-mm-dd
     
     phone_number : String,
     sns : String,
@@ -102,8 +109,8 @@ const UserSchema = new Schema({
     location : String,
     degree : String,
     major: String,
-    entrance_date : Date,
-    graduation_date: Date
+    entrance_date : String,
+    graduation_date: String
   },
   external_activities: [ExternalActivitiesSchema],
   special_info: [SpecialSchema],
@@ -115,7 +122,7 @@ const UserSchema = new Schema({
 // 몽고디비 저장
 // arrow function 이 안먹힘
 UserSchema.statics.create = function(user_name, email, password)  {
-  const secret = config.secret
+  const secret = JWT_SECRET
 
   const encrypted = crypto.createHmac('sha1', secret)
                     .update(password)
@@ -139,6 +146,13 @@ UserSchema.statics.findOneById = function(id){
   }).exec();
 };
 
+UserSchema.statics.findOneUserInfo = function(user_name, email){
+  return this.findOne({
+    'basic_info.user_name':user_name,
+    'basic_info.email' : email
+  }).exec();
+};
+
 // email 로 찾기
 UserSchema.statics.findOneByEmail = function(email){
   return this.findOne({
@@ -148,7 +162,6 @@ UserSchema.statics.findOneByEmail = function(email){
 
 // 이름 으로 찾기
 UserSchema.statics.findOneByUsername = function(user_name) {
-  // console.log(user_name)
   return this.findOne({
       'basic_info.user_name' : user_name
   }).exec();
@@ -157,7 +170,7 @@ UserSchema.statics.findOneByUsername = function(user_name) {
 // 비밀번호 암호화
 UserSchema.methods.verify = function(password) {
   // console.log(this.password)
-  const encrypted = crypto.createHmac('sha1', config.secret)
+  const encrypted = crypto.createHmac('sha1', JWT_SECRET)
                           .update(password)
                           .digest('base64');
 

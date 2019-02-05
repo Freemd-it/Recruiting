@@ -77,10 +77,10 @@ class PersonalInformation extends Component {
             label='성별'
           >
             <div className={cx('personal-form-holder')}>
-              <Button classes={{root: gender === 'mail' ? classes.buttonChecked : classes.buttonRoot}} onClick={() => onButtonChange('personalIdentification.gender','mail')} >
+              <Button classes={{root: gender === 'male' ? classes.buttonChecked : classes.buttonRoot}} onClick={() => onButtonChange('personalIdentification.gender','male')} >
                 남성
               </Button>
-              <Button classes={{root: gender === 'femail' ? classes.buttonChecked  : classes.buttonRoot}} onClick={() => onButtonChange('personalIdentification.gender', 'femail')}>
+              <Button classes={{root: gender === 'female' ? classes.buttonChecked  : classes.buttonRoot}} onClick={() => onButtonChange('personalIdentification.gender', 'female')}>
                 여성
               </Button>
             </div>

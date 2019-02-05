@@ -29,8 +29,9 @@ class CareerFormGroup extends Component {
                 componentClass='select'
                 bsClass='form-control career-division-item-1 custorm-form'
                 value={activityType}
-                onChange={onInputChange(`career.detail.${formGroupIndex}.activityType.`, false)}
+                onChange={onInputChange(`career.detail.${formGroupIndex}.activityType`, false)}
               >
+                <option value=''> 선택안함 </option>
                 <option value='인턴'> 인턴 </option>
               </FormControl>
               <FieldGroup

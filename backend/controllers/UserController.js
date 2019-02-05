@@ -86,7 +86,7 @@ exports.readStoreData = async(req, res) => {
 
   const respond = (user) => {
     const {clientStoreData} = user
-    const value =  clientStoreData === null ? '': clientStoreData
+    const value =  !clientStoreData  ? {}: clientStoreData
     res.json({
       message: 'Read StoreData Success',
       result: value
@@ -114,7 +114,8 @@ exports.updateStoreData = async(req, res) => {
  
   const respond = (user) => {
     const {clientStoreData} = user
-    const value =  !clientStoreData ? '': clientStoreData
+    const value =  !clientStoreData  ? {}: clientStoreData
+
     res.json({
       message: 'Update StoreData Success',
       result: value

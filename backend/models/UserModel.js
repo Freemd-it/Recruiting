@@ -65,7 +65,6 @@ const interviewSchema = new Schema({
 
 const UserSchema = new Schema({
   clientStoreData:{
-    default: ''
   },
   support_status: {
     type: Number,

@@ -84,29 +84,28 @@ exports.update = async (req, res) => {
 exports.readStoreData = async(req, res) => {
   const {id} = req.params;
 
-  const respond = (user) => {
-    const {clientStoreData} = user
-    const value =  clientStoreData === null ? '': clientStoreData
+  try{
+    const user = await User.findOneById(id);
+
+    if(!user) {
+      res.status(404).json({error: 'User not exist'});
+      return;
+    };
+
+    const { clientStoreData } = user;
+    const value = !clientStoreData ? {}: clientStoreData;
+
     res.json({
       message: 'Read StoreData Success',
       result: value
     })
-  }
 
-  try{
-    const user = await User.findOneById(id)
-                  .then(respond)
-   
-    if(!user) {
-      res.status(404).json({error: 'User not exist'});
-    };
-
-  }catch(err){
+  } catch (err) {
     res.status(500).json({
       message: 'Read StoreData Fail',
       error : err
     })
-  }}
+  }};
 
 // 스토어 데이터 수정 
 exports.updateStoreData = async(req, res) => {

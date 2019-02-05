@@ -8,6 +8,7 @@ export const initState = createAction(INIT_STATE);
 export const changeInput = createAction(CHANGE_INPUT);
 
 const initialState = fromJS({
+  id: '',
   name: '',
   email: '',
   password: '',

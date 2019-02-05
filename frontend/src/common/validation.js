@@ -1,18 +1,4 @@
-export const checkLavel = {
-  VALUE: 'value',
-  COMPARE: 'compare'
-};
-
-export const validationType  = {
-  CONSENT: 'consent',
-  EMAIL: 'email',
-  DATE_OF_BIRTH: 'dateOfBirth',
-  EMPTY: 'empty',
-  PHONE: 'phone',
-  GENDER: 'gender',
-  YEAR_MONTH: 'yearMonth',
-  NOT_EQUAL: 'notEqual'
-};
+import { validationType } from './types';
 
 export default {
   [validationType.CONSENT]: value => value,

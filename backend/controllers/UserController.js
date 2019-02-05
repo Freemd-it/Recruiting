@@ -38,39 +38,26 @@ exports.read = async (req, res) => {
 exports.update = async (req, res) => {
   const {id} = req.params;
 
-  const {
-    basic_info,
-    academic_career,
-    external_activities,
-    special_info,
-    question_info,
-    interview_info
-  } = req.body;
+  const {basic_info, academic_career, external_activities, special_info, question_info, interview_info} = req.body;
 
-  let data = {
-    basic_info,
-    academic_career,
-    external_activities,
-    special_info,
-    question_info,
-    interview_info
-  }
+  try {
+    let user = await User.findOneById(id);
+
+    let data = {
+      basic_info: {...basic_info, password: user.basic_info.password},
+      academic_career,
+      external_activities,
+      special_info,
+      question_info,
+      interview_info
+    };
     
-  const respond = (user) => {
+    await User.findByIdAndUpdate({_id : id}, {$set: data}, {new:true, upsert: true});
     res.json({
       message: 'Update Success',
       result: user
     })
-  }
 
-  try {
-    console.log(data)
-    await User.findByIdAndUpdate(
-      {_id : id},
-      {$set: data},
-      {new:true, upsert: true}
-    ).then(respond)
-  
   }catch(err){
     res.status(500).json({
       message: 'Update Fail',

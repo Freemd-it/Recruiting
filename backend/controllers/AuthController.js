@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
 
     const response = [token, user._id, user.support_status];
     res.json({
-      message: 'Register Success',
+      message: 'login Success',
       results: response,
     })
 
@@ -31,7 +31,6 @@ exports.login = async (req, res) => {
     })
   }
 };
-
 
 
 // GET /api/auth/check

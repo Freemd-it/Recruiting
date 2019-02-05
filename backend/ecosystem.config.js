@@ -7,12 +7,12 @@ module.exports = {
           script: "./app.js",
           // 개발환경시 적용될 설정 지정
           env: {
-              "PORT": 3002,
+              "PORT": 3003,
               "NODE_ENV": "development"
           },
           // 배포환경시 적용될 설정 지정
           env_production: {
-              "PORT": 8080,
+              "PORT": 3002,
               "NODE_ENV": "production"
           }
       }

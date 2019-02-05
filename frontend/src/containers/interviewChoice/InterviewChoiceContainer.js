@@ -19,8 +19,6 @@ class InterviewChoiceContainer extends Component {
     });
   };
 
-  componentDidMount() {
-  }
 
   render() {
     const { checkedFields } = this.props;

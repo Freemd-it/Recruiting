@@ -58,6 +58,7 @@
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
     "redux-localstorage-simple": "^2.1.4",
+    "redux-saga": "^1.0.1",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",

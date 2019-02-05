@@ -48,7 +48,11 @@ class NextSection extends Component {
             이전
           </Button>
         }
-        <Button variant='contained' classes={{ root: config.showPreviousSection ? classes.buttonNext : classes.buttonNextFullWidth}} onClick={onNextButtonClick}>
+        <Button
+          variant='contained'
+          classes={{ root: config.showPreviousSection ?
+          classes.buttonNext : classes.buttonNextFullWidth}}
+          onClick={onNextButtonClick}>
           {config.pageType !== 'interviewChoice' ? '다음' : '제출'}
         </Button>
       </div>

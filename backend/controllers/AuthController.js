@@ -1,51 +1,21 @@
 const User = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
 
-// POST: baseUrl/api/auth/register
-// body : {user_name, email, password}
-exports.register = async (req, res) => {
-   const {user_name, email, password} = req.body;
-
-  // 가입자 생성
-  // TODO: 중복여부 체크 해야함.
-  const create = (user) => {
-    if(user) {
-      throw new Error('User exists')
-    } else {
-      return User.create(user_name, email, password)
-    }
-  }
-
-  // respond to the client
-  const respond = (user) => {
-    res.json({
-        message: 'Register Success',
-        result : user
-    })
-  }
-
-  try {
-    await User.findOneByEmail(email)
-    .then(create)
-    .then(respond)
-  }catch(err){
-    res.status(409).json({message: err.message});
-  }
-}
-
 
 // POST: baseUrl/api/auth/login
 // body : {user_name, email, password}
-
 exports.login = async (req, res) => {
   const {user_name, email, password} = req.body;
   const secret = req.app.get('jwt-secret');
 
+  // 체크 
   const check = (user) => {
     const user_info = user
-    console.log('user_info', user_info)
+
     if(!user_info){
-      throw Error ('User not exists');
+      return User.create(user_name, email, password)
+      .then(check)
+      .then(ResgisterRespond)
     }else {
       if(user.verify(password)) {
         const pw = new Promise((resovle, reject) => {
@@ -59,7 +29,7 @@ exports.login = async (req, res) => {
            subject:'userInfo',
          }, (err, token) => {
            if(err) reject(err);
-           resovle([token, user._id])
+           resovle([token, user._id, user.support_status])
          });
         });
         return pw
@@ -76,13 +46,24 @@ exports.login = async (req, res) => {
     })
   }
 
+  const ResgisterRespond = (token) => {
+    res.json({
+      message: 'Register Success',
+      results: token,
+    })
+  }
+ 
+
   try {
   
-    await User.findOneByEmail(email)
+    // 이메일을 찾고 체크를 한뒤 응답 
+    await User.findOneUserInfo(user_name, email)
+    // await User.findOneByEmail(email)
     .then(check)
     .then(respond)
 
   } catch(err) {
+    console.log(err)
     res.status(403).json({
       message: err.message
     })

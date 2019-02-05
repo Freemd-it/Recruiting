@@ -16,7 +16,6 @@ exports.read = async (req, res) => {
   const {id} = req.params;
 
   try{
-
     const user = await User.findOneById(id)
 
     if(!user) {
@@ -37,8 +36,8 @@ exports.read = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-  console.log(`=========update start=============`)
   const {id} = req.params;
+
   const {
     basic_info,
     academic_career,
@@ -46,8 +45,17 @@ exports.update = async (req, res) => {
     special_info,
     question_info,
     interview_info
-      } = req.body;
-  
+  } = req.body;
+
+  let data = {
+    basic_info,
+    academic_career,
+    external_activities,
+    special_info,
+    question_info,
+    interview_info
+  }
+    
   const respond = (user) => {
     res.json({
       message: 'Update Success',
@@ -56,19 +64,12 @@ exports.update = async (req, res) => {
   }
 
   try {
-   await User.findById({_id:id}, function(err, user) {
-      user
-          .multiUpdate({
-            basic_info: basic_info,
-            academic_career: academic_career,
-            external_activities : external_activities,
-            special_info : special_info,
-            question_info : question_info,
-            interview_info: interview_info
-          })
-          .save();
-
-  }).then(respond);
+    console.log(data)
+    await User.findByIdAndUpdate(
+      {_id : id},
+      {$set: data},
+      {new:true, upsert: true}
+    ).then(respond)
   
   }catch(err){
     res.status(500).json({
@@ -76,8 +77,6 @@ exports.update = async (req, res) => {
       error : err
     })
   }
-
-console.log(`=========update end=============`)
 }
 
 
@@ -85,20 +84,26 @@ console.log(`=========update end=============`)
 exports.readStoreData = async(req, res) => {
   const {id} = req.params;
 
+  const respond = (user) => {
+    const {clientStoreData} = user
+    const value =  clientStoreData === null ? '': clientStoreData
+    res.json({
+      message: 'Read StoreData Success',
+      result: value
+    })
+  }
+
   try{
     const user = await User.findOneById(id)
+                  .then(respond)
+   
     if(!user) {
       res.status(404).json({error: 'User not exist'});
     };
 
-    res.json({
-      message: 'Read Origin Success',
-      result: user.clientStoreData
-    });
-
   }catch(err){
     res.status(500).json({
-      message: 'Read Origin Fail',
+      message: 'Read StoreData Fail',
       error : err
     })
   }}
@@ -108,9 +113,11 @@ exports.updateStoreData = async(req, res) => {
   const {id} = req.params;
  
   const respond = (user) => {
+    const {clientStoreData} = user
+    const value =  clientStoreData === null ? '': clientStoreData
     res.json({
-      message: 'Update Origin Success',
-      result: user.clientStoreData
+      message: 'Update StoreData Success',
+      result: value
     })
   }
 
@@ -123,8 +130,10 @@ exports.updateStoreData = async(req, res) => {
    
    }catch(err){
      res.status(500).json({
-       message: 'Update Origin Fail',
+       message: 'Update StoreData Fail',
        error : err
      })
    }
 }
+
+

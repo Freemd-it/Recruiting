@@ -7,7 +7,9 @@ const node_env = process.env.NODE_ENV
 const {MONGO_URL} = envConfig(node_env)
 
 try {
-  mongoose.connect(MONGO_URL)
+  mongoose.connect(MONGO_URL,{
+    useNewUrlParser : true
+  })
 } catch (err) {
   mongoose.createConnection(MONGO_URL)
 }

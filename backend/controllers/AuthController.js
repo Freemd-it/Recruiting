@@ -1,6 +1,28 @@
 const User = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
 
+
+
+
+exports.test = async(req, res) => {
+  const {user_name, email, password} = req.body;
+
+  // 유저 정보 유무 확인 
+
+  // 있다면 로그인 
+
+  // 없다면 회원가입 후 로그인 
+  try {
+    await User.findOneByEmail(email)
+    .then(create)
+    .then(respond)
+  }catch(err){
+    res.status(409).json({message: err.message});
+  }
+}
+
+
+
 // POST: baseUrl/api/auth/register
 // body : {user_name, email, password}
 exports.register = async (req, res) => {
@@ -36,16 +58,18 @@ exports.register = async (req, res) => {
 
 // POST: baseUrl/api/auth/login
 // body : {user_name, email, password}
-
 exports.login = async (req, res) => {
   const {user_name, email, password} = req.body;
   const secret = req.app.get('jwt-secret');
 
+  // 체크 
   const check = (user) => {
     const user_info = user
-    console.log('user_info', user_info)
+
     if(!user_info){
-      throw Error ('User not exists');
+      return User.create(user_name, email, password)
+      .then(check)
+      .then(ResgisterRespond)
     }else {
       if(user.verify(password)) {
         const pw = new Promise((resovle, reject) => {
@@ -59,7 +83,7 @@ exports.login = async (req, res) => {
            subject:'userInfo',
          }, (err, token) => {
            if(err) reject(err);
-           resovle([token, user._id])
+           resovle([token, user._id, user.support_status])
          });
         });
         return pw
@@ -76,9 +100,19 @@ exports.login = async (req, res) => {
     })
   }
 
+  const ResgisterRespond = (token) => {
+    res.json({
+      message: 'Register Success',
+      results: token,
+    })
+  }
+ 
+
   try {
   
-    await User.findOneByEmail(email)
+    // 이메일을 찾고 체크를 한뒤 응답 
+    await User.findOneUserInfo(user_name, email)
+    // await User.findOneByEmail(email)
     .then(check)
     .then(respond)
 

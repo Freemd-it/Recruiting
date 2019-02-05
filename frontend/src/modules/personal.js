@@ -58,30 +58,30 @@ const initialState = fromJS({
   career: {
     count: '1',
     detailFormat: {
-      activityType: '인턴',
+      activityType: '',
       activityDetail: '',
       durationStart: '',
       durationEnd: '',
+      time: '',
       content: '',
     },
     detail: [{
-      activityType: '인턴',
+      activityType: '',
       activityDetail: '',
       durationStart: '',
       durationEnd: '',
+      time: '',
       content: '',
     }],
   },
   speciality: {
     count: '1',
     detailFormat: {
-      activityType: '공인영어',
       activityDetail: '',
       grade: '',
       content: '',
     },
     detail: [{
-      activityType: '공인영어',
       activityDetail: '',
       grade: '',
       content: '',

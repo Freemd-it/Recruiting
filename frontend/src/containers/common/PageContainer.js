@@ -45,11 +45,12 @@ class PageContainer extends Component {
       interview: state.interview.toJS()
     });
 
-    /*recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, convertModelToSchemaBased({
+
+    recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, convertModelToSchemaBased({
       personal: state.personal.toJS(),
       apply: state.apply.toJS(),
-      state: state.interview.toJS()
-    }))*/
+      interview: state.interview.toJS()
+    }))
   };
 
 

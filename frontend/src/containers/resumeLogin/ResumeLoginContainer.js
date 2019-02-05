@@ -32,7 +32,6 @@ class ResumeLoginContainer extends Component {
     try {
       loginData = await userApi.login(userFields);
 
-      console.log(loginData);
       if (loginData[2] !== SupportStatusType.PROCEEDING) {
         window.alert(message.alreadySubmitted);
         return;

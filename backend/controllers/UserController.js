@@ -107,9 +107,11 @@ exports.updateStoreData = async(req, res) => {
   const {id} = req.params;
  
   const respond = (user) => {
+    const {clientStoreData} = user
+    const value =  clientStoreData === null ? '': clientStoreData
     res.json({
       message: 'Update StoreData Success',
-      result: user.clientStoreData
+      result: value
     })
   }
 
@@ -121,6 +123,7 @@ exports.updateStoreData = async(req, res) => {
     ).then(respond)
    
    }catch(err){
+     console.log(err)
      res.status(500).json({
        message: 'Update StoreData Fail',
        error : err

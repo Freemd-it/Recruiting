@@ -1,6 +1,5 @@
 import axios from 'axios';
 import serverConfig from '../config/serverConfig';
-import * as _ from 'lodash';
 
 const convertModelToSchemaBased = ({ personal, apply, interview }) => {
   const { personalIdentification, education, career, speciality } = personal;
@@ -80,7 +79,7 @@ export default {
         key += questionClassId.toString();
       }
     });
-    console.log({ key });
+    console.log(`${serverConfig.url}/api/recruits/questions?key=${key}`);
     // return axios.get(`${serverConfig.url}/api/recruits/questions`, {key});
   },
 }

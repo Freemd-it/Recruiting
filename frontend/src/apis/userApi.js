@@ -4,7 +4,7 @@ import message from '../common/message';
 
 export default {
   login: ({name, email, password}) => {
-    return axios.post(`${serverConfig.url}:${serverConfig.port}/api/auth/login`, {
+    return axios.post(`${serverConfig.url}/api/auth/login`, {
       user_name: name,
       email,
       password
@@ -14,7 +14,7 @@ export default {
     })
   },
   getStoreDataByUser: (id, accessToken) => {
-    return axios.get(`${serverConfig.url}:${serverConfig.port}/api/recruits/${id}/clientStoreData`, {
+    return axios.get(`${serverConfig.url}/api/recruits/${id}/clientStoreData`, {
       headers: {'x-access-token': `${accessToken}`}
     }).then(res => res.data.result)
       .catch(err => {
@@ -23,7 +23,7 @@ export default {
       })
   },
   saveStoreDataByUser: (id, accessToken, body) => {
-    return axios.put(`${serverConfig.url}:${serverConfig.port}/api/recruits/${id}/clientStoreData`, {
+    return axios.put(`${serverConfig.url}/api/recruits/${id}/clientStoreData`, {
       clientStoreData: {
         ...body
       }

@@ -1,6 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
-import { fromJS } from 'immutable';
+import { fromJS, removeIn, setIn } from 'immutable';
 import Consts from '../common/consts';
+import * as _ from 'lodash';
+
 const INIT_STATE = 'apply/INIT_STATE';
 const LOAD_SAVED_STATE = 'apply/LOAD_SAVED_STATE';
 const TEXT_ANSWER_CHANGED = 'apply/TEXT_ANSWER_CHANGED';
@@ -8,6 +10,7 @@ const FILE_ANSWER_CHANGED = 'apply/FILE_ANSWER_CHANGED';
 const SELECT_ANSWER_CHANGED = 'apply/SELECT_ANSWER_CHANGED';
 const DEPARTMENT_CHOICE_CHANGED = 'apply/DEPARTMENT_CHOICE_CHANGED';
 const CHANGE_INPUT = 'apply/CHANGE_INPUT';
+const PAGE_REFRESHED = 'apply/PAGE_REFRESHED';
 
 export const initState = createAction(INIT_STATE);
 export const loadSavedState = createAction(LOAD_SAVED_STATE);
@@ -16,6 +19,7 @@ export const fileAnswerChanged = createAction(FILE_ANSWER_CHANGED);
 export const selectAnswerChanged = createAction(SELECT_ANSWER_CHANGED);
 export const changeInput = createAction(CHANGE_INPUT);
 export const departmentChoiceChanged = createAction(DEPARTMENT_CHOICE_CHANGED);
+export const pageRefreshed = createAction(PAGE_REFRESHED);
 
 const initialState = fromJS({
   otherAssignConsent: {
@@ -56,20 +60,22 @@ export default handleActions({
     if (type === 'common') {
       return state.setIn([type, index], content);
     } else {
-      return state.setIn([type, questionClassId, index, answerType], content);
+      return fromJS(setIn(state.toJS(), [type, questionClassId, index, answerType], content));
     }
   },
   [FILE_ANSWER_CHANGED]: (state, action) => {
     const { type, index, questionClassId, answerType, file } = action.payload;
-    return state.setIn([type, questionClassId, index, answerType], 
+    const url = URL.createObjectURL(file);
+    let updated = setIn(state.toJS(), [type, questionClassId, index, answerType], 
       {
         'name': file.name,
-        'url': URL.createObjectURL(file)
+        'url': url,
       });
+    return fromJS(setIn(updated, [type, 'files', `${questionClassId}.${index}.file`], url))
   },
   [SELECT_ANSWER_CHANGED]: (state, action) => {
     const { type, index, questionClassId, answerType, techName, abilityIndex } = action.payload;
-    return state.setIn([type, questionClassId, index, answerType, techName], abilityIndex);
+    return fromJS(setIn(state.toJS(), [type, questionClassId, index, answerType, techName], abilityIndex));
   },
   [CHANGE_INPUT]: (state, action) => {
     const keyPath = [...Object.keys(action.payload)[0].split('.')];
@@ -78,13 +84,30 @@ export default handleActions({
   [DEPARTMENT_CHOICE_CHANGED]: (state, action) => {
     const applyChoice = action.payload;
     const questionIds = applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team));
-    const departmentQuestions = state.get('department') ? state.get('department').toJS() : {};
+    const files = state.get('department').get('files') ? state.get('department').get('files').toJS() : {};
+    const filteredFiles = Object.keys(files)
+      .filter(key => questionIds.includes(parseInt(key.split('.')[0])))
+      .reduce((obj, key) => ({...obj, [key]: files[key]}), {});
+
+    let updated = state.setIn(['department', 'files'], fromJS(filteredFiles));
+    questionIds.push('files');
+    const departmentQuestions = updated.get('department') ? updated.get('department').toJS() : {};
     const filteredQuestions = Object.keys(departmentQuestions)
-      .filter(key => questionIds.includes(parseInt(key)))
-      .reduce((obj, key) => {
-        obj[key] = departmentQuestions[key];
-        return obj;
-      }, {});
-    return state.set('department', fromJS(filteredQuestions));
+      .filter(key => questionIds.includes(key) || questionIds.includes(parseInt(key)))
+      .reduce((obj, key) => ({...obj, [key]: departmentQuestions[key]}), {});
+
+    return updated.set('department', fromJS(filteredQuestions));
+  },
+  [PAGE_REFRESHED]: (state, action) => {
+    const files = state.getIn(['department', 'files']).toJS();
+    let updated = state.toJS();
+    updated = setIn(updated, ['department', 'files'], {});
+    Object.keys(files).forEach(key => {
+      let keyPath = ['department'].concat(key.split('.'));
+      keyPath[1] = parseInt(keyPath[1]);
+      keyPath[2] = parseInt(keyPath[2]);
+      updated = removeIn(updated, keyPath);
+    });
+    return fromJS(updated);
   },
 }, initialState);

@@ -28,6 +28,10 @@
       display: flex;
       justify-content: flex-end;
       width: 930px;
+
+      textarea {
+        resize: none;
+      }
     }
     .custorm-form {
       &:focus {

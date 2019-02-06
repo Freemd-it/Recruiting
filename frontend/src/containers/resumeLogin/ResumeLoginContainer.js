@@ -32,24 +32,37 @@ class ResumeLoginContainer extends Component {
     try {
       loginData = await userApi.login(userFields);
 
-      if (loginData[2] !== SupportStatusType.PROCEEDING) {
-        window.alert(message.alreadySubmitted);
+      if (this._loginCheck(loginData) === false) {
         return;
       }
     } catch (err) {
-        window.alert(message.serverError);
+        window.alert(message.SERVER_ERROR);
         return;
     }
 
     /**
      * id redux 저장 및 기존 store 초기화, store 데이터 세팅
      */
-    userActions.changeInput({id : loginData[1]});
-    const storeData = await userApi.getStoreDataByUser(loginData[1], window.localStorage.accessToken);
+    userActions.changeInput({id : loginData.results[1]});
+    const storeData = await userApi.getStoreDataByUser(loginData.results[1], window.localStorage.accessToken);
 
     this._initStoreAndLoadSaved(storeData);
 
     this.props.history.push('/personalQuestions');
+  };
+
+  _loginCheck = (loginData) => {
+    if (!loginData.results && loginData.isExistEmail) {
+      window.alert(message.EXIST_EMAIL);
+      return false;
+    }
+
+    if (loginData.results[2] !== SupportStatusType.PROCEEDING) {
+      window.alert(message.ALREADY_SUBMITTED);
+      return false;
+    }
+
+    return true;
   };
 
   _initStoreAndLoadSaved = (storeData) => {
@@ -62,7 +75,7 @@ class ResumeLoginContainer extends Component {
     });
 
     // Load
-    if (Object.keys(storeData).length > 0 && window.confirm(message.loadSaved)) {
+    if (Object.keys(storeData).length > 0 && window.confirm(message.LOAD_SAVED)) {
       const actionsObjForload = {
         personal: personalActions,
         apply: applyActions,

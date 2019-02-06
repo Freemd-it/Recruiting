@@ -1,4 +1,3 @@
-import { validationType } from './validation';
 
 const defaultPageTitle = {
   fullText: `본 서식을 작성하기 앞서 제 20기 신입 단원\n공개 선발 안내문 필히 숙지해 주시길 바랍니다.`,

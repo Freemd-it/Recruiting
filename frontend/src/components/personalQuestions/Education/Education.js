@@ -99,6 +99,8 @@ class Education extends Component {
               >
                 <option value='졸업'> 졸업 </option>
                 <option value='재학'> 재학 </option>
+                <option value='휴학'> 휴학 </option>
+                <option value='대학원'> 대학원 </option>
               </FormControl>
             </div>
           </FieldGroupWithLabelInlineAndChildren>

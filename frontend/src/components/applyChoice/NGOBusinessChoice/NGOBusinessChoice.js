@@ -84,6 +84,7 @@ const NGOBusinessChoice = (props) => {
             ...theme.colors,
             primary: '#ff5858',
             primary25: '#ff5858',
+            primary50: '#ff5858',
           },
         })}
       />

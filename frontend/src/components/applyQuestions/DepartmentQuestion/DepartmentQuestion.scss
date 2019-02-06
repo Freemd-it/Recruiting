@@ -1,0 +1,21 @@
+.department-question-form {
+  margin-top: 52px;
+
+  .department-title {
+    font-size: 26px;
+    color: #707070;
+    font-family: 'NotoSans-Thin';
+    margin: 18px 0px;
+  }
+
+  .department-answer-form:not(:first-child) {
+    margin-top: 80px;
+  }
+
+  &:not(:first-child) {
+    margin-top: 220px !important;
+  }
+}
+
+
+

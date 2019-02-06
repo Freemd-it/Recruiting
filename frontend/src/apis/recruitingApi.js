@@ -1,8 +1,9 @@
 import axios from 'axios';
 import serverConfig from '../config/serverConfig';
 
-const convertModelToSchemaBased = ({personal, apply, interview}) => {
-  const { personalIdentification, education, career, speciality} = personal;
+const convertModelToSchemaBased = ({ personal, apply, interview }) => {
+  const { personalIdentification, education, career, speciality } = personal;
+  const { common, department } = apply;
   return {
     basic_info: {
       user_name: personalIdentification.name,
@@ -32,21 +33,21 @@ const convertModelToSchemaBased = ({personal, apply, interview}) => {
           special_type: row.activityDetail,
           self_evaluation_ability: row.grade,
           content: row.content,
-      }))) : []
+        }))) : []
     ),
     external_activities: (
       career.detail[0].activityType.length > 0 ? (
         career.detail.map(row => ({
-        external_type: row.activityType,
-        organizer: row.activityDetail,
-        start_date: row.durationStart,
-        end_date: row.durationEnd,
-        turnaround_time: row.turnaround_time,
-        content: row.content,
-      }))) : []
+          external_type: row.activityType,
+          organizer: row.activityDetail,
+          start_date: row.durationStart,
+          end_date: row.durationEnd,
+          turnaround_time: row.turnaround_time,
+          content: row.content,
+        }))) : []
     ),
     question_info: {
-
+      common: Object.entries(common).sort((a, b) => a - b).map(row => row[1]),
     },
     interview_info: interview.interviewDates.map(row => ({
       interview_date: ['2019', ...row.day.replace(/ /gi, '').split('.')].splice(0, 3).join('-'),
@@ -65,7 +66,20 @@ export default {
     return axios.put(`${serverConfig.url}/api/recruits/${id}`, {
       ...body
     }, {
-      headers: {"x-access-token": `${accessToken}`}
-    })
+        headers: { "x-access-token": `${accessToken}` }
+      })
+  },
+  getQuestionInfo: (questionClassIds) => {
+    let key = '';
+    questionClassIds.forEach((questionClassId, index) => {
+      if (questionClassId !== null) {
+        if (index > 0) {
+          key += '_';
+        }
+        key += questionClassId.toString();
+      }
+    });
+    console.log(`${serverConfig.url}/api/recruits/questions?key=${key}`);
+    // return axios.get(`${serverConfig.url}/api/recruits/questions`, {key});
   },
 }

@@ -3,16 +3,19 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom'
 import { } from '../../components/applyQuestions';
-import CommonQuestion from '../../components/applyQuestions/CommonQuestion/CommonQuestion';
 
 import * as applyActions from '../../modules/apply';
+import recruitingApi from '../../apis/recruitingApi';
+import Consts from '../../common/consts';
+
+import CommonQuestion from '../../components/applyQuestions/CommonQuestion';
 import DepartmentQuestion from '../../components/applyQuestions/DepartmentQuestion';
 
 class ApplyQuestionsContainer extends Component {
 
   handleInputChange = (props) => event => {
     const { applyActions } = this.props;
-    const { type, name, answerType, index, techName } = props;
+    const { type, questionClassId, answerType, index, techName } = props;
     switch (type) {
       case 'common':
         applyActions.textAnswerChanged({ type, index, content: event.target.value.substring(0, 500) });
@@ -20,13 +23,13 @@ class ApplyQuestionsContainer extends Component {
       case 'department':
         switch (answerType) {
           case 'text':
-            applyActions.textAnswerChanged({ type, index, name, answerType, content: event.target.value.substring(0, 500) });
+            applyActions.textAnswerChanged({ type, index, questionClassId, answerType, content: event.target.value.substring(0, 500) });
             break;
           case 'file':
-            applyActions.fileAnswerChanged({ type, index, name, answerType, file: event.target.files[0] });
+            applyActions.fileAnswerChanged({ type, index, questionClassId, answerType, file: event.target.files[0] });
             break;
           case 'select':
-            applyActions.selectAnswerChanged({ type, index, name, answerType, techName, abilityIndex: event.target.value });
+            applyActions.selectAnswerChanged({ type, index, questionClassId, answerType, techName, abilityIndex: event.target.value });
             break;
           default:
             break;
@@ -36,6 +39,12 @@ class ApplyQuestionsContainer extends Component {
         break;
     }
   };
+
+  componentDidMount() {
+    const { state, applyActions } = this.props;
+    recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)));
+    applyActions.departmentChoiceChanged(state.applyChoice);
+  }
 
   render() {
     const { state } = this.props;
@@ -51,7 +60,9 @@ class ApplyQuestionsContainer extends Component {
     state.applyChoice.forEach((choice, index) => {
       if (choice.department !== '') {
         questionData.department.push({
-          name: `${choice.department}본부 (${choice.team})`,
+          department: choice.department,
+          team: choice.team,
+          questionClassId: Consts.getQuestionClassId(choice.department, choice.team),
           rank: index + 1,
           questions: [
             {
@@ -63,10 +74,8 @@ class ApplyQuestionsContainer extends Component {
               answerType: 'file'
             },
             {
-              question: `프리메드에서 디자인적으로 취약한 부분이라고 생각되는 점과 이를 개선하기 위해 
-                어떠한 해결책을 제시하고자 하는지 구체적으로 서술해 주십시오. 혹은 문제점과 별개로 
-                프리메드에서 진행하고 싶은 사업이 있다면 자유롭게 서술해주십시오.`,
-              answerType: 'text'
+              question: `하실 줄 아는 기술에 대해 적어주세요.`,
+              answerType: 'select'
             }
           ]
         })

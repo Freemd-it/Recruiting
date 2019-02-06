@@ -51,10 +51,7 @@ class ApplyChoiceContainer extends Component {
     const { applyState, applyActions } = this.props;
     const { isSecondApplyChoice, applyChoiceFormat } = applyState;
     applyActions.changeInput({'isSecondApplyChoice' : !isSecondApplyChoice});
-
-    if (!isSecondApplyChoice) {
-      applyActions.changeInput({'applyChoice.1' : applyChoiceFormat});
-    }
+    applyActions.changeInput({'applyChoice.1' : applyChoiceFormat});
   };
 
   render() {

@@ -9,8 +9,10 @@ export default {
       email,
       password
     }).then(res => {
-      window.localStorage.setItem('accessToken', res.data.results[0]);
-      return res.data.results;
+      if (res.data.results) {
+        window.localStorage.setItem('accessToken', res.data.results[0]);
+      }
+      return res.data;
     })
   },
   getStoreDataByUser: (id, accessToken) => {

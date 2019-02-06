@@ -12,8 +12,9 @@ import {
   interviewActions
 } from '../../reducers';
 
-import message from '../../common/message';
 import { SupportStatusType } from '../../common/types';
+import message from '../../common/message';
+
 import userApi from '../../apis/userApi'
 
 class ResumeLoginContainer extends Component {

@@ -2,3 +2,22 @@
   padding-left: 61px;
   padding-right: 61px;
 }
+
+.save-button {
+  position: absolute;
+  top:743px;
+  width: inherit;
+  padding-right: 122px;
+
+  display: inline-flex;
+  justify-content: flex-end;
+  button {
+    width: 90px;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid #f76c6c;
+    color: #ff5858;
+    font-family: 'NotoSans-Medium';
+    font-size: 14px;
+  }
+}

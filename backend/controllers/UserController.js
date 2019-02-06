@@ -49,7 +49,8 @@ exports.update = async (req, res) => {
       external_activities,
       special_info,
       question_info,
-      interview_info
+      interview_info,
+      support_status: 201
     };
     
     await User.findByIdAndUpdate({_id : id}, {$set: data}, {new:true, upsert: true});

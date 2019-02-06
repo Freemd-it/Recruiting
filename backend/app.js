@@ -42,6 +42,16 @@ app.use((req, res, next) => {
   console.log(req.header);
   next();
 });
+
+// bucketOptions 
+const bucketOptions = {
+  ENV: process.env.NODE_ENV,
+  bucket : 'freemed.recruiting',
+  prifix: 'Portfolios',
+  prifix: 'test'
+}
+
+
 // /api요청 사용
 app.use('/api', api);
 app.use(function(err, req, res, next) {

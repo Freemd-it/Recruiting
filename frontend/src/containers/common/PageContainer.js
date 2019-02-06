@@ -64,18 +64,21 @@ class PageContainer extends Component {
     const { history, state } = this.props;
     const userId = state.user.toJS().id;
 
-    const isAlreadySubmitted = recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, convertModelToSchemaBased({
+    const sendData = convertModelToSchemaBased({
       personal: state.personal.toJS(),
       apply: state.apply.toJS(),
       interview: state.interview.toJS()
-    }));
+    });
+    let isAlreadySubmitted = false;
+    sendData.then(body => {
+      isAlreadySubmitted = recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, body);
+    });
 
     if (isAlreadySubmitted) {
       window.alert(message.ALREADY_SUBMITTED);
       history.push('/');
       return false;
     }
-
     return true;
   };
 
@@ -84,7 +87,7 @@ class PageContainer extends Component {
 
     let hasNotValidatedItem = false;
 
-    switch(match.path) {
+    switch (match.path) {
       case '/personalQuestions':
       case '/applyChoice':
         hasNotValidatedItem = this._validate(actionModule, required);
@@ -109,7 +112,7 @@ class PageContainer extends Component {
   _validate = (actionModule, required) => {
     let hasNotValidatedItem;
     return required.find(row => {
-      switch(row.checkLavel) {
+      switch (row.checkLavel) {
         case CheckLavelType.VALUE:
           hasNotValidatedItem = !validation[row.validationType](_.get(actionModule, [...row.key.split('.')]));
           break;
@@ -127,9 +130,16 @@ class PageContainer extends Component {
     });
   };
 
-  render() {
-    const { pageLayout: LayoutComponent } = this.props;
+  componentDidMount() {
+    const { applyActions } = this.props;
+    window.onbeforeunload = function () {
+      applyActions.pageRefreshed();
+    }.bind(this);
+  }
 
+  render() {
+
+    const { pageLayout: LayoutComponent, state } = this.props;
     return (
       <>
         <LayoutComponent

@@ -61,7 +61,7 @@ class PageContainer extends Component {
   };
 
   _submit = () => {
-    const { state } = this.props;
+    const { history, state } = this.props;
     const userId = state.user.toJS().id;
 
     const isAlreadySubmitted = recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, convertModelToSchemaBased({
@@ -72,6 +72,7 @@ class PageContainer extends Component {
 
     if (isAlreadySubmitted) {
       window.alert(message.ALREADY_SUBMITTED);
+      history.push('/');
       return false;
     }
 

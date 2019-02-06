@@ -66,7 +66,7 @@ export default {
       ...body
     }, {
         headers: { "x-access-token": `${accessToken}` }
-      })
+    }).then(res => res.data.isAlreadySubmitted)
   },
   getQuestionInfo: (questionClassIds) => {
     let key = '';

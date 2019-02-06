@@ -5,13 +5,14 @@ import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
 import { personalActions, applyActions, interviewActions } from '../../reducers'
-import validation, { checkLavel } from '../../common/validation';
+import { checkLavelType } from '../../common/types';
+import validation from '../../common/validation';
+
+import message from '../../common/message';
+import userApi from '../../apis/userApi'
+import recruitingApi, { convertModelToSchemaBased } from '../../apis/recruitingApi'
 
 class PageContainer extends Component {
-  //Todo login시 redux 및 스토리지 서버 가져와서 연동.
-  componentDidMount() {
-
-  };
 
   handlePreviousButtonClick = e => {
     const { history, config } = this.props;
@@ -26,9 +27,32 @@ class PageContainer extends Component {
     const validateResult = this._validateByPage(match, actionModule, config.validation);
 
     if (validateResult) {
+      if (config.pageType === 'interviewChoice') {
+        this._submit();
+      }
+
       history.push(config.nextRoutePath);
     }
   };
+
+  _submit = () => {
+    const { state } = this.props;
+    const userId = state.user.toJS().id;
+
+    userApi.saveStoreDataByUser(userId, window.localStorage.accessToken, {
+      personal: state.personal.toJS(),
+      apply: state.apply.toJS(),
+      interview: state.interview.toJS()
+    });
+
+
+    recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, convertModelToSchemaBased({
+      personal: state.personal.toJS(),
+      apply: state.apply.toJS(),
+      interview: state.interview.toJS()
+    }))
+  };
+
 
   _validateByPage = (match, actionModule, { required }) => {
     const { state } = this.props;
@@ -48,7 +72,7 @@ class PageContainer extends Component {
           return (timeCount >= 2 || !shouldInterview) && (timeCount === 0 || shouldInterview)
         });
         if (hasNotValidatedItem) {
-          window.alert('각 본부에 맞게 인터뷰 날짜를 최소 2개 이상 선정하셔야 합니다.');
+          window.alert(message.interviewChoice);
         }
         return !hasNotValidatedItem;
 
@@ -61,10 +85,10 @@ class PageContainer extends Component {
     let hasNotValidatedItem;
     return required.find(row => {
       switch(row.checkLavel) {
-        case checkLavel.VALUE:
+        case checkLavelType.VALUE:
           hasNotValidatedItem = !validation[row.validationType](_.get(actionModule, [...row.key.split('.')]));
           break;
-        case checkLavel.COMPARE:
+        case checkLavelType.COMPARE:
           hasNotValidatedItem = !validation[row.validationType](_.get(actionModule, [...row.key1.split('.')]), _.get(actionModule, [...row.key2.split('.')]));
           break;
         default:

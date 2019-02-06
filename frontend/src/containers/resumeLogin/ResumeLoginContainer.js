@@ -5,7 +5,16 @@ import { withRouter } from 'react-router-dom'
 
 import { LoginForm } from '../../components/resumeLogin';
 
-import * as userActions from '../../modules/user';
+import {
+  userActions,
+  personalActions,
+  applyActions,
+  interviewActions
+} from '../../reducers';
+
+import message from '../../common/message';
+import { SupportStatusType } from '../../common/types';
+import userApi from '../../apis/userApi'
 
 class ResumeLoginContainer extends Component {
 
@@ -14,14 +23,56 @@ class ResumeLoginContainer extends Component {
     userActions.changeInput({[name] : event.target.value});
   };
 
-  handleSubmit = e => {
-    const { userFields } = this.props;
+  handleSubmit = async (e) => {
+    const { userFields, userActions } = this.props;
+
+    e.preventDefault();
+
+    let loginData;
+    try {
+      loginData = await userApi.login(userFields);
+
+      if (loginData[2] !== SupportStatusType.PROCEEDING) {
+        window.alert(message.alreadySubmitted);
+        return;
+      }
+    } catch (err) {
+        window.alert(message.serverError);
+        return;
+    }
+
     /**
-     * login post 요청, 만약 있으면 바로 넘어감
+     * id redux 저장 및 기존 store 초기화, store 데이터 세팅
      */
-    // axios.post('/api/login');
+    userActions.changeInput({id : loginData[1]});
+    const storeData = await userApi.getStoreDataByUser(loginData[1], window.localStorage.accessToken);
+
+    this._initStoreAndLoadSaved(storeData);
 
     this.props.history.push('/personalQuestions');
+  };
+
+  _initStoreAndLoadSaved = (storeData) => {
+    const { personalActions, applyActions, interviewActions } = this.props;
+    const actions = [ personalActions, applyActions, interviewActions ];
+
+    // 초기화
+    actions.forEach(action => {
+      action.initState();
+    });
+
+    // Load
+    if (Object.keys(storeData).length > 0 && window.confirm(message.loadSaved)) {
+      const actionsObjForload = {
+        personal: personalActions,
+        apply: applyActions,
+        interview: interviewActions,
+      };
+
+      Object.keys(actionsObjForload).forEach(key => {
+        actionsObjForload[key].loadSavedState(storeData[key])
+      });
+    }
   };
 
   render() {
@@ -44,6 +95,9 @@ export default withRouter(connect(
   }),
   (dispatch) => ({
     userActions: bindActionCreators(userActions, dispatch),
+    personalActions: bindActionCreators(personalActions, dispatch),
+    applyActions: bindActionCreators(applyActions, dispatch),
+    interviewActions: bindActionCreators(interviewActions, dispatch),
   })
 )(ResumeLoginContainer));
 

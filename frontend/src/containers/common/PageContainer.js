@@ -27,7 +27,7 @@ class PageContainer extends Component {
     const validateResult = this._validateByPage(match, actionModule, config.validation);
 
     if (validateResult) {
-      if (config.pageType === 'interviewChoice' && window.confirm(message.supportConfirm)) {
+      if (config.pageType === 'interviewChoice' && window.confirm(message.SUPPORT_CONFIRM)) {
         this._submit();
       }
 
@@ -72,7 +72,7 @@ class PageContainer extends Component {
           return (timeCount >= 2 || !shouldInterview) && (timeCount === 0 || shouldInterview)
         });
         if (hasNotValidatedItem) {
-          window.alert(message.interviewChoice);
+          window.alert(message.INTERVIEW_CHOICE);
         }
         return !hasNotValidatedItem;
 

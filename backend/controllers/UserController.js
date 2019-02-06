@@ -41,39 +41,27 @@ exports.read = async (req, res) => {
 exports.update = async (req, res) => {
   const {id} = req.params;
 
-  const {
-    basic_info,
-    academic_career,
-    external_activities,
-    special_info,
-    question_info,
-    interview_info
-  } = req.body;
+  const {basic_info, academic_career, external_activities, special_info, question_info, interview_info} = req.body;
 
-  let data = {
-    basic_info,
-    academic_career,
-    external_activities,
-    special_info,
-    question_info,
-    interview_info
-  }
+  try {
+    let user = await User.findOneById(id);
+
+    let data = {
+      basic_info: {...basic_info, password: user.basic_info.password},
+      academic_career,
+      external_activities,
+      special_info,
+      question_info,
+      interview_info,
+      support_status: 201
+    };
     
-  const respond = (user) => {
+    await User.findByIdAndUpdate({_id : id}, {$set: data}, {new:true, upsert: true});
     res.json({
       message: 'Update Success',
       result: user
     })
-  }
 
-  try {
-    console.log(data)
-    await User.findByIdAndUpdate(
-      {_id : id},
-      {$set: data},
-      {new:true, upsert: true}
-    ).then(respond)
-  
   }catch(err){
     res.status(500).json({
       message: 'Update Fail',
@@ -86,30 +74,29 @@ exports.update = async (req, res) => {
 // 스토어 데이터 확인 
 exports.readStoreData = async(req, res) => {
   const {id} = req.params;
+  
+  try{
+    const user = await User.findOneById(id);
 
-  const respond = (user) => {
-    const {clientStoreData} = user
-    const value =  !clientStoreData  ? {}: clientStoreData
+    if(!user) {
+      res.status(404).json({error: 'User not exist'});
+      return;
+    };
+
+    const { clientStoreData } = user;
+    const value = !clientStoreData ? {}: clientStoreData;
+
     res.json({
       message: 'Read StoreData Success',
       result: value
     })
-  }
 
-  try{
-    const user = await User.findOneById(id)
-                  .then(respond)
-   
-    if(!user) {
-      res.status(404).json({error: 'User not exist'});
-    };
-
-  }catch(err){
+  } catch (err) {
     res.status(500).json({
       message: 'Read StoreData Fail',
       error : err
     })
-  }}
+  }};
 
 // 스토어 데이터 수정 
 exports.updateStoreData = async(req, res) => {

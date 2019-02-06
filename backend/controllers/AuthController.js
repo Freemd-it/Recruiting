@@ -13,6 +13,16 @@ exports.login = async (req, res) => {
     let user = await User.findOneUserInfo(user_name, email);
 
     if (!user) {
+      const isExistEmail = await User.findOneByEmail(email);
+
+      if (isExistEmail) {
+        res.json({
+          message: 'exist email',
+          results: false,
+          isExistEmail: true,
+        });
+        return;
+      }
       user = await User.create(user_name, email, password);
     }
 
@@ -31,6 +41,7 @@ exports.login = async (req, res) => {
     })
   }
 };
+
 
 
 // GET /api/auth/check

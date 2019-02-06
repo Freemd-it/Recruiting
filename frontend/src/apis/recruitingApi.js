@@ -62,7 +62,7 @@ export {
 
 export default {
   submitRecruiting: (id, accessToken, body) => {
-    return axios.put(`${serverConfig.url}:${serverConfig.port}/api/recruits/${id}`, {
+    return axios.put(`${serverConfig.url}/api/recruits/${id}`, {
       ...body
     }, {
       headers: {"x-access-token": `${accessToken}`}

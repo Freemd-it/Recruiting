@@ -28,8 +28,9 @@ class PageContainer extends Component {
     const validateResult = this._validateByPage(match, actionModule, config.validation);
 
     if (validateResult) {
-      if (config.pageType === 'interviewChoice' && window.confirm(message.SUPPORT_CONFIRM)) {
-        this._submit();
+      const checkResult = this._checkSubmit();
+      if (!checkResult) {
+        return;
       }
 
       history.push(config.nextRoutePath);
@@ -49,8 +50,18 @@ class PageContainer extends Component {
     window.alert(message.TEMPORARY_SAVE)
   };
 
+  _checkSubmit = () => {
+    const { config } = this.props;
+
+    if (config.pageType === 'interviewChoice' && window.confirm(message.SUPPORT_CONFIRM)) {
+      return this._submit();
+    }
+
+    return true;
+  };
+
   _submit = () => {
-    const { state } = this.props;
+    const { history, state } = this.props;
     const userId = state.user.toJS().id;
 
     const sendData = convertModelToSchemaBased({
@@ -58,12 +69,18 @@ class PageContainer extends Component {
       apply: state.apply.toJS(),
       interview: state.interview.toJS()
     });
-
+    let isAlreadySubmitted = false;
     sendData.then(body => {
-      recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, body);
+      isAlreadySubmitted = recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, body);
     });
-  };
 
+    if (isAlreadySubmitted) {
+      window.alert(message.ALREADY_SUBMITTED);
+      history.push('/');
+      return false;
+    }
+    return true;
+  };
 
   _validateByPage = (match, actionModule, { required }) => {
     const { state } = this.props;

@@ -41,7 +41,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
             }))) : []
         ),
         external_activities: (
-          career.detail[0].activityType.length > 0 ? (
+          career.detail[0].activityDetail.length > 0 ? (
             career.detail.map(row => ({
               external_type: row.activityType,
               organizer: row.activityDetail,
@@ -96,7 +96,7 @@ export default {
       ...body
     }, {
         headers: { "x-access-token": `${accessToken}` }
-      })
+    }).then(res => res.data.isAlreadySubmitted)
   },
   getQuestionInfo: (questionClassIds) => {
     let key = '';

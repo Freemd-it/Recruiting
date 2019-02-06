@@ -36,15 +36,14 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
         }))) : []
     ),
     external_activities: (
-      career.detail[0].activityType.length > 0 ? (
+      career.detail[0].activityDetail.length > 0 ? (
         career.detail.map(row => ({
-          external_type: row.activityType,
-          organizer: row.activityDetail,
-          start_date: row.durationStart,
-          end_date: row.durationEnd,
-          turnaround_time: row.turnaround_time,
-          content: row.content,
-        }))) : []
+        organizer: row.activityDetail,
+        start_date: row.durationStart,
+        end_date: row.durationEnd,
+        turnaround_time: row.turnaround_time,
+        content: row.content,
+      }))) : []
     ),
     question_info: {
       common: Object.entries(common).sort((a, b) => a - b).map(row => row[1]),
@@ -67,7 +66,7 @@ export default {
       ...body
     }, {
         headers: { "x-access-token": `${accessToken}` }
-      })
+    }).then(res => res.data.isAlreadySubmitted)
   },
   getQuestionInfo: (questionClassIds) => {
     let key = '';

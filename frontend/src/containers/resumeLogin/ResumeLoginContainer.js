@@ -33,7 +33,7 @@ class ResumeLoginContainer extends Component {
     try {
       loginData = await userApi.login(userFields);
 
-      if (this._loginCheck(loginData) === false) {
+      if (!this._loginCheck(loginData)) {
         return;
       }
     } catch (err) {

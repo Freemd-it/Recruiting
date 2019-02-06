@@ -5,10 +5,11 @@ import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
 import { personalActions, applyActions, interviewActions } from '../../reducers'
-import { checkLavelType } from '../../common/types';
-import validation from '../../common/validation';
 
+import { CheckLavelType } from '../../common/types';
+import validation from '../../common/validation';
 import message from '../../common/message';
+
 import userApi from '../../apis/userApi'
 import recruitingApi, { convertModelToSchemaBased } from '../../apis/recruitingApi'
 
@@ -27,7 +28,7 @@ class PageContainer extends Component {
     const validateResult = this._validateByPage(match, actionModule, config.validation);
 
     if (validateResult) {
-      if (config.pageType === 'interviewChoice' && window.confirm(message.supportConfirm)) {
+      if (config.pageType === 'interviewChoice' && window.confirm(message.SUPPORT_CONFIRM)) {
         this._submit();
       }
 
@@ -35,7 +36,7 @@ class PageContainer extends Component {
     }
   };
 
-  _submit = () => {
+  handleSaveStoreDataByUser = () => {
     const { state } = this.props;
     const userId = state.user.toJS().id;
 
@@ -45,6 +46,12 @@ class PageContainer extends Component {
       interview: state.interview.toJS()
     });
 
+    window.alert(message.TEMPORARY_SAVE)
+  };
+
+  _submit = () => {
+    const { state } = this.props;
+    const userId = state.user.toJS().id;
 
     recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, convertModelToSchemaBased({
       personal: state.personal.toJS(),
@@ -72,7 +79,7 @@ class PageContainer extends Component {
           return (timeCount >= 2 || !shouldInterview) && (timeCount === 0 || shouldInterview)
         });
         if (hasNotValidatedItem) {
-          window.alert(message.interviewChoice);
+          window.alert(message.INTERVIEW_CHOICE);
         }
         return !hasNotValidatedItem;
 
@@ -85,10 +92,10 @@ class PageContainer extends Component {
     let hasNotValidatedItem;
     return required.find(row => {
       switch(row.checkLavel) {
-        case checkLavelType.VALUE:
+        case CheckLavelType.VALUE:
           hasNotValidatedItem = !validation[row.validationType](_.get(actionModule, [...row.key.split('.')]));
           break;
-        case checkLavelType.COMPARE:
+        case CheckLavelType.COMPARE:
           hasNotValidatedItem = !validation[row.validationType](_.get(actionModule, [...row.key1.split('.')]), _.get(actionModule, [...row.key2.split('.')]));
           break;
         default:
@@ -110,6 +117,7 @@ class PageContainer extends Component {
         <LayoutComponent
           onNextButtonClick={this.handleNextButtonClick}
           onPreviousButtonClick={this.handlePreviousButtonClick}
+          onSaveStoreDataByUser={this.handleSaveStoreDataByUser}
           {...this.props}
         />
       </>

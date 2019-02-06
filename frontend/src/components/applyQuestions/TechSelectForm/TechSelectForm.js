@@ -21,7 +21,7 @@ const materialStyles = () => ({
   }
 });
 
-const TechSelectForm = ({ onInputChange, type, index, name, answer, classes }) => {
+const TechSelectForm = ({ onInputChange, type, index, questionClassId, answer, classes }) => {
 
   const techNames = [
     'JavaScript', 'HTML', 'jQuery', 'SQL', 'Linux', 'CSS', 'PHP', 'Node.js'
@@ -51,7 +51,7 @@ const TechSelectForm = ({ onInputChange, type, index, name, answer, classes }) =
               row
               defaultValue={'3'}
               value={answer ? answer[techName] : '3'}
-              onChange={onInputChange({ type, index, name, techName, answerType: 'select'})}
+              onChange={onInputChange({ type, index, questionClassId, techName, answerType: 'select'})}
             >
               {degreeNames.map((abilityName, abilityIndex) => (
                 <FormControlLabel 

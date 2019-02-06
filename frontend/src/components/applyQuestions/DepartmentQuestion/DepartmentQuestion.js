@@ -11,14 +11,14 @@ const cx = classNames.bind(styles);
 
 const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
 
-  const answerFormByType = (answerType, index, name, answer, onInputChange) => {
+  const answerFormByType = (answerType, index, questionClassId, answer, onInputChange) => {
     switch (answerType) {
       case 'text':
         return (
           <AnswerArea
             type={'department'}
             index={index}
-            name={name}
+            questionClassId={questionClassId}
             answer={answer ? answer.text : ''}
             onInputChange={onInputChange}
           />
@@ -30,14 +30,14 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
             <AnswerArea
               type={'department'}
               index={index}
-              name={name}
+              questionClassId={questionClassId}
               answer={answer ? answer.text : ''}
               onInputChange={onInputChange}
             />
             <FileUploadForm
               type={'department'}
               index={index}
-              name={name}
+              questionClassId={questionClassId}
               answer={answer ? answer.file : null}
               onInputChange={onInputChange}
             />
@@ -49,14 +49,14 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
             <TechSelectForm
               type={'department'}
               index={index}
-              name={name}
+              questionClassId={questionClassId}
               answer={answer ? answer.select : null}
               onInputChange={onInputChange}
             />
             <AnswerArea
               type={'department'}
               index={index}
-              name={name}
+              questionClassId={questionClassId}
               answer={answer ? answer.text : ''}
               onInputChange={onInputChange}
             />
@@ -67,26 +67,29 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
     }
   }
 
-  const componentByModule = (questionModule, index) => (
-    <div key={index} className={cx('department-question-form')}>
-      <div className={cx('department-title')}>
-        {questionModule.rank}지망: {questionModule.name}
+  const componentByModule = (questionModule, index) => {
+    const { department, team, rank, questions, questionClassId } = questionModule;
+    return (
+      <div key={index} className={cx('department-question-form')}>
+        <div className={cx('department-title')}>
+          {rank}지망: {`${department} ${team === '' ? '' : `(${team})`}`}
+        </div>
+        <div>
+          {questions.map(({ question, answerType }, questionIndex) => (
+            <div key={`${index}__${questionIndex}`} className={cx('department-answer-form')}>
+              <SubsectionHeader title={`Q. ${question}`} />
+              {answerFormByType(
+                answerType,
+                questionIndex,
+                questionClassId,
+                answers[questionClassId] ? answers[questionClassId][questionIndex] : '',
+                onInputChange)}
+            </div>
+          ))}
+        </div>
       </div>
-      <div>
-        {questionModule.questions.map(({ question, answerType }, questionIndex) => (
-          <div key={`${index}__${questionIndex}`} className={cx('department-answer-form')}>
-            <SubsectionHeader title={`Q. ${question}`} />
-            {answerFormByType(
-              answerType,
-              questionIndex,
-              questionModule.name,
-              answers[questionModule.name] ? answers[questionModule.name][questionIndex] : '',
-              onInputChange)}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
+    )
+  }
 
   return (
     <>

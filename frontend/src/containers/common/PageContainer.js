@@ -27,7 +27,7 @@ class PageContainer extends Component {
     const validateResult = this._validateByPage(match, actionModule, config.validation);
 
     if (validateResult) {
-      if (config.pageType === 'interviewChoice') {
+      if (config.pageType === 'interviewChoice' && window.confirm(message.supportConfirm)) {
         this._submit();
       }
 

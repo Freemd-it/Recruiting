@@ -58,7 +58,6 @@ const initialState = fromJS({
   career: {
     count: '1',
     detailFormat: {
-      activityType: '',
       activityDetail: '',
       durationStart: '',
       durationEnd: '',
@@ -66,7 +65,6 @@ const initialState = fromJS({
       content: '',
     },
     detail: [{
-      activityType: '',
       activityDetail: '',
       durationStart: '',
       durationEnd: '',

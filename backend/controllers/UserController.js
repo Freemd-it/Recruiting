@@ -43,6 +43,15 @@ exports.update = async (req, res) => {
   try {
     let user = await User.findOneById(id);
 
+    if (user && user.support_status !== 200) {
+      res.json({
+        message: 'already submitted',
+        result: false,
+        isAlreadySubmitted: true
+      });
+      return;
+    }
+
     let data = {
       basic_info: {...basic_info, password: user.basic_info.password},
       academic_career,
@@ -59,7 +68,7 @@ exports.update = async (req, res) => {
       result: user
     })
 
-  }catch(err){
+  } catch(err){
     res.status(500).json({
       message: 'Update Fail',
       error : err

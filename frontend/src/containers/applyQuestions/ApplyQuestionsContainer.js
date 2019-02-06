@@ -7,6 +7,7 @@ import { } from '../../components/applyQuestions';
 import * as applyActions from '../../modules/apply';
 import recruitingApi from '../../apis/recruitingApi';
 import Consts from '../../common/consts';
+import message from '../../common/message';
 
 import CommonQuestion from '../../components/applyQuestions/CommonQuestion';
 import DepartmentQuestion from '../../components/applyQuestions/DepartmentQuestion';
@@ -26,6 +27,10 @@ class ApplyQuestionsContainer extends Component {
             applyActions.textAnswerChanged({ type, index, questionClassId, answerType, content: event.target.value.substring(0, 500) });
             break;
           case 'file':
+            if (event.target.files[0].size > 1048576 * 10) {
+              window.alert(message.EXCEED_FILE_CAPACITY);
+              break;
+            }
             applyActions.fileAnswerChanged({ type, index, questionClassId, answerType, file: event.target.files[0] });
             break;
           case 'select':
@@ -42,6 +47,7 @@ class ApplyQuestionsContainer extends Component {
 
   componentDidMount() {
     const { state, applyActions } = this.props;
+    // applyActions.pageRefreshed();
     recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)));
     applyActions.departmentChoiceChanged(state.applyChoice);
   }

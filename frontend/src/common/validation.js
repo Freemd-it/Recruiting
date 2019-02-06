@@ -1,26 +1,26 @@
-import { validationType } from './types';
+import { ValidationType } from './types';
 
 export default {
-  [validationType.CONSENT]: value => value,
-  [validationType.EMAIL]: value => (
+  [ValidationType.CONSENT]: value => value,
+  [ValidationType.EMAIL]: value => (
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/.test(value)
   ),
-  [validationType.DATE_OF_BIRTH]: value => (
+  [ValidationType.DATE_OF_BIRTH]: value => (
     /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/.test(value)
   ),
-  [validationType.GENDER]: value => (
+  [ValidationType.GENDER]: value => (
     value.length > 0
   ),
-  [validationType.EMPTY]: value => (
+  [ValidationType.EMPTY]: value => (
     value.length > 0
   ),
-  [validationType.PHONE]: value => (
+  [ValidationType.PHONE]: value => (
     /^\d{3}-\d{3,4}-\d{4}$/.test(value)
   ),
-  [validationType.YEAR_MONTH]: value => (
+  [ValidationType.YEAR_MONTH]: value => (
     /^(19|20)\d{2}\/(0[1-9]|1[012])$/.test(value)
   ),
-  [validationType.NOT_EQUAL]: (value1, value2) => (
+  [ValidationType.NOT_EQUAL]: (value1, value2) => (
     value1 !== value2
   )
 }

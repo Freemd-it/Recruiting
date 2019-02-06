@@ -4,6 +4,7 @@ export default {
   showStepSection: true,
   showPreviousSection: true,
   showNextSection: true,
+  showTemporarySaveButton: true,
   nextRoutePath: '/resumeComplete',
   previousRoutePath: '/applyQuestions',
   validationModuleKey: 'interview',

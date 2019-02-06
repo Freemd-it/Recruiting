@@ -11,8 +11,8 @@ import styles from './PageCommonTemplate.scss';
 const cx = classNames.bind(styles);
 
 const PageCommonTemplate = (props) => {
-  const { children, config } = props;
-  const { showStepSection, showNextSection } = config;
+  const { children, config, onSaveStoreDataByUser } = props;
+  const { showStepSection, showNextSection, showTemporarySaveButton } = config;
 
   return (
     <div>
@@ -20,8 +20,10 @@ const PageCommonTemplate = (props) => {
         { showStepSection && <StepSection/> }
         <main className={cx('container')}>
           {children}
+          { showTemporarySaveButton && <div className={cx('save-button')}><button onClick={onSaveStoreDataByUser}>임시저장</button></div>}
         </main>
         { showNextSection && <NextSection config={config} {...props}/> }
+
       <Footer/>
     </div>
   );

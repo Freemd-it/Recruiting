@@ -6,12 +6,12 @@ const SupportStatusType = {
   HOLDING: 204,
 };
 
-const checkLavelType = {
+const CheckLavelType = {
   VALUE: 'value',
   COMPARE: 'compare'
 };
 
-const validationType  = {
+const ValidationType  = {
   CONSENT: 'consent',
   EMAIL: 'email',
   DATE_OF_BIRTH: 'dateOfBirth',
@@ -24,6 +24,6 @@ const validationType  = {
 
 export {
   SupportStatusType,
-  checkLavelType,
-  validationType
+  CheckLavelType,
+  ValidationType
 }

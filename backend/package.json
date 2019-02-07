@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "pm2-dev start ecosystem.config.js",
-    "deploy" : "npm install && pm2 start ecosystem.config.js --env production",
+    "deploy": "npm install && pm2 start ecosystem.config.js --env production",
     "start:local": "cross-env NODE_ENV=local nodemon app.js",
     "start:dev": "cross-env NODE_ENV=development nodemon app.js",
     "start:prod": "cross-env NODE_ENV=production nodemon app.js",
@@ -25,6 +25,7 @@
     "mongoose": "^5.4.6",
     "mongoose-multi-update": "^0.1.1",
     "morgan": "^1.9.1",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "querystring": "^0.2.0"
   }
 }

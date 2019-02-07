@@ -1,5 +1,9 @@
 const User = require('../models/UserModel');
 
+const { envConfig} = require('../config/constants');
+const node_env = process.env.NODE_ENV
+const {PREFIX, BUCKET} = envConfig(node_env)
+
 exports.list = async(req, res) => {
   console.log(req.decoded)
   try {
@@ -132,5 +136,4 @@ exports.updateStoreData = async(req, res) => {
      })
    }
 }
-
 

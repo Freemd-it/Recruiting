@@ -3,9 +3,9 @@ const Questions = require('../models/QuestionsModel');
 exports.getQuestionslist = async (req, res) => {
   const { keys } = req.query;
 
-  const key = keys.split('_').map((item) => {
+  const key = !keys ? [] :  keys.split('_').map((item) => {
     return parseInt(item, 10);
-  });
+  })
 
   try {
     const results = await Questions.getQuestions(key);

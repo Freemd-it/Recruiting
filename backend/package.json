@@ -25,7 +25,6 @@
     "mongoose": "^5.4.6",
     "mongoose-multi-update": "^0.1.1",
     "morgan": "^1.9.1",
-    "nodemon": "^1.18.9",
-    "querystring": "^0.2.0"
+    "nodemon": "^1.18.9"
   }
 }

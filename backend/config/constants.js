@@ -1,7 +1,6 @@
 const localConfig = {
   MONGO_URL: 'mongodb://localhost/backend_test',
   JWT_SECRET: 'SeCrEtKeYfOrHaShInG',
-
   BUCKET : 'freemed.recruiting',
   PREFIX : 'Portfolios_local'
 };

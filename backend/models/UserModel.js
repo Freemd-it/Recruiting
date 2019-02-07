@@ -1,11 +1,19 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const crypto = require('crypto')
-// const config = require('../config')
 const { envConfig} = require('../config/constants');
 const node_env = process.env.NODE_ENV
 const {JWT_SECRET} = envConfig(node_env)
 const multiUpdate = require('mongoose-multi-update')
+const NODE_JS = 'Node.js';
+// 포트폴리오
+const PortfoliosSchema = new Schema({
+  file_path: String, // 포트폴리오 파일 경로
+  registedDate: {
+    type: Date,
+   default: new Date() // 현재 날짜를 기본값으로 지정
+  }
+})
 
 // 경력사항
 const ExternalActivitiesSchema = new Schema({
@@ -32,22 +40,54 @@ const SpecialSchema = new Schema({
   },
   content: String 
 });
-// 포트폴리오
-const PortfoliosSchema = new Schema({
-  file_path: String, // 포트폴리오 파일 경로
-  registedDate: {
-    type: Date,
-   default: new Date() // 현재 날짜를 기본값으로 지정
-  }
-})
 
 // 질문 스키마
 const QuestionsSchema = new Schema({
   classify: Number, //공통, 본부, 팀질문 및 어떤본부 팀인지 분류 101 102 103
   department: String, //본부
   team: String, //팀
+  key: String, // 본부 팀 
   question : String, //질문내용,
+  content_type: {
+    type : String,
+    enum : ['text', 'file', 'select']
+  },
   content: String,
+  // 기본상태를 3 -> 사용못함
+  select :{
+    SQL: {
+      type: String,
+      default :'3'
+    },
+    jQuery: {
+      type: String,
+      default :'3'
+    },
+    HTML: {
+      type: String,
+      default :'3'
+    },
+    Javascipt: {
+      type: String,
+      default :'3'
+    },
+    CSS: {
+      type: String,
+      default :'3'
+    },
+    Linux: {
+      type: String,
+      default :'3'
+    },
+    [NODE_JS]: {
+      type: String,
+      default :'3'
+    },
+    PHP: {
+      type: String,
+      default :'3'
+    },
+  } ,
   batch: Number, //기수
   portfolios: [PortfoliosSchema],
   registedDate: {
@@ -60,7 +100,6 @@ const interviewSchema = new Schema({
   interview_date : Date,
   interview_week : String,
   interview_time : [String]
-  
 })
 
 const UserSchema = new Schema({

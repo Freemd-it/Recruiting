@@ -37,20 +37,12 @@ const corsOptions = {
   optionsSuccessStatus: 200 
 }
 app.use(cors(corsOptions))
-app.use((req, res, next) => {
+app.use((req, res, err, next) => {
   console.log(res.header);
   console.log(req.header);
+  // console.log(err);
   next();
 });
-
-// bucketOptions 
-const bucketOptions = {
-  ENV: process.env.NODE_ENV,
-  bucket : 'freemed.recruiting',
-  prifix: 'Portfolios',
-  prifix: 'test'
-}
-
 
 // /api요청 사용
 app.use('/api', api);

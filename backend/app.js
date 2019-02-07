@@ -36,11 +36,11 @@ const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200 
 }
+
 app.use(cors(corsOptions))
-app.use((req, res, err, next) => {
+app.use((req, res, next) => {
   console.log(res.header);
   console.log(req.header);
-  // console.log(err);
   next();
 });
 

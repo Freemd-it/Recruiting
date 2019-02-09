@@ -34,7 +34,7 @@ const getDeptCommonQuestions = (deptCode, teamCode) => {
         .sort({registedData: -1})
         .limit(deptCode == 104 || deptCode == 103 ? 2 : 1)
         .toArray(function (err, data) {
-        err ? reject(err) : resolve(data)
+          err ? reject(err) : resolve(data)
       });
     })
   })
@@ -47,9 +47,9 @@ const getDeptTeamQuestions = (deptCode, teamCode) => {
       collection
         .find({'department': deptCode, 'used': true, $or: [ { team: teamCode } ]})
         .sort({registedData: -1})
-        .limit(0)
+        .limit(1)
         .toArray(function (err, data) {
-        err ? reject(err) : resolve(data)
+          err ? reject(err) : resolve(data)
       });
     })
   })

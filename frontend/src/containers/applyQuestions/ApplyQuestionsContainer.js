@@ -75,7 +75,12 @@ class ApplyQuestionsContainer extends Component {
               team: choice.team,
               questionClassId: Consts.getQuestionClassId(choice.department, choice.team),
               rank: index + 1,
-              questions: data[questionKey].map(row => ({question: row.question, answerType: row.type })),
+              questions: data[questionKey].map(row => (
+                {
+                  question: row.question, 
+                  answerType: row.type,
+                  isTeamQuestion: row.team !== '00',
+                })),
             })
           }
         })

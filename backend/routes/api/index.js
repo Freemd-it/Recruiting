@@ -5,6 +5,7 @@ const user = require('./user');
 const questions = require('./questions');
 const authMiddleware = require('../../middlewares/Auth');
 const upload = require('../../lib/s3Connect')
+const interview = require('./interview/')
 
 
 // /auth 로 들어오면 연결
@@ -16,6 +17,7 @@ router.use('/recruits', upload.any('files'), user);
 
 router.use('/questions', authMiddleware);
 router.use('/questions', questions);
+router.use('/interview', interview);
 
 
 module.exports = router;

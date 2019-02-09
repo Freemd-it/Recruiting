@@ -61,6 +61,7 @@ class ApplyQuestionsContainer extends Component {
 
   componentDidMount() {
     const { state, applyActions } = this.props;
+    applyActions.departmentChoiceChanged(state.applyChoice);
     recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)))
       .then(data => {
         let questionData = {
@@ -70,23 +71,26 @@ class ApplyQuestionsContainer extends Component {
         state.applyChoice.forEach((choice, index) => {
           const questionKey = index === 0 ? 'first' : 'second';
           if (choice.department !== '') {
+            const questionClassId = Consts.getQuestionClassId(choice.department, choice.team);
+            const questions = data[questionKey].map(row => (
+              {
+                question: row.question, 
+                answerType: row.type,
+                isTeamQuestion: row.team !== '00',
+              }));
+            const storeData = questions.map(elem => ({ question: elem.question, type: elem.answerType }));
+            applyActions.answerFormatInit({ key: questionClassId, data: storeData });
             questionData.department.push({
               department: choice.department,
               team: choice.team,
-              questionClassId: Consts.getQuestionClassId(choice.department, choice.team),
+              questionClassId,
               rank: index + 1,
-              questions: data[questionKey].map(row => (
-                {
-                  question: row.question, 
-                  answerType: row.type,
-                  isTeamQuestion: row.team !== '00',
-                })),
+              questions,
             })
           }
-        })
+        });
         this.setState({questionData});
       });
-    applyActions.departmentChoiceChanged(state.applyChoice);
   }
 
   render() {

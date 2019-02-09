@@ -92,10 +92,8 @@ export default {
         console.log(pair);
       }
     }
-    return axios.put(`${serverConfig.url}/api/recruits/${id}`, {
-      ...body
-    }, {
-        headers: { "x-access-token": `${accessToken}` }
+    return axios.put(`${serverConfig.url}/api/recruits/${id}`, body, {
+        headers: { "x-access-token": `${accessToken}`, "Content-Type": 'multipart/form-data', }
     }).then(res => res.data.isAlreadySubmitted)
   },
   getQuestionInfo: (questionClassIds) => {
@@ -108,7 +106,8 @@ export default {
         key += questionClassId.toString();
       }
     });
-    console.log(`${serverConfig.url}/api/recruits/questions?key=${key}`);
-    // return axios.get(`${serverConfig.url}/api/recruits/questions`, {key});
+    return axios.get(`${serverConfig.url}/api/questions/list?key=${key}`, 
+      { headers: { "x-access-token": `${window.localStorage.accessToken}` }}
+    ).then(res => res.data.results);
   },
 }

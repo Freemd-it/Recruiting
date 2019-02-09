@@ -14,6 +14,20 @@ import DepartmentQuestion from '../../components/applyQuestions/DepartmentQuesti
 
 class ApplyQuestionsContainer extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      questionData: {
+        common: [
+
+        ],
+        department: [
+
+        ],
+      },
+    }
+  }
+
   handleInputChange = (props) => event => {
     const { applyActions } = this.props;
     const { type, questionClassId, answerType, index, techName } = props;
@@ -47,8 +61,10 @@ class ApplyQuestionsContainer extends Component {
 
   componentDidMount() {
     const { state, applyActions } = this.props;
-    // applyActions.pageRefreshed();
-    recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)));
+    recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)))
+      .then(data => {
+        console.log(data);
+      });
     applyActions.departmentChoiceChanged(state.applyChoice);
   }
 

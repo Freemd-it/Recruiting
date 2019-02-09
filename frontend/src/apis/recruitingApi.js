@@ -71,7 +71,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
       Promise.all(filesPromise)
         .then(files => {
           for (let index = 0; index < files.length; index++) {
-            formData.append('files[]', files[index], _.get(department, fileKeys[index].split('.')).name);
+            formData.append(`files[${index}]`, files[index], _.get(department, fileKeys[index].split('.')).name);
           }
           resolve(formData);
         });

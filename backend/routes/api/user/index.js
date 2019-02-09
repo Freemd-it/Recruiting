@@ -11,6 +11,7 @@ const uploadData = multer({
 
 
 router.get('/list', usercontroller.list);
+
 router.get('/:id', usercontroller.read);
 router.put('/:id', usercontroller.update);
 

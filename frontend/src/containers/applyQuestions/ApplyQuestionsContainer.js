@@ -25,7 +25,7 @@ class ApplyQuestionsContainer extends Component {
 
         ],
       },
-    }
+    };
   }
 
   handleInputChange = (props) => event => {
@@ -63,46 +63,30 @@ class ApplyQuestionsContainer extends Component {
     const { state, applyActions } = this.props;
     recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)))
       .then(data => {
-        console.log(data);
+        let questionData = {
+          common: data.common.map(row => row.question),
+          department: [],
+        };
+        state.applyChoice.forEach((choice, index) => {
+          const questionKey = index === 0 ? 'first' : 'second';
+          if (choice.department !== '') {
+            questionData.department.push({
+              department: choice.department,
+              team: choice.team,
+              questionClassId: Consts.getQuestionClassId(choice.department, choice.team),
+              rank: index + 1,
+              questions: data[questionKey].map(row => ({question: row.question, answerType: 'text' })),
+            })
+          }
+        })
+        this.setState({questionData});
       });
     applyActions.departmentChoiceChanged(state.applyChoice);
   }
 
   render() {
     const { state } = this.props;
-    let questionData = {
-        common: [
-          '간략한 본인 소개와 함께 프리메드 제 19기 리크루팅에 지원하신 동기를 서술해 주십시오.',
-          '이제까지 가장 소속감을 느꼈던 조직은 무엇이었으며, 그 조직의 발전을 위해 헌신적으로 노력했던 것 중 가장 기억에 남는 경험은 무엇입니까?'
-        ],
-        department: [
-
-        ]
-    }
-    state.applyChoice.forEach((choice, index) => {
-      if (choice.department !== '') {
-        questionData.department.push({
-          department: choice.department,
-          team: choice.team,
-          questionClassId: Consts.getQuestionClassId(choice.department, choice.team),
-          rank: index + 1,
-          questions: [
-            {
-              question: '사용할 수 있는 그래픽 툴은 무엇이 있는지 작성해주십시오.(ex- Adobe Photoshop, Adobe illustrator 등등)',
-              answerType: 'text'
-            },
-            {
-              question: '지금까지 진행한 작품을 2개 이상 제시해주시고 그 중 마음에 드는 작품과 그 이유를 지원서에 서술해 주십시오.',
-              answerType: 'file'
-            },
-            {
-              question: `하실 줄 아는 기술에 대해 적어주세요.`,
-              answerType: 'select'
-            }
-          ]
-        })
-      }
-    })
+    const questionData = this.state.questionData;
     return (
       <>
         <CommonQuestion

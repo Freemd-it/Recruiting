@@ -96,14 +96,21 @@ class PageContainer extends Component {
         const selectedDepartments = state.apply.toJS().applyChoice.map(d => d.department);
         const shouldInterviews = interviewActions.checkInterviewDates(selectedDepartments);
         let hasNotValidatedItem = !shouldInterviews.every((shouldInterview, index) => {
-          let timeCount = actionModule.interviewDates[index].times.length;
-          return (timeCount >= 2 || !shouldInterview) && (timeCount === 0 || shouldInterview)
-        });
-        if (hasNotValidatedItem) {
-          window.alert(message.INTERVIEW_CHOICE);
-        }
-        return !hasNotValidatedItem;
+          const timeCount = actionModule.interviewDates[index].times.length;
+          const needMoreChoice = (timeCount < 2 && shouldInterview);
+          const hasInvalidChoice = (timeCount > 0 && !shouldInterview);
 
+          if (needMoreChoice) {
+            window.alert(message.NEED_MORE_INTERVIEW_CHOICE);
+          }
+
+          if (hasInvalidChoice) {
+            window.alert(message.REMOVE_INVALID_INTERVIEW_CHOICE);
+          }
+          return !(needMoreChoice || hasInvalidChoice);
+        });
+
+        return !hasNotValidatedItem;
       default:
         return !hasNotValidatedItem;
     }

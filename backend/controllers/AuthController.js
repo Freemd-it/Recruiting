@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
     }
 
     const token = await AuthService.makeToken(user, secret, password);
-
+    // console.log('token', token)
     const response = [token, user._id, user.support_status];
     res.json({
       message: 'login Success',
@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
     })
 
   } catch(err) {
-    console.log(err);
+    console.log('err',err);
     res.status(500).json({
       message: err.message
     })

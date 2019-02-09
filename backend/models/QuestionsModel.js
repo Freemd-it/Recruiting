@@ -12,7 +12,8 @@ connection.on('error', console.error.bind(console, 'connection error:'));
 const getQuestions = (key) => {
   return new Promise(async (resolve, reject) => {
     connection.db.collection("questions", function (err, collection) {
-      console.log('key',key)
+      if(err) reject(err);
+      
       collection.find({
         'classify': {
           $in: key

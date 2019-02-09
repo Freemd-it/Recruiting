@@ -26,7 +26,7 @@ const TimeCheckForm = ({ date, index, onCheckedChange, checkedFields }) => {
       {index !== 0 ? (<hr />) : ''}
       <div className={(cx('time-check-form-content'))}>
         <div className={(cx('form-day'))}>
-          {moment(day).format("M월 DD일")}
+          {moment(day).format(`MM. DD. ${index === 0 ? '토' : '일'}`)}
         </div>
         <div className={(cx('form-times'))}>
           {times.map((time, timeIndex) => (

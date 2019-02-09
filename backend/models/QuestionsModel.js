@@ -9,16 +9,30 @@ const connection = mongoose.connection;
 
 connection.on('error', console.error.bind(console, 'connection error:'));
 
-const getQuestions = (key) => {
+const getQuestions = (deptCode, teamCode) => {
   return new Promise(async (resolve, reject) => {
     connection.db.collection("questions", function (err, collection) {
       if(err) reject(err);
-      
-      collection.find({
-        'classify': {
-          $in: key
-        }
-      }).toArray(function (err, data) {
+      collection
+        .find({'department': deptCode, 'used': true, 'team': teamCode})
+        .sort({registedData: -1})
+        .limit(1)
+        .toArray(function (err, data) {
+        err ? reject(err) : resolve(data)
+      });
+    })
+  })
+}
+
+const getCommonQuestions = () => {
+  return new Promise(async (resolve, reject) => {
+    connection.db.collection("questions", function (err, collection) {
+      if(err) reject(err);
+      collection
+        .find({ 'department': '900', 'used': true })
+        .sort({registedData: -1})
+        .limit(2)
+        .toArray(function (err, data) {
         err ? reject(err) : resolve(data)
       });
     })
@@ -27,6 +41,7 @@ const getQuestions = (key) => {
 
 module.exports = {
   getQuestions,
+  getCommonQuestions,
 }
 
 

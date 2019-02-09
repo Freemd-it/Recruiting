@@ -50,50 +50,39 @@ const QuestionsSchema = new Schema({
   team: String, //팀
   key: String, // 본부 팀 
   question : String, //질문내용,
-  content_type: {
-    type : String,
-    enum : ['text', 'file', 'select']
-  },
+  type: String,
   content: String,
   select :{
     SQL: {
       type: String,
-      default :'3'
     },
     jQuery: {
       type: String,
-      default :'3'
     },
     HTML: {
       type: String,
-      default :'3'
     },
     Javascipt: {
       type: String,
-      default :'3'
     },
     CSS: {
       type: String,
-      default :'3'
     },
     Linux: {
       type: String,
-      default :'3'
     },
-    [NODE_JS]: {
+    NODEJS: {
       type: String,
-      default :'3'
     },
     PHP: {
       type: String,
-      default :'3'
     },
   } ,
   batch: Number, //기수
   portfolios: [PortfoliosSchema],
   registedDate: {
     type: Date,
-   default: new Date() // 현재 날짜를 기본값으로 지정
+    default: new Date() // 현재 날짜를 기본값으로 지정
   }
 })
 

@@ -41,7 +41,7 @@ exports.read = async (req, res) => {
 exports.update = async (req, res) => {
   const { id } = req.params;
   const { basic_info, academic_career, external_activities, special_info, question_info, interview_info} = jsonParser(req.body.body);
-  
+  console.log(req.files)
   try {
     let user = await User.findOneById(id);
     if (user.support_status !== 200) {

@@ -11,7 +11,6 @@ exports.getQuestionslist = async (req, res) => {
   })
 
   try {
-
     const common = await Questions.getCommonQuestions();
     const first = await Questions.getQuestions(deptCode[0], teamCode[0]);
     const second = await Questions.getQuestions(deptCode[1], teamCode[1]);

@@ -24,7 +24,7 @@ const materialStyles = () => ({
 const TechSelectForm = ({ onInputChange, type, index, questionClassId, answer, classes }) => {
 
   const techNames = [
-    'JavaScript', 'HTML', 'jQuery', 'SQL', 'Linux', 'CSS', 'PHP', 'Node.js'
+    'JavaScript', 'HTML', 'jQuery', 'SQL', 'Linux', 'CSS', 'PHP', 'NodeJS'
   ];
 
   const degreeNames = [

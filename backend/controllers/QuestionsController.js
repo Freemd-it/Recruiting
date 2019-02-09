@@ -11,10 +11,22 @@ exports.getQuestionslist = async (req, res) => {
   })
 
   try {
-
+    let first = []; let second = [];
     const common = await Questions.getCommonQuestions();
-    const first = await Questions.getQuestions(deptCode[0], teamCode[0]);
-    const second = await Questions.getQuestions(deptCode[1], teamCode[1]);
+    const firstDept = await Questions.getDeptCommonQuestions(deptCode[0], teamCode[0]) 
+    const sercondDept = await Questions.getDeptCommonQuestions(deptCode[1], teamCode[1])
+    
+    firstDept.forEach(v => { first.push(v)})
+    sercondDept.forEach(v => { second.push(v)})
+
+    if( deptCode[0] != 103 && deptCode[0] != 104) {
+       firstTeam = await Questions.getDeptTeamQuestions(deptCode[0], teamCode[0])
+       firstTeam.forEach(v => { first.push(v)})
+    }
+    if( deptCode[1] != 103 && deptCode[1] != 104) {
+      secondTeam = await Questions.getDeptTeamQuestions(deptCode[1], teamCode[1])
+      secondTeam.forEach(v => { second.push(v)})
+    }
     
     res.json({
       message: 'GET LIST SUCCESS',
@@ -24,6 +36,7 @@ exports.getQuestionslist = async (req, res) => {
         second,
       }
     })
+
   } catch (err) {
     res.status(500).json({
       message: err.message

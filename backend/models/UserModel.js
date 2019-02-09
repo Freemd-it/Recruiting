@@ -187,6 +187,7 @@ UserSchema.statics.findOneById = function(id){
 };
 
 UserSchema.statics.findOneUserInfo = function(user_name, email){
+  console.log(user_name, email)
   return this.findOne({
     'basic_info.user_name':user_name,
     'basic_info.email' : email

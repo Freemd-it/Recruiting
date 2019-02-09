@@ -1,14 +1,14 @@
 const localConfig = {
   MONGO_URL: 'mongodb://localhost/backend_test',
   JWT_SECRET: 'SeCrEtKeYfOrHaShInG',
-  BUCKET : 'freemed.recruiting',
+  BUCKET : 'freemed.develop',
   PREFIX : 'Portfolios_local'
 };
 
 const devConfig = {
   MONGO_URL: 'mongodb://13.209.7.151/test',
   JWT_SECRET: 'SeCrEtKeYfOrHaShInGDeV',
-  BUCKET : 'freemed.recruiting',
+  BUCKET : 'freemed.develop',
   PREFIX : 'Portfolios_dev'
 };
 

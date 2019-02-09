@@ -27,6 +27,18 @@ const FileUploadForm = ({ onInputChange, type, index, questionClassId, answer })
         >
         </input>
       </div>
+<<<<<<< HEAD
+=======
+      <label htmlFor={`${questionClassId}__${index}`} className={cx('file-upload-btn')}>
+        <AttachmentIcon />
+      </label>
+      <input
+        id={`${questionClassId}__${index}`}
+        type='file'
+        onChange={onInputChange({ type, index, questionClassId, answerType: 'file' })}
+      >
+      </input>
+>>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
     </div>
   )
 }

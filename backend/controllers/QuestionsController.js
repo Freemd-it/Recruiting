@@ -1,14 +1,14 @@
 const Questions = require('../models/QuestionsModel');
 
 exports.getQuestionslist = async (req, res) => {
-  const { keys } = req.query;
-
-  const key = !keys ? [] :  keys.split('_').map((item) => {
+  const { key } = req.query;
+  console.log('들어온 값:', key)
+  const _key = key === undefined ? [] :  key.split('_').map((item) => {
     return parseInt(item, 10);
   })
 
   try {
-    const results = await Questions.getQuestions(key);
+    const results = await Questions.getQuestions(_key);
     res.json({
       message: 'GET LIST SUCCESS',
       results: results

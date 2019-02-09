@@ -48,6 +48,7 @@ const QuestionsSchema = new Schema({
   team: String, //팀
   key: String, // 본부 팀 
   question : String, //질문내용,
+  type: String, // [text, file, select]
   content_type: {
     type : String,
     enum : ['text', 'file', 'select']

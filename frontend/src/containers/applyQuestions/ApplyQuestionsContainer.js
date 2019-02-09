@@ -68,7 +68,7 @@ class ApplyQuestionsContainer extends Component {
           department: [],
         };
         state.applyChoice.forEach((choice, index) => {
-          const questionKey = index == 0 ? 'first' : 'second';
+          const questionKey = index === 0 ? 'first' : 'second';
           if (choice.department !== '') {
             questionData.department.push({
               department: choice.department,

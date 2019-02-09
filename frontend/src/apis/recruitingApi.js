@@ -56,9 +56,9 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
           department: department,
           fileKeys: Object.entries(department.files ? department.files : []).map(row => row[0]),
         },
-        interview_info: interview.interviewDates.map(row => ({
-          interview_date: ['2019', ...row.day.replace(/ /gi, '').split('.')].splice(0, 3).join('-'),
-          interview_week: row.day.replace(/ /gi, '').split('.').pop(),
+        interview_info: interview.interviewDates.map((row, index) => ({
+          interview_date: row.day,
+          interview_week: index === 0 ? '토' : '일',
           interview_time: row.times
         })),
       }))

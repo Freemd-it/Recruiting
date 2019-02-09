@@ -1,13 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
-<<<<<<< HEAD
 import { fromJS, removeIn, setIn } from 'immutable';
 import Consts from '../common/consts';
 import * as _ from 'lodash';
 
-=======
-import { fromJS } from 'immutable';
-import Consts from '../common/consts';
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
 const INIT_STATE = 'apply/INIT_STATE';
 const LOAD_SAVED_STATE = 'apply/LOAD_SAVED_STATE';
 const TEXT_ANSWER_CHANGED = 'apply/TEXT_ANSWER_CHANGED';
@@ -24,10 +19,7 @@ export const fileAnswerChanged = createAction(FILE_ANSWER_CHANGED);
 export const selectAnswerChanged = createAction(SELECT_ANSWER_CHANGED);
 export const changeInput = createAction(CHANGE_INPUT);
 export const departmentChoiceChanged = createAction(DEPARTMENT_CHOICE_CHANGED);
-<<<<<<< HEAD
 export const pageRefreshed = createAction(PAGE_REFRESHED);
-=======
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
 
 const initialState = fromJS({
   otherAssignConsent: {
@@ -68,21 +60,13 @@ export default handleActions({
     if (type === 'common') {
       return state.setIn([type, index], content);
     } else {
-<<<<<<< HEAD
       return fromJS(setIn(state.toJS(), [type, questionClassId, index, answerType], content));
-=======
-      return state.setIn([type, questionClassId, index, answerType], content);
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
     }
   },
   [FILE_ANSWER_CHANGED]: (state, action) => {
     const { type, index, questionClassId, answerType, file } = action.payload;
-<<<<<<< HEAD
     const url = URL.createObjectURL(file);
     let updated = setIn(state.toJS(), [type, questionClassId, index, answerType], 
-=======
-    return state.setIn([type, questionClassId, index, answerType], 
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
       {
         'name': file.name,
         'url': url,
@@ -91,11 +75,7 @@ export default handleActions({
   },
   [SELECT_ANSWER_CHANGED]: (state, action) => {
     const { type, index, questionClassId, answerType, techName, abilityIndex } = action.payload;
-<<<<<<< HEAD
     return fromJS(setIn(state.toJS(), [type, questionClassId, index, answerType, techName], abilityIndex));
-=======
-    return state.setIn([type, questionClassId, index, answerType, techName], abilityIndex);
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
   },
   [CHANGE_INPUT]: (state, action) => {
     const keyPath = [...Object.keys(action.payload)[0].split('.')];
@@ -104,7 +84,6 @@ export default handleActions({
   [DEPARTMENT_CHOICE_CHANGED]: (state, action) => {
     const applyChoice = action.payload;
     const questionIds = applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team));
-<<<<<<< HEAD
     const files = state.get('department').get('files') ? state.get('department').get('files').toJS() : {};
     const filteredFiles = Object.keys(files)
       .filter(key => questionIds.includes(parseInt(key.split('.')[0])))
@@ -130,15 +109,5 @@ export default handleActions({
       updated = removeIn(updated, keyPath);
     });
     return fromJS(updated);
-=======
-    const departmentQuestions = state.get('department') ? state.get('department').toJS() : {};
-    const filteredQuestions = Object.keys(departmentQuestions)
-      .filter(key => questionIds.includes(parseInt(key)))
-      .reduce((obj, key) => {
-        obj[key] = departmentQuestions[key];
-        return obj;
-      }, {});
-    return state.set('department', fromJS(filteredQuestions));
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
   },
 }, initialState);

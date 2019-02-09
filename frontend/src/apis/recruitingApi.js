@@ -5,7 +5,6 @@ import * as _ from 'lodash';
 const convertModelToSchemaBased = ({ personal, apply, interview }) => {
   const { personalIdentification, education, career, speciality } = personal;
   const { common, department } = apply;
-<<<<<<< HEAD
   return new Promise((resolve, reject) => {
     try {
 
@@ -78,59 +77,6 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
       reject(e);
     }
   })
-=======
-  return {
-    basic_info: {
-      user_name: personalIdentification.name,
-      english_name: personalIdentification.englishName,
-      email: personalIdentification.emailText,
-      is_male: personalIdentification.gender === 'male',
-      birth_date: personalIdentification.birthText,
-      phone_number: personalIdentification.phoneNumberText,
-      sns: personalIdentification.sns,
-      address: personalIdentification.address,
-      department: apply.applyChoice[0].department,
-      secondary_department: apply.applyChoice[1].department,
-      team: apply.applyChoice[0].team,
-      secondary_team: apply.applyChoice[1].team,
-    },
-    academic_career: {
-      academic_name: education.schoolNameText,
-      location: education.location,
-      major: education.major,
-      entrance_date: education.graduationYear.entrance,
-      graduation_date: education.graduationYear.graduation,
-      degree: education.graduationYear.status,
-    },
-    special_info: (
-      speciality.detail[0].activityDetail.length > 0 ? (
-        speciality.detail.map(row => ({
-          special_type: row.activityDetail,
-          self_evaluation_ability: row.grade,
-          content: row.content,
-        }))) : []
-    ),
-    external_activities: (
-      career.detail[0].activityType.length > 0 ? (
-        career.detail.map(row => ({
-          external_type: row.activityType,
-          organizer: row.activityDetail,
-          start_date: row.durationStart,
-          end_date: row.durationEnd,
-          turnaround_time: row.turnaround_time,
-          content: row.content,
-        }))) : []
-    ),
-    question_info: {
-      common: Object.entries(common).sort((a, b) => a - b).map(row => row[1]),
-    },
-    interview_info: interview.interviewDates.map(row => ({
-      interview_date: ['2019', ...row.day.replace(/ /gi, '').split('.')].splice(0, 3).join('-'),
-      interview_week: row.day.replace(/ /gi, '').split('.').pop(),
-      interview_time: row.times
-    })),
-  }
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
 };
 
 export {
@@ -139,7 +85,6 @@ export {
 
 export default {
   submitRecruiting: (id, accessToken, body) => {
-<<<<<<< HEAD
     for (let pair of body.entries()) {
       if (pair[0] == 'body') {
         console.log(pair[0], JSON.parse(pair[1]));
@@ -150,13 +95,6 @@ export default {
     return axios.put(`${serverConfig.url}/api/recruits/${id}`, body, {
         headers: { "x-access-token": `${accessToken}`, "Content-Type": 'multipart/form-data', }
     }).then(res => res.data.isAlreadySubmitted)
-=======
-    return axios.put(`${serverConfig.url}/api/recruits/${id}`, {
-      ...body
-    }, {
-        headers: { "x-access-token": `${accessToken}` }
-      })
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
   },
   getQuestionInfo: (questionClassIds) => {
     let key = '';
@@ -168,13 +106,8 @@ export default {
         key += questionClassId.toString();
       }
     });
-<<<<<<< HEAD
     return axios.get(`${serverConfig.url}/api/questions/list?key=${key}`, 
       { headers: { "x-access-token": `${window.localStorage.accessToken}` }}
     ).then(res => res.data.results);
-=======
-    console.log(`${serverConfig.url}/api/recruits/questions?key=${key}`);
-    // return axios.get(`${serverConfig.url}/api/recruits/questions`, {key});
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
   },
 }

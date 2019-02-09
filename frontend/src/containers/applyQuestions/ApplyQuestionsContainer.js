@@ -7,10 +7,7 @@ import { } from '../../components/applyQuestions';
 import * as applyActions from '../../modules/apply';
 import recruitingApi from '../../apis/recruitingApi';
 import Consts from '../../common/consts';
-<<<<<<< HEAD
 import message from '../../common/message';
-=======
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
 
 import CommonQuestion from '../../components/applyQuestions/CommonQuestion';
 import DepartmentQuestion from '../../components/applyQuestions/DepartmentQuestion';
@@ -44,13 +41,10 @@ class ApplyQuestionsContainer extends Component {
             applyActions.textAnswerChanged({ type, index, questionClassId, answerType, content: event.target.value.substring(0, 500) });
             break;
           case 'file':
-<<<<<<< HEAD
             if (event.target.files[0].size > 1048576 * 10) {
               window.alert(message.EXCEED_FILE_CAPACITY);
               break;
             }
-=======
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
             applyActions.fileAnswerChanged({ type, index, questionClassId, answerType, file: event.target.files[0] });
             break;
           case 'select':
@@ -67,14 +61,10 @@ class ApplyQuestionsContainer extends Component {
 
   componentDidMount() {
     const { state, applyActions } = this.props;
-<<<<<<< HEAD
     recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)))
       .then(data => {
         console.log(data);
       });
-=======
-    recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)));
->>>>>>> 6fad396fea84cb1c8894faf825bcdcb0fa40d49b
     applyActions.departmentChoiceChanged(state.applyChoice);
   }
 

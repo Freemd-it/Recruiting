@@ -14,9 +14,9 @@ const getQuestions = (deptCode, teamCode) => {
     connection.db.collection("questions", function (err, collection) {
       if(err) reject(err);
       collection
-        .find({'department': deptCode, 'used': true, 'team': teamCode})
+        .find({'department': deptCode, 'used': true, $or: [ { team: '00' }, { team: teamCode }]})
         .sort({registedData: -1})
-        .limit(1)
+        .limit(deptCode == 104 || deptCode == 103 ? 2 : 1)
         .toArray(function (err, data) {
         err ? reject(err) : resolve(data)
       });

@@ -110,4 +110,9 @@ export default {
       { headers: { "x-access-token": `${window.localStorage.accessToken}` }}
     ).then(res => res.data.results);
   },
+  getInterviewInfo: () => {
+    return axios.get(`${serverConfig.url}/api/interview/schedules/20`,
+      { headers: { "x-access-token": `${window.localStorage.accessToken}` }}
+    ).then(res => res.data.result);
+  }
 }

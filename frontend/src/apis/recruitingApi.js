@@ -54,10 +54,11 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
         question_info: {
           common: Object.entries(common ? common : []).sort((a, b) => a - b).map(row => row[1]),
           department: department,
+          fileKeys: Object.entries(department.files ? department.files : []).map(row => row[0]),
         },
-        interview_info: interview.interviewDates.map(row => ({
-          interview_date: ['2019', ...row.day.replace(/ /gi, '').split('.')].splice(0, 3).join('-'),
-          interview_week: row.day.replace(/ /gi, '').split('.').pop(),
+        interview_info: interview.interviewDates.map((row, index) => ({
+          interview_date: row.day,
+          interview_week: index === 0 ? '토' : '일',
           interview_time: row.times
         })),
       }))
@@ -70,7 +71,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
       Promise.all(filesPromise)
         .then(files => {
           for (let index = 0; index < files.length; index++) {
-            formData.append('files[]', files[index], _.get(department, fileKeys[index].split('.')).name);
+            formData.append(`files[${index}]`, files[index], _.get(department, fileKeys[index].split('.')).name);
           }
           resolve(formData);
         });

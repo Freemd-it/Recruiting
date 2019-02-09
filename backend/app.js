@@ -17,7 +17,6 @@ const {MONGO_URL, JWT_SECRET} = envConfig(node_env)
 // 설정
 app.use(logger('dev'));
 app.use(express.json());
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

@@ -6,6 +6,7 @@ const node_env = process.env.NODE_ENV
 const {JWT_SECRET} = envConfig(node_env)
 const multiUpdate = require('mongoose-multi-update')
 const NODE_JS = 'Node.js';
+
 // 포트폴리오
 const PortfoliosSchema = new Schema({
   file_path: String, // 포트폴리오 파일 경로
@@ -27,6 +28,7 @@ const ExternalActivitiesSchema = new Schema({
   turnaround_time: Number,
   content: String 
 })
+
 // 자격증
 const SpecialSchema = new Schema({
   special_type: {
@@ -48,13 +50,11 @@ const QuestionsSchema = new Schema({
   team: String, //팀
   key: String, // 본부 팀 
   question : String, //질문내용,
-  type: String, // [text, file, select]
   content_type: {
     type : String,
     enum : ['text', 'file', 'select']
   },
   content: String,
-  // 기본상태를 3 -> 사용못함
   select :{
     SQL: {
       type: String,
@@ -105,7 +105,6 @@ const interviewSchema = new Schema({
 
 const UserSchema = new Schema({
   clientStoreData:{
-
   },
   support_status: {
     type: Number,
@@ -113,7 +112,7 @@ const UserSchema = new Schema({
   },
   registedDate: {
     type: Date,
-   default: new Date() // 현재 날짜를 기본값으로 지정
+    default: new Date() // 현재 날짜를 기본값으로 지정
   },
   basic_info:{
     user_name : String,
@@ -157,7 +156,7 @@ const UserSchema = new Schema({
   special_info: [SpecialSchema],
   question_info: [QuestionsSchema],
   interview_info : [interviewSchema]
-  })
+})
 
 
 // 몽고디비 저장

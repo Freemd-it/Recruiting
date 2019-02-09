@@ -4,13 +4,11 @@ const _ = require('lodash')
 exports.getQuestionslist = async (req, res) => {
   const { key } = req.query;
   const deptCode = []; const teamCode = []
-  const splitFc = (key) => {
-    key.split('_').map(code => {
-      deptCode.push(code.slice(0,3))
-      teamCode.push(code.slice(3,5))
-    })
-  }
-  splitFc(key)
+
+  key.split('_').map(code => {
+    deptCode.push(code.slice(0,3))
+    teamCode.push(code.slice(3,5))
+  })
 
   try {
 

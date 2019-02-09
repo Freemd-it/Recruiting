@@ -1,10 +1,11 @@
 import { createAction, handleActions } from 'redux-actions';
-import { fromJS, removeIn, setIn } from 'immutable';
+import { fromJS, removeIn, setIn, getIn } from 'immutable';
 import Consts from '../common/consts';
 import * as _ from 'lodash';
 
 const INIT_STATE = 'apply/INIT_STATE';
 const LOAD_SAVED_STATE = 'apply/LOAD_SAVED_STATE';
+const ANSWER_FORMAT_INIT = 'apply/ANSWER_FORMAT_INIT';
 const TEXT_ANSWER_CHANGED = 'apply/TEXT_ANSWER_CHANGED';
 const FILE_ANSWER_CHANGED = 'apply/FILE_ANSWER_CHANGED';
 const SELECT_ANSWER_CHANGED = 'apply/SELECT_ANSWER_CHANGED';
@@ -14,6 +15,7 @@ const PAGE_REFRESHED = 'apply/PAGE_REFRESHED';
 
 export const initState = createAction(INIT_STATE);
 export const loadSavedState = createAction(LOAD_SAVED_STATE);
+export const answerFormatInit = createAction(ANSWER_FORMAT_INIT);
 export const textAnswerChanged = createAction(TEXT_ANSWER_CHANGED);
 export const fileAnswerChanged = createAction(FILE_ANSWER_CHANGED);
 export const selectAnswerChanged = createAction(SELECT_ANSWER_CHANGED);
@@ -55,6 +57,19 @@ const initialState = fromJS({
 export default handleActions({
   [INIT_STATE]: (state, action) => state = initialState,
   [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
+  [ANSWER_FORMAT_INIT]: (state, action) => {
+    const { key, data } = action.payload;
+    let updated = state.toJS();
+    data.forEach((elem, index) => {
+      if (!getIn(updated, ['department', key, index])) {
+        updated = setIn(updated, ['department', key, index], { question: elem.question, type: elem.type });
+      } else {
+        updated.department[key][index].question = elem.question;
+        updated.department[key][index].type = elem.type;
+      }
+    });
+    return fromJS(updated);
+  },
   [TEXT_ANSWER_CHANGED]: (state, action) => {
     const { type, index, questionClassId, answerType, content } = action.payload;
     if (type === 'common') {

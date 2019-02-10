@@ -22,9 +22,9 @@ export default {
       validationType: ValidationType.EMPTY,
       checkLavel: CheckLavelType.VALUE,
     },{
-      key1: 'applyChoice.0.department',
-      key2: 'applyChoice.1.department',
-      message: '1,2지망 다른 NGO 사업 부서를 선택해 주세요.',
+      key1: 'applyChoice.0.team',
+      key2: 'applyChoice.1.team',
+      message: '1,2지망 다른 NGO 사업 팀을 선택해 주세요.',
       validationType: ValidationType.NOT_EQUAL,
       checkLavel: CheckLavelType.COMPARE,
     }],

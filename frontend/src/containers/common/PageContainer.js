@@ -70,9 +70,9 @@ class PageContainer extends Component {
       applyActions.initState();
       interviewActions.initState();
       userActions.initState();
-      history.pushState(null, null, location.href);
+      window.history.pushState(null, null, window.location.href);
       window.onpopstate = function () {
-        history.go(1);
+        window.history.go(1);
         window.alert(message.BLOCK_BACK_BUTTON);
       };
     }

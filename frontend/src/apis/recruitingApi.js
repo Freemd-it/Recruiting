@@ -24,8 +24,8 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
           secondary_department: apply.applyChoice[1].department,
           team: apply.applyChoice[0].team,
           secondary_team: apply.applyChoice[1].team,
-          key: consts.getQuestionClassId(apply.applyChoice[0].department, apply.applyChoice[0].team),
-          secondary_key: consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team),
+          key: consts.getQuestionClassId(apply.applyChoice[0].department, apply.applyChoice[0].team).toString(),
+          secondary_key: consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team).toString(),
         },
         academic_career: {
           academic_name: education.schoolNameText,

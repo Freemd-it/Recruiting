@@ -73,7 +73,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "deploy:dev": "pm2 start pm2/freemed.admin.front.dev.json && pm2 logs freemed.admin.front.dev",
+    "deploy:prod": "pm2 start pm2/freemed.admin.front.prod.json && pm2 logs freemed.admin.front.prod"
   },
   "eslintConfig": {
     "extends": "react-app"

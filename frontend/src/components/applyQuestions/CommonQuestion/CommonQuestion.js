@@ -20,7 +20,7 @@ const CommonQuestion = ({ questions, answers, onInputChange }) => {
             type={'common'}
             name={null}
             index={index}
-            answer={answers[index]}
+            answer={answers[index].text}
             onInputChange={onInputChange}
           />
         </div>

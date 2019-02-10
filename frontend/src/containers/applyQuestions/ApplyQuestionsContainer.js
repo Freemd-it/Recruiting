@@ -18,12 +18,8 @@ class ApplyQuestionsContainer extends Component {
     super(props);
     this.state = {
       questionData: {
-        common: [
-
-        ],
-        department: [
-
-        ],
+        common: [],
+        department: [],
       },
     };
   }
@@ -64,6 +60,9 @@ class ApplyQuestionsContainer extends Component {
     applyActions.departmentChoiceChanged(state.applyChoice);
     recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)))
       .then(data => {
+        console.log(data.common);
+        const commonData = data.common.map(row => ({ question: row.question, type: row.type }));
+        applyActions.answerFormatInit({ type: 'common', data: commonData, });
         let questionData = {
           common: data.common.map(row => row.question),
           department: [],
@@ -78,8 +77,8 @@ class ApplyQuestionsContainer extends Component {
                 answerType: row.type,
                 isTeamQuestion: row.team !== '00',
               }));
-            const storeData = questions.map(elem => ({ question: elem.question, type: elem.answerType }));
-            applyActions.answerFormatInit({ key: questionClassId, data: storeData });
+            const departmentData = questions.map(elem => ({ question: elem.question, type: elem.answerType }));
+            applyActions.answerFormatInit({ type: 'department', key: questionClassId, data: departmentData });
             questionData.department.push({
               department: choice.department,
               team: choice.team,

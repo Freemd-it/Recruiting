@@ -25,6 +25,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
           team: apply.applyChoice[0].team,
           secondary_team: apply.applyChoice[1].team,
           key: consts.getQuestionClassId(apply.applyChoice[0].department, apply.applyChoice[0].team),
+          secondary_key: consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team),
         },
         academic_career: {
           academic_name: education.schoolNameText,
@@ -54,7 +55,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
             }))) : []
         ),
         question_info: {
-          common: Object.entries(common ? common : []).sort((a, b) => a - b).map(row => row[1]),
+          common: common,
           department: department,
           fileKeys: Object.entries(department.files ? department.files : []).map(row => row[0]),
         },

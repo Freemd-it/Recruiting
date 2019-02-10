@@ -4,21 +4,25 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
-import { personalActions, applyActions, interviewActions, userActions } from '../../reducers'
+import { personalActions, applyActions, interviewActions, userActions } from '../../reducers';
 
 import { CheckLevelType } from '../../common/types';
 import validation from '../../common/validation';
 import message from '../../common/message';
 
-import userApi from '../../apis/userApi'
-import recruitingApi, { convertModelToSchemaBased } from '../../apis/recruitingApi'
+import userApi from '../../apis/userApi';
+import recruitingApi, { convertModelToSchemaBased } from '../../apis/recruitingApi';
 
 class PageContainer extends Component {
+
+  componentDidMount() {
+    window.scrollTo({ top: 100 });
+  };
 
   handlePreviousButtonClick = e => {
     const { history, config } = this.props;
     history.push(config.previousRoutePath);
-    window.scrollTo({ top: 100 });
+
   };
 
   handleNextButtonClick = e => {
@@ -34,12 +38,10 @@ class PageContainer extends Component {
           .then(checkResult => {
             if (checkResult) {
               history.push(config.nextRoutePath);
-              window.scrollTo({ top: 100 });
             }
           })
       } else {
         history.push(config.nextRoutePath);
-        window.scrollTo({ top: 100 });
       }
     }
   };

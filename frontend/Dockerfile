@@ -12,4 +12,4 @@ COPY ./node_modules /app/node_modules
 RUN cd /app && npm install --production
 
 RUN npm install -g serve
-CMD serve -s build -p 8080
+CMD serve -s build -p 80

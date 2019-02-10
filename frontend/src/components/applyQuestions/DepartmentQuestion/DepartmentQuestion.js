@@ -72,7 +72,7 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
     return (
       <div key={index} className={cx('department-question-form')}>
         <div className={cx('department-title')}>
-          {rank}지망: {`${department} ${team === '팀 없음' ? '' : `(${team})`}`}
+          {rank}지망: {`${department} ${team === '' ? '' : `(${team})`}`}
         </div>
         <div>
           {questions.map(({ question, answerType, isTeamQuestion }, questionIndex) => (

@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import { personalActions, applyActions, interviewActions, userActions } from '../../reducers'
 
-import { CheckLavelType } from '../../common/types';
+import { CheckLevelType } from '../../common/types';
 import validation from '../../common/validation';
 import message from '../../common/message';
 
@@ -139,19 +139,29 @@ class PageContainer extends Component {
     }
   };
 
+  _validateSingle(actionModule, row) {
+    let isValid = true;
+    switch (row.checkLavel) {
+      case CheckLevelType.VALUE:
+        isValid = validation[row.validationType](_.get(actionModule, [...row.key.split('.')]));
+        break;
+      case CheckLevelType.COMPARE:
+        isValid = validation[row.validationType](_.get(actionModule, [...row.key1.split('.')]), _.get(actionModule, [...row.key2.split('.')]));
+        break;
+      default:
+        isValid = false;
+        break;
+    }
+    return isValid;
+  }
+
   _validate = (actionModule, required) => {
     let hasNotValidatedItem;
     return required.find(row => {
-      switch (row.checkLavel) {
-        case CheckLavelType.VALUE:
-          hasNotValidatedItem = !validation[row.validationType](_.get(actionModule, [...row.key.split('.')]));
-          break;
-        case CheckLavelType.COMPARE:
-          hasNotValidatedItem = !validation[row.validationType](_.get(actionModule, [...row.key1.split('.')]), _.get(actionModule, [...row.key2.split('.')]));
-          break;
-        default:
-          hasNotValidatedItem = false;
-          break;
+      if (row.checkLavel !== CheckLevelType.NESTED) {
+        hasNotValidatedItem = !this._validateSingle(actionModule, row);
+      } else {
+        hasNotValidatedItem = !validation[row.validationType](row.required.map(nested => this._validateSingle(actionModule, nested)));
       }
       if (hasNotValidatedItem) {
         window.alert(row.message);

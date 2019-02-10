@@ -48,16 +48,11 @@ const NGOBusinessChoice = (props) => {
 
   const options = selectedDepartment && selectedDepartment.teams.length > 0 ?
     selectedDepartment.teams.map(dataRow => ({value: dataRow, label: dataRow === '약무팀' ? '약무팀 (약대생만 선발)' : dataRow})) : [{value: '팀 없음', label: '팀 없음'}];
-
-  const teamValue = applyChoice[props.isSecondApply ? 1 : 0].team;
+ 
   const currentValue = {
-      value: teamValue || '팀 없음',
-      label: teamValue || '팀 없음',
+      value: applyChoice[props.isSecondApply ? 1 : 0].team || '팀 없음',
+      label: applyChoice[props.isSecondApply ? 1 : 0].team || '팀 없음',
   };
-
-  if (!teamValue) {
-    onChoiceSelectBox(`applyChoice.${props.isSecondApply ? 1 : 0}.team`, '팀 없음');
-  }
 
   return (
     <>

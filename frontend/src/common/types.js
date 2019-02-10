@@ -6,9 +6,10 @@ const SupportStatusType = {
   HOLDING: 204,
 };
 
-const CheckLavelType = {
+const CheckLevelType = {
   VALUE: 'value',
-  COMPARE: 'compare'
+  COMPARE: 'compare',
+  NESTED: 'nested',
 };
 
 const ValidationType  = {
@@ -19,11 +20,13 @@ const ValidationType  = {
   PHONE: 'phone',
   GENDER: 'gender',
   YEAR_MONTH: 'yearMonth',
-  NOT_EQUAL: 'notEqual'
+  NOT_EQUAL: 'notEqual',
+  OR: 'or',
+  AND: 'and',
 };
 
 export {
   SupportStatusType,
-  CheckLavelType,
+  CheckLevelType,
   ValidationType
 }

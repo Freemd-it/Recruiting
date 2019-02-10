@@ -1,6 +1,7 @@
 import axios from 'axios';
 import serverConfig from '../config/serverConfig';
 import * as _ from 'lodash';
+import consts from '../common/consts';
 
 const convertModelToSchemaBased = ({ personal, apply, interview }) => {
   const { personalIdentification, education, career, speciality } = personal;
@@ -23,6 +24,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
           secondary_department: apply.applyChoice[1].department,
           team: apply.applyChoice[0].team,
           secondary_team: apply.applyChoice[1].team,
+          key: consts.getQuestionClassId(apply.applyChoice[0].department, apply.applyChoice[0].team),
         },
         academic_career: {
           academic_name: education.schoolNameText,

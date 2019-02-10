@@ -74,23 +74,27 @@ class PageContainer extends Component {
   _submit = async () => {
     const { history, state } = this.props;
     const userId = state.user.toJS().id;
+    try {
+      const sendData = convertModelToSchemaBased({
+        personal: state.personal.toJS(),
+        apply: state.apply.toJS(),
+        interview: state.interview.toJS()
+      });
+      let isAlreadySubmitted = false;
+      const body = await sendData;
+      isAlreadySubmitted = await recruitingApi
+        .submitRecruiting(userId, window.localStorage.accessToken, body);
 
-    const sendData = convertModelToSchemaBased({
-      personal: state.personal.toJS(),
-      apply: state.apply.toJS(),
-      interview: state.interview.toJS()
-    });
-    let isAlreadySubmitted = false;
-    const body = await sendData;
-    isAlreadySubmitted = await recruitingApi
-      .submitRecruiting(userId, window.localStorage.accessToken, body);
-
-    if (isAlreadySubmitted) {
-      window.alert(message.ALREADY_SUBMITTED);
-      history.push('/');
+      if (isAlreadySubmitted) {
+        window.alert(message.ALREADY_SUBMITTED);
+        history.push('/');
+        return false;
+      }
+      return true;
+    } catch (e) {
+      console.error(e);
       return false;
     }
-    return true;
   };
 
   _validateByPage = (match, actionModule, { required }) => {

@@ -108,7 +108,7 @@ export default {
         if (index > 0) {
           key += '_';
         }
-        key += questionClassId.toString();
+        key += questionClassId ? questionClassId.toString() : '';
       }
     });
     return axios.get(`${serverConfig.url}/api/questions/list?key=${key}`, 

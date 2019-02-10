@@ -1,7 +1,6 @@
 #! /bin/sh
 
-docker rm -f `docker ps | grep recruiting-web_prod | awk '{print $1}'`
-docker rmi -f recruiting-web_prod
-npm run build &&
+docker rm -f `docker ps | grep frontend_prod | awk '{print $1}'`
+docker rmi -f frontend_prod
 docker-compose up -d --build
 

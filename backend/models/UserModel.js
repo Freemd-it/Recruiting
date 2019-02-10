@@ -112,8 +112,11 @@ const UserSchema = new Schema({
     },
     password : String,
     
-    can_moved: Boolean, 
-    can_multiple_interview: Boolean,
+    other_assign_ngo: Boolean,
+    other_assign_medical: Boolean,
+    
+    // can_moved: Boolean, 
+    // can_multiple_interview: Boolean,
 
     english_name: String,
     is_male: Boolean,

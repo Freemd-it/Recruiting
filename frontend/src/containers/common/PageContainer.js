@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
-import { personalActions, applyActions, interviewActions } from '../../reducers'
+import { personalActions, applyActions, interviewActions, userActions } from '../../reducers'
 
 import { CheckLavelType } from '../../common/types';
 import validation from '../../common/validation';
@@ -28,12 +28,16 @@ class PageContainer extends Component {
     const validateResult = this._validateByPage(match, actionModule, config.validation);
 
     if (validateResult) {
-      const checkResult = this._checkSubmit();
-      if (!checkResult) {
-        return;
+      if (config.pageType === 'interviewChoice') {
+        this._checkSubmit()
+          .then(checkResult => {
+            if (checkResult) {
+              history.push(config.nextRoutePath);
+            }
+          })
+      } else {
+        history.push(config.nextRoutePath);
       }
-
-      history.push(config.nextRoutePath);
     }
   };
 
@@ -50,17 +54,24 @@ class PageContainer extends Component {
     window.alert(message.TEMPORARY_SAVE)
   };
 
-  _checkSubmit = () => {
-    const { config } = this.props;
+  _checkSubmit = async () => {
+    const { personalActions, applyActions, interviewActions, userActions } = this.props;
+    let checkSubmit = false;
 
-    if (config.pageType === 'interviewChoice' && window.confirm(message.SUPPORT_CONFIRM)) {
-      return this._submit();
+    if (window.confirm(message.SUPPORT_CONFIRM)) {
+      checkSubmit = await this._submit();
     }
 
-    return true;
+    if (checkSubmit) {
+      personalActions.initState();
+      applyActions.initState();
+      interviewActions.initState();
+      userActions.initState();
+    }
+    return checkSubmit;
   };
 
-  _submit = () => {
+  _submit = async () => {
     const { history, state } = this.props;
     const userId = state.user.toJS().id;
 
@@ -70,9 +81,9 @@ class PageContainer extends Component {
       interview: state.interview.toJS()
     });
     let isAlreadySubmitted = false;
-    sendData.then(body => {
-      isAlreadySubmitted = recruitingApi.submitRecruiting(userId, window.localStorage.accessToken, body);
-    });
+    const body = await sendData;
+    isAlreadySubmitted = await recruitingApi
+      .submitRecruiting(userId, window.localStorage.accessToken, body);
 
     if (isAlreadySubmitted) {
       window.alert(message.ALREADY_SUBMITTED);
@@ -168,6 +179,7 @@ export default withRouter(connect(
     personalActions: bindActionCreators(personalActions, dispatch),
     applyActions: bindActionCreators(applyActions, dispatch),
     interviewActions: bindActionCreators(interviewActions, dispatch),
+    userActions: bindActionCreators(userActions, dispatch),
 
   })
 )(PageContainer));

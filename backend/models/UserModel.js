@@ -46,7 +46,8 @@ const SpecialSchema = new Schema({
 // 질문 스키마
 const QuestionsSchema = new Schema({
   classify: Number, //공통, 본부, 팀질문 및 어떤본부 팀인지 분류 101 102 103
-  department: String, //본부
+  common : [],
+  department: {}, //본부
   team: String, //팀
   key: String, // 본부 팀 
   question : String, //질문내용,
@@ -93,6 +94,7 @@ const interviewSchema = new Schema({
 })
 
 const UserSchema = new Schema({
+  files:[],
   clientStoreData:{
   },
   support_status: {
@@ -144,7 +146,7 @@ const UserSchema = new Schema({
   external_activities: [ExternalActivitiesSchema],
   special_info: [SpecialSchema],
   question_info: [QuestionsSchema],
-  interview_info : [interviewSchema]
+  interview_info : [interviewSchema],
 })
 
 

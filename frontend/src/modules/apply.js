@@ -58,14 +58,15 @@ export default handleActions({
   [INIT_STATE]: (state, action) => state = initialState,
   [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
   [ANSWER_FORMAT_INIT]: (state, action) => {
-    const { key, data } = action.payload;
+    const { type, key, data } = action.payload;
     let updated = state.toJS();
     data.forEach((elem, index) => {
-      if (!getIn(updated, ['department', key, index])) {
-        updated = setIn(updated, ['department', key, index], { question: elem.question, type: elem.type });
+      const keyPath = type === 'common' ? ['common', index] : ['department', key, index];
+      if (!getIn(updated, keyPath)) {
+        updated = setIn(updated, keyPath, { question: elem.question, type: elem.type });
       } else {
-        updated.department[key][index].question = elem.question;
-        updated.department[key][index].type = elem.type;
+        updated = setIn(updated, keyPath.concat(['question']), elem.question);
+        updated = setIn(updated, keyPath.concat(['type']), elem.type);
       }
     });
     return fromJS(updated);
@@ -73,7 +74,7 @@ export default handleActions({
   [TEXT_ANSWER_CHANGED]: (state, action) => {
     const { type, index, questionClassId, answerType, content } = action.payload;
     if (type === 'common') {
-      return state.setIn([type, index], content);
+      return fromJS(setIn(state.toJS(), [type, index, 'text'], content));
     } else {
       return fromJS(setIn(state.toJS(), [type, questionClassId, index, answerType], content));
     }

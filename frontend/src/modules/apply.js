@@ -63,7 +63,7 @@ export default handleActions({
     data.forEach((elem, index) => {
       const keyPath = type === 'common' ? ['common', index] : ['department', key, index];
       if (!getIn(updated, keyPath)) {
-        updated = setIn(updated, keyPath, { question: elem.question, type: elem.type, });
+        updated = setIn(updated, keyPath, { question: elem.question, type: elem.type });
       } else {
         updated = setIn(updated, keyPath.concat(['question']), elem.question);
         updated = setIn(updated, keyPath.concat(['type']), elem.type);

@@ -9,10 +9,11 @@ const NODE_JS = 'Node.js';
 
 // 포트폴리오
 const PortfoliosSchema = new Schema({
-  file_path: String, // 포트폴리오 파일 경로
+  originalname: String,
+  location: String, // 포트폴리오 파일 경로
   registedDate: {
     type: Date,
-   default: new Date() // 현재 날짜를 기본값으로 지정
+    default: new Date() // 현재 날짜를 기본값으로 지정
   }
 })
 

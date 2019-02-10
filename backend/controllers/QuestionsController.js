@@ -13,18 +13,18 @@ exports.getQuestionslist = async (req, res) => {
   try {
     let first = []; let second = [];
     const common = await Questions.getCommonQuestions();
-    
+
     const firstDept = await Questions.getDeptCommonQuestions(deptCode[0], teamCode[0]) 
     const sercondDept = await Questions.getDeptCommonQuestions(deptCode[1], teamCode[1])
     
     firstDept.forEach(v => {first.push(v)})
     sercondDept.forEach(v => {second.push(v)})
 
-    if(deptCode[0] != 103 && deptCode[0] != 104) {
+    if(deptCode[0] != 103 && deptCode[0] != 104 && deptCode[0] != 203) {
        firstTeam = await Questions.getDeptTeamQuestions(deptCode[0], teamCode[0])
        firstTeam.forEach(v => { first.push(v)})
     }
-    if(deptCode[1] != 103 && deptCode[1] != 104) {
+    if(deptCode[1] != 103 && deptCode[1] != 104 && deptCode[1] != 203) {
       secondTeam = await Questions.getDeptTeamQuestions(deptCode[1], teamCode[1])
       secondTeam.forEach(v => { second.push(v)})
     }

@@ -2,12 +2,13 @@ const express = require('express')
 const router = express.Router();
 const usercontroller = require('../../../controllers/UserController');
 const filecontroller = require('../../../controllers/FileController');
-const multer = require('multer');
 
-const memorystorage = multer.memoryStorage()
-const uploadData = multer({
-  storage: memorystorage
-})
+const upload = require('../../../lib/s3Connect')
+// const multer = require('multer');
+// const memorystorage = multer.memoryStorage()
+// const uploadData = multer({
+//   storage: memorystorage
+// })
 
 
 router.get('/list', usercontroller.list);
@@ -23,7 +24,7 @@ router.put('/:id/clientStoreData', usercontroller.updateStoreData);
 router.get('/:id/file', filecontroller.getFileData)
 // router.get('/:id/upload', filecontroller.getUploadfile)
 // router.put('/:id/uploadlocal', filecontroller.puttUploadfilelocal)
-router.put('/:id/upload', uploadData.array('file'), filecontroller.putUploadData)
+router.put('/:id/upload', upload.array('file'), filecontroller.putUploadData)
 
 
-module.exports=router;
+module.exports = router;

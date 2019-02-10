@@ -32,7 +32,7 @@ const getDeptCommonQuestions = (deptCode, teamCode) => {
       collection
         .find({'department': deptCode, 'used': true, $or: [ { team: '00' }]})
         .sort({registedData: -1})
-        .limit(deptCode == 104 || deptCode == 103 ? 2 : 1)
+        .limit(deptCode == 104 || deptCode == 103 || deptCode === 203 ? 2 : 1)
         .toArray(function (err, data) {
           err ? reject(err) : resolve(data)
       });

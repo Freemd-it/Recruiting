@@ -141,7 +141,7 @@ class PageContainer extends Component {
 
   _validateSingle(actionModule, row) {
     let isValid = true;
-    switch (row.checkLavel) {
+    switch (row.checkLevel) {
       case CheckLevelType.VALUE:
         isValid = validation[row.validationType](_.get(actionModule, [...row.key.split('.')]));
         break;
@@ -158,7 +158,7 @@ class PageContainer extends Component {
   _validate = (actionModule, required) => {
     let hasNotValidatedItem;
     return required.find(row => {
-      if (row.checkLavel !== CheckLevelType.NESTED) {
+      if (row.checkLevel !== CheckLevelType.NESTED) {
         hasNotValidatedItem = !this._validateSingle(actionModule, row);
       } else {
         hasNotValidatedItem = !validation[row.validationType](row.required.map(nested => this._validateSingle(actionModule, nested)));

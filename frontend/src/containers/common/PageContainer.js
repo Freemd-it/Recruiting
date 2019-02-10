@@ -18,6 +18,7 @@ class PageContainer extends Component {
   handlePreviousButtonClick = e => {
     const { history, config } = this.props;
     history.push(config.previousRoutePath);
+    window.scrollTo({ top: 100 });
   };
 
   handleNextButtonClick = e => {
@@ -33,10 +34,12 @@ class PageContainer extends Component {
           .then(checkResult => {
             if (checkResult) {
               history.push(config.nextRoutePath);
+              window.scrollTo({ top: 100 });
             }
           })
       } else {
         history.push(config.nextRoutePath);
+        window.scrollTo({ top: 100 });
       }
     }
   };
@@ -67,6 +70,11 @@ class PageContainer extends Component {
       applyActions.initState();
       interviewActions.initState();
       userActions.initState();
+      window.history.pushState(null, null, window.location.href);
+      window.onpopstate = function () {
+        window.history.go(1);
+        window.alert(message.BLOCK_BACK_BUTTON);
+      };
     }
     return checkSubmit;
   };
@@ -74,23 +82,27 @@ class PageContainer extends Component {
   _submit = async () => {
     const { history, state } = this.props;
     const userId = state.user.toJS().id;
+    try {
+      const sendData = convertModelToSchemaBased({
+        personal: state.personal.toJS(),
+        apply: state.apply.toJS(),
+        interview: state.interview.toJS()
+      });
+      let isAlreadySubmitted = false;
+      const body = await sendData;
+      isAlreadySubmitted = await recruitingApi
+        .submitRecruiting(userId, window.localStorage.accessToken, body);
 
-    const sendData = convertModelToSchemaBased({
-      personal: state.personal.toJS(),
-      apply: state.apply.toJS(),
-      interview: state.interview.toJS()
-    });
-    let isAlreadySubmitted = false;
-    const body = await sendData;
-    isAlreadySubmitted = await recruitingApi
-      .submitRecruiting(userId, window.localStorage.accessToken, body);
-
-    if (isAlreadySubmitted) {
-      window.alert(message.ALREADY_SUBMITTED);
-      history.push('/');
+      if (isAlreadySubmitted) {
+        window.alert(message.ALREADY_SUBMITTED);
+        history.push('/');
+        return false;
+      }
+      return true;
+    } catch (e) {
+      console.error(e);
       return false;
     }
-    return true;
   };
 
   _validateByPage = (match, actionModule, { required }) => {

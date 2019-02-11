@@ -98,7 +98,7 @@ export default {
         console.log(pair);
       }
     }
-    return axios.put(`${serverConfig.url}/api/recruits/${id}`, body, {
+    return axios.put(`${serverConfig[process.env.NODE_ENV].url}/api/recruits/${id}`, body, {
         headers: { "x-access-token": `${accessToken}`, "Content-Type": 'multipart/form-data', }
     }).then(res => res.data.isAlreadySubmitted)
   },
@@ -112,12 +112,12 @@ export default {
         key += questionClassId ? questionClassId.toString() : '';
       }
     });
-    return axios.get(`${serverConfig.url}/api/questions/list?key=${key}`, 
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/questions/list?key=${key}`, 
       { headers: { "x-access-token": `${window.localStorage.accessToken}` }}
     ).then(res => res.data.results);
   },
   getInterviewInfo: () => {
-    return axios.get(`${serverConfig.url}/api/interview/schedules/20`,
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/interview/schedules/20`,
       { headers: { "x-access-token": `${window.localStorage.accessToken}` }}
     ).then(res => res.data.result);
   }

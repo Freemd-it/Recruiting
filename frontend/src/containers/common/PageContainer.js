@@ -60,7 +60,6 @@ class PageContainer extends Component {
   };
 
   _checkSubmit = async () => {
-    const { personalActions, applyActions, interviewActions, userActions } = this.props;
     let checkSubmit = false;
 
     if (window.confirm(message.SUPPORT_CONFIRM)) {
@@ -68,15 +67,7 @@ class PageContainer extends Component {
     }
 
     if (checkSubmit) {
-      personalActions.initState();
-      applyActions.initState();
-      interviewActions.initState();
-      userActions.initState();
-      window.history.pushState(null, null, window.location.href);
-      window.onpopstate = function () {
-        window.history.go(1);
-        window.alert(message.BLOCK_BACK_BUTTON);
-      };
+      this._initStoreAndBlockHistory()
     }
     return checkSubmit;
   };
@@ -105,6 +96,21 @@ class PageContainer extends Component {
       console.error(e);
       return false;
     }
+  };
+
+  _initStoreAndBlockHistory = () => {
+    const { personalActions, applyActions, interviewActions, userActions } = this.props;
+    const actions = [ personalActions, applyActions, interviewActions, userActions ];
+
+    actions.forEach(action => {
+      action.initState();
+    });
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+      window.history.go(1);
+      window.alert(message.BLOCK_BACK_BUTTON);
+    };
+
   };
 
   _validateByPage = (match, actionModule, { required }) => {
@@ -204,6 +210,5 @@ export default withRouter(connect(
     applyActions: bindActionCreators(applyActions, dispatch),
     interviewActions: bindActionCreators(interviewActions, dispatch),
     userActions: bindActionCreators(userActions, dispatch),
-
   })
 )(PageContainer));

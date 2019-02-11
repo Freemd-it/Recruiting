@@ -9,6 +9,8 @@
     "start:local": "cross-env NODE_ENV=local nodemon app.js",
     "start:dev": "cross-env NODE_ENV=development nodemon app.js",
     "start:prod": "cross-env NODE_ENV=production nodemon app.js",
+    "pm2_start:dev":"pm2 start ecosystem.config.js",
+    "pm2_start:prod":"pm2 start ecosystem.config.js —env production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

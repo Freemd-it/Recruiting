@@ -4,21 +4,25 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
-import { personalActions, applyActions, interviewActions, userActions } from '../../reducers'
+import { personalActions, applyActions, interviewActions, userActions } from '../../reducers';
 
 import { CheckLevelType } from '../../common/types';
 import validation from '../../common/validation';
 import message from '../../common/message';
 
-import userApi from '../../apis/userApi'
-import recruitingApi, { convertModelToSchemaBased } from '../../apis/recruitingApi'
+import userApi from '../../apis/userApi';
+import recruitingApi, { convertModelToSchemaBased } from '../../apis/recruitingApi';
 
 class PageContainer extends Component {
+
+  componentDidMount() {
+    window.scrollTo({ top: 100 });
+  };
 
   handlePreviousButtonClick = e => {
     const { history, config } = this.props;
     history.push(config.previousRoutePath);
-    window.scrollTo({ top: 100 });
+
   };
 
   handleNextButtonClick = e => {
@@ -34,12 +38,10 @@ class PageContainer extends Component {
           .then(checkResult => {
             if (checkResult) {
               history.push(config.nextRoutePath);
-              window.scrollTo({ top: 100 });
             }
           })
       } else {
         history.push(config.nextRoutePath);
-        window.scrollTo({ top: 100 });
       }
     }
   };
@@ -58,7 +60,6 @@ class PageContainer extends Component {
   };
 
   _checkSubmit = async () => {
-    const { personalActions, applyActions, interviewActions, userActions } = this.props;
     let checkSubmit = false;
 
     if (window.confirm(message.SUPPORT_CONFIRM)) {
@@ -66,15 +67,7 @@ class PageContainer extends Component {
     }
 
     if (checkSubmit) {
-      personalActions.initState();
-      applyActions.initState();
-      interviewActions.initState();
-      userActions.initState();
-      window.history.pushState(null, null, window.location.href);
-      window.onpopstate = function () {
-        window.history.go(1);
-        window.alert(message.BLOCK_BACK_BUTTON);
-      };
+      this._initStoreAndBlockHistory()
     }
     return checkSubmit;
   };
@@ -103,6 +96,21 @@ class PageContainer extends Component {
       console.error(e);
       return false;
     }
+  };
+
+  _initStoreAndBlockHistory = () => {
+    const { personalActions, applyActions, interviewActions, userActions } = this.props;
+    const actions = [ personalActions, applyActions, interviewActions, userActions ];
+
+    actions.forEach(action => {
+      action.initState();
+    });
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+      window.history.go(1);
+      window.alert(message.BLOCK_BACK_BUTTON);
+    };
+
   };
 
   _validateByPage = (match, actionModule, { required }) => {
@@ -202,6 +210,5 @@ export default withRouter(connect(
     applyActions: bindActionCreators(applyActions, dispatch),
     interviewActions: bindActionCreators(interviewActions, dispatch),
     userActions: bindActionCreators(userActions, dispatch),
-
   })
 )(PageContainer));

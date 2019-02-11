@@ -18,7 +18,7 @@ export default {
       checkLevel: CheckLevelType.VALUE,
     }, {
       key: 'applyChoice.0.medical',
-      message: '의료 산업을 선택해 주세요.',
+      message: '의료 사업을 선택해 주세요.',
       validationType: ValidationType.EMPTY,
       checkLevel: CheckLevelType.VALUE,
     }, {

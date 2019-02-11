@@ -25,7 +25,10 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
           team: apply.applyChoice[0].team,
           secondary_team: apply.applyChoice[1].team,
           key: consts.getQuestionClassId(apply.applyChoice[0].department, apply.applyChoice[0].team).toString(),
-          secondary_key: consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team).toString(),
+          secondary_key: (
+            consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team) &&
+            consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team).toString()
+          ),
           other_assign_consent: apply.otherAssignConsent,
         },
         academic_career: {
@@ -91,6 +94,7 @@ export {
 
 export default {
   submitRecruiting: (id, accessToken, body) => {
+<<<<<<< HEAD
     for (let pair of body.entries()) {
       if (pair[0] == 'body') {
         console.log(pair[0], JSON.parse(pair[1]));
@@ -100,6 +104,10 @@ export default {
     }
     return axios.put(`${serverConfig[process.env.NODE_ENV].url}/api/recruits/${id}`, body, {
         headers: { "x-access-token": `${accessToken}`, "Content-Type": 'multipart/form-data', }
+=======
+    return axios.put(`${serverConfig.url}/api/recruits/${id}`, body, {
+        headers: { 'x-access-token': `${accessToken}`, 'Content-Type': 'multipart/form-data', }
+>>>>>>> f00b195675343611313c28db6ba5c85fe6826347
     }).then(res => res.data.isAlreadySubmitted)
   },
   getQuestionInfo: (questionClassIds) => {

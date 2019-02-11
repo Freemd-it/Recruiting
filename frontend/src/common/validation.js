@@ -22,5 +22,12 @@ export default {
   ),
   [ValidationType.NOT_EQUAL]: (value1, value2) => (
     value1 !== value2
-  )
+  ),
+  [ValidationType.OR]: (values) => (
+    values.reduce((prev, curr) => prev || curr, false)
+  ),
+  [ValidationType.AND]: (values) => (
+    values.reduce((prev, curr) => prev && curr, false)
+  ),
+
 }

@@ -81,8 +81,8 @@ export default {
   },
   interviewChoice: {
     ...defaultPageTitle,
-    firstDayDepartments: ['디자인', 'IT기획', '해외의료사업'],
-    secondDayDepartments: ['경영지원', '브랜드마케팅', '무료진료소사업', '보건교육사업'],
+    firstDayDepartments: ['디자인본부', 'IT기획본부', '해외의료사업본부'],
+    secondDayDepartments: ['경영지원본부', '브랜드마케팅본부', '무료진료소사업본부', '보건교육사업본부'],
   },
   resumeComplete: {
     ...defaultPageTitle,

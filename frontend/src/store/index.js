@@ -5,19 +5,12 @@ import { fromJS } from 'immutable';
 
 import rootSaga from '../saga';
 import reducers from '../modules';
-import initailState from '../config/initialState'
+import initailState from '../config/initialState';
 
-const configureStore = (reducer, initialState = {}) => {
-  const sagaMiddleware = createSagaMiddleware();
-  const enhancer = compose(
-    applyMiddleware(sagaMiddleware, save()),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  );
-  const store = createStore(reducer, initialState, enhancer);
-
-  sagaMiddleware.run(rootSaga);
-  return store;
-};
+const createStoreWithMiddleware
+  = applyMiddleware(
+  save() // Saving done here
+)(createStore);
 
 let preloadedState = initailState;
 
@@ -27,6 +20,6 @@ Object.keys(reduxState).forEach(key => {
   preloadedState = {...preloadedState, ...({[key]:fromJS(reduxState[key])})}
 });
 
-const store = configureStore(reducers, preloadedState);
+const store = createStoreWithMiddleware(reducers, preloadedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 export default store;

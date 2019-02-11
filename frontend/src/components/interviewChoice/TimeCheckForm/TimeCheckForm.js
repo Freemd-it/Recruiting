@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 
@@ -25,7 +26,7 @@ const TimeCheckForm = ({ date, index, onCheckedChange, checkedFields }) => {
       {index !== 0 ? (<hr />) : ''}
       <div className={(cx('time-check-form-content'))}>
         <div className={(cx('form-day'))}>
-          {day}
+          {moment(day).format(`MM. DD. ${index === 0 ? '토' : '일'}`)}
         </div>
         <div className={(cx('form-times'))}>
           {times.map((time, timeIndex) => (

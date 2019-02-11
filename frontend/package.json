@@ -39,6 +39,7 @@
     "jest-resolve": "23.6.0",
     "lodash": "^4.17.11",
     "mini-css-extract-plugin": "0.4.3",
+    "moment": "^2.24.0",
     "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
@@ -72,7 +73,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "deploy:dev": "pm2 start pm2/freemed.admin.front.dev.json && pm2 logs freemed.admin.front.dev",
+    "deploy:prod": "pm2 start pm2/freemed.admin.front.prod.json && pm2 logs freemed.admin.front.prod"
   },
   "eslintConfig": {
     "extends": "react-app"

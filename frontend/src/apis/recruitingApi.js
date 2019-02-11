@@ -94,7 +94,6 @@ export {
 
 export default {
   submitRecruiting: (id, accessToken, body) => {
-<<<<<<< HEAD
     for (let pair of body.entries()) {
       if (pair[0] == 'body') {
         console.log(pair[0], JSON.parse(pair[1]));
@@ -104,10 +103,6 @@ export default {
     }
     return axios.put(`${serverConfig[process.env.NODE_ENV].url}/api/recruits/${id}`, body, {
         headers: { "x-access-token": `${accessToken}`, "Content-Type": 'multipart/form-data', }
-=======
-    return axios.put(`${serverConfig.url}/api/recruits/${id}`, body, {
-        headers: { 'x-access-token': `${accessToken}`, 'Content-Type': 'multipart/form-data', }
->>>>>>> f00b195675343611313c28db6ba5c85fe6826347
     }).then(res => res.data.isAlreadySubmitted)
   },
   getQuestionInfo: (questionClassIds) => {

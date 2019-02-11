@@ -18,15 +18,16 @@ exports.getQuestionslist = async (req, res) => {
     // 본부별 공통질문 
     let first = []; let second = []
 
-    deptCode.forEach(async (v,i) => {
-      const dept = await Questions.getDeptCommonQuestions(v)
-      i === 0 ? first.push(dept) : second.push(dept)
-
-      if(!deptHasTeam(v)) {
-        const team = await Questions.getDeptTeamQuestions(v, teamCode[i])
-        i === 0 ? team.forEach(_v => { first.push(_v)}) : team.forEach(_v => { second.push(_v)})
-      }
-    })
+    for(let i=0; i <deptCode.length; i++)
+    {
+        const dept = await Questions.getDeptCommonQuestions(deptCode[i])
+        i === 0 ? first = dept : second = dept
+        
+        if(!deptHasTeam(deptCode[i])) {
+          const team = await Questions.getDeptTeamQuestions(deptCode[i], teamCode[i])
+          i === 0 ? team.forEach(_v => { first.push(_v)}) : team.forEach(_v => { second.push(_v)})
+        }
+    }
     
     res.json({
       message: 'GET LIST SUCCESS',

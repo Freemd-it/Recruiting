@@ -36,7 +36,7 @@ const ApplyBusinessChoice = (props) => {
             <div className={cx('medical-business-form')}>
               <div className={cx('mediacal-title-form')}>
                 <div className={cx('subsection-title')}>
-                  <span>의료 산업</span>
+                  <span>의료 사업</span>
                 </div>
                 <img src={errorImage} alt="" onClick={onShowModal}/>
               </div>

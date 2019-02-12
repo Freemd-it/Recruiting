@@ -11,7 +11,6 @@ router.get('/list', userController.list);
 router.get('/:id', userController.read);
 router.put('/:id', userController.update);
 
-// 리덕스 storedData테스트 
 router.get('/:id/clientStoreData', userController.readStoreData);
 router.put('/:id/clientStoreData', userController.updateStoreData);
 

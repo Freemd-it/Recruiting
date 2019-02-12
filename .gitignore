@@ -7,7 +7,7 @@ yarn-error.log*
 
 # backend config directory
 backend/config/
-
+frontend/build/
 # Runtime data
 pids
 *.pid

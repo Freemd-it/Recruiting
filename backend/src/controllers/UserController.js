@@ -2,12 +2,14 @@ const User = require('../models/UserModel');
 const jsonParser = require('parse-json')
 const moment = require('moment')
 const _ = require('lodash')
-const questionList = []
+
 exports.list = async(req, res) => {
   try {
-   const user = await User.find({})
+   const user = await User
+   .find({})
    .sort({_id: -1})
    .exec()
+
    res.json({result:user})
   }catch(err) {
     res.status(500).json({err})
@@ -17,7 +19,7 @@ exports.list = async(req, res) => {
 exports.read = async (req, res) => {
   const {id} = req.params;
 
-  try{
+  try {
     const user = await User.findOneById(id)
 
     if(!user) {
@@ -29,7 +31,7 @@ exports.read = async (req, res) => {
       result: user
     });
 
-  }catch(err){
+  } catch(err) {
     res.status(500).json({
       message: 'Read Fail',
       error : err
@@ -39,19 +41,13 @@ exports.read = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { id } = req.params;
-  const { files } = req
+  const { files } = req;
   const { basic_info, academic_career, external_activities, special_info, question_info, interview_info} = jsonParser(req.body.body);
+  const questionList = []
   
-  const setQuestionList = (question_info) => {
-    _.forEach(question_info, (v, k) => {
-      makeQuestionObject(v,k)
-    })
-  }
-  const setInterviewList = (interview_info) => {
-    return _.forEach(interview_info, (v, k) => {
-      return makeInterviewObject(v,k)
-    })
-  }
+  const setQuestionList = (question_info) => _.forEach(question_info, (v, k) => makeQuestionObject(v,k))
+  const setInterviewList = (interview_info) => _.forEach(interview_info, (v, k) => makeInterviewObject(v,k))
+
   const makeQuestionObject = (value, key) => {
     if(key === 'common') {
       _.forEach(value, (v, k) => {
@@ -182,13 +178,9 @@ exports.updateStoreData = async(req, res) => {
   }
 
   try {
-    await User.findByIdAndUpdate(
-      {_id : id},
-      req.body,
-      {new:true, upsert: true}
-    ).then(respond)
-   
-   }catch(err){
+    await User.findByIdAndUpdate({_id : id}, req.body, { new: true, upsert: true }).then(respond)
+
+   } catch (err) {
      res.status(500).json({
        message: 'Update StoreData Fail',
        error : err

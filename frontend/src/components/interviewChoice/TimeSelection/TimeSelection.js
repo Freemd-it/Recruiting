@@ -17,7 +17,7 @@ const TimeSelection = ({ interviewData, onCheckedChange, checkedFields }) => {
 
   return (
     <div className={cx('time-selection-form')}>
-      <SubsectionHeader title={<>가능한 인터뷰 시간대를 모두 선택해주세요. (<strong>최소 2개 선택</strong> - 연결된 시간으로 부탁드립니다.)</>} />
+      <SubsectionHeader title={<>가능한 인터뷰 시간대를 모두 선택해주세요. (<strong>최소 1개 선택</strong> - 연결된 시간으로 부탁드립니다.)</>} />
       <div className={cx('department-notice')}>
           {departmentNotices.map((notice, index) => (
             <li key={`Notice__${index}`}>{notice}</li>

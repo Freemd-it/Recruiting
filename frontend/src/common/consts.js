@@ -13,7 +13,7 @@ const departmentAndTeamToId = {
   '보건교육사업본부_보건교육운영팀': 20201,
   '보건교육사업본부_교육연구팀': 20202,
   '해외의료사업본부_': 20300,
-  '_': undefined,
+  '_': '',
 }
 export default {
   getQuestionClassId: (department, team) => {

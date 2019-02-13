@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const { envConfig } = require('../config/constants');
+const { envConfig } = require('../../config/constants');
+const deptHasTeam = require('lib/deptHasTeam')
+
 const node_env = process.env.NODE_ENV
 const { MONGO_URL } = envConfig(node_env)
 
@@ -25,14 +27,15 @@ const getCommonQuestions = () => {
   })
 }
 
-const getDeptCommonQuestions = (deptCode, teamCode) => {
+const getDeptCommonQuestions = (deptCode) => {
+  console.log(3)
   return new Promise(async (resolve, reject) => {
     connection.db.collection("questions", function (err, collection) {
-      if(err) reject(err);
+      err && reject(err)
       collection
         .find({'department': deptCode, 'used': true, $or: [ { team: '00' }]})
         .sort({registedData: -1})
-        .limit(deptCode == 104 || deptCode == 103 || deptCode === 203 ? 2 : 1)
+        .limit(deptHasTeam(deptCode) ? 2 : 1)
         .toArray(function (err, data) {
           err ? reject(err) : resolve(data)
       });

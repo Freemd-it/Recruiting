@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router();
+
 const auth = require('./auth');
 const user = require('./user');
 const questions = require('./questions');
-const authMiddleware = require('../../middlewares/Auth');
-const upload = require('../../lib/s3Connect')
-const interview = require('./interview/')
+const interview = require('./interview');
+
+const authMiddleware = require('middlewares/Auth');
+const upload = require('lib/s3Connect');
 
 
 // /auth 로 들어오면 연결

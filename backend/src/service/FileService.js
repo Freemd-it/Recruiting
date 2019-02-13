@@ -4,11 +4,11 @@ const moment = require('moment');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 
-const { envConfig } = require('../config/constants');
-const node_env = process.env.NODE_ENV
-const { PREFIX, BUCKET } = envConfig(node_env)
+const { envConfig } = require('../../config/constants');
+const { PREFIX, BUCKET } = envConfig(process.env.NODE_ENV)
 
 aws.config.loadFromPath('./config/aws_config.json')
+
 const s3 = new aws.S3();
 const year = moment().format('YYYY')
 const month = moment().format('MM')
@@ -16,7 +16,6 @@ const day = moment().format('DD')
 
 const getListObject = (id) => {
   return new Promise(async (resolve, reject) => {
-    console.log(id, BUCKET, PREFIX)
     try {
       s3.getObject({
         Bucket: `${BUCKET}/`, 

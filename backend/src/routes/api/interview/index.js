@@ -1,6 +1,7 @@
 const express = require('express')
+const interviewController = require('controllers/InterviewTimeCtroller');
+
 const router = express.Router();
-const interviewController = require('../../../controllers/InterviewTime.Ctrl');
 
 router.get('/schedules/:batch', interviewController.getInterviewSchedule);
 

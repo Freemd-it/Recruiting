@@ -128,7 +128,7 @@ class PageContainer extends Component {
         const shouldInterviews = interviewActions.checkInterviewDates(selectedDepartments);
         let hasNotValidatedItem = !shouldInterviews.every((shouldInterview, index) => {
           const timeCount = actionModule.interviewDates[index].times.length;
-          const needMoreChoice = (timeCount < 2 && shouldInterview);
+          const needMoreChoice = (timeCount < 1 && shouldInterview);
           const hasInvalidChoice = (timeCount > 0 && !shouldInterview);
 
           if (needMoreChoice) {

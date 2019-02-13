@@ -17,7 +17,7 @@ const ResumeComplete = () => {
       <div>
         지원해주신 결과는 <span><strong> 개별 문자 </strong></span>와
         <span><strong> 홈페이지 공고 </strong></span>를 통해 
-        <strong> 3월 00일에 발표</strong>됩니다.
+        <strong> 3월 07일 오후6시에 발표</strong>됩니다.
       </div>
 
       <Button 

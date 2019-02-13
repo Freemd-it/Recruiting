@@ -7,7 +7,7 @@ const fileService = require('../service/FileService');
 
 exports.getFileData = async (req, res) => {
   const { id } = req.params
-  // file 이름 필요
+  
   try {
     const results = await fileService.getListObject(id)
 
@@ -23,9 +23,6 @@ exports.getFileData = async (req, res) => {
   }
 }
 
-// 파일 업로드 테스트
-// 해당 유저의 파일 데이터 업로드 
-// 인터뷰에 있는 데이터를 어떻게 받아와야하나 ..
 exports.putUploadData = async (req, res) => {
   const { id } = req.params
    try {

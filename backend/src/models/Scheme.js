@@ -1,19 +1,14 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose;
-const crypto = require('crypto')
-const { envConfig} = require('../config/constants');
-const node_env = process.env.NODE_ENV
-const {JWT_SECRET} = envConfig(node_env)
-const multiUpdate = require('mongoose-multi-update')
-const NODE_JS = 'Node.js';
 
-// 포트폴리오
+const { Schema } = mongoose;
+
+
 const PortfoliosSchema = new Schema({
   originalname: String,
-  location: String, // 포트폴리오 파일 경로
+  location: String,
   registedDate: {
     type: Date,
-    default: new Date() // 현재 날짜를 기본값으로 지정
+    default: new Date(),
   }
 })
 
@@ -24,7 +19,7 @@ const ExternalActivitiesSchema = new Schema({
     enum : ['인턴', '봉사활동']
   },
   organizer: String, 
-  start_date: String, // 2019/03
+  start_date: String,
   end_date: String, 
   turnaround_time: Number,
   content: String 
@@ -36,7 +31,7 @@ const SpecialSchema = new Schema({
     type: String,
     enum: ['자격증', '어학능력', '기타능력']
   },
-  // acquisition_date: Date,
+  acquisition_date: Date,
   self_evaluation_ability: {
     type: String,
     enum: ['상', '중', '하']
@@ -46,11 +41,11 @@ const SpecialSchema = new Schema({
 
 // 질문 스키마
 const QuestionsSchema = new Schema({
-  classify: Number, //공통, 본부, 팀질문 및 어떤본부 팀인지 분류 101 102 103
-  department: String, //본부
-  team: String, //팀
-  key: String, // 본부 팀 
-  question : String, //질문내용,
+  classify: Number,
+  department: String,
+  team: String,
+  key: String,
+  question : String,
   type: String,
   content: String,
   select :{
@@ -87,7 +82,7 @@ const QuestionsSchema = new Schema({
   }
 })
 
-const interviewSchema = new Schema({
+const InterviewSchema = new Schema({
   interview_date : Date,
   interview_week : String,
   interview_time : [String]
@@ -102,7 +97,7 @@ const UserSchema = new Schema({
   },
   registedDate: {
     type: Date,
-    default: new Date() // 현재 날짜를 기본값으로 지정
+    default: new Date(),
   },
   basic_info:{
     user_name : String,
@@ -115,12 +110,9 @@ const UserSchema = new Schema({
     other_assign_ngo: Boolean,
     other_assign_medical: Boolean,
     
-    // can_moved: Boolean, 
-    // can_multiple_interview: Boolean,
-
     english_name: String,
     is_male: Boolean,
-    birth_date: String, // yyyy-mm-dd
+    birth_date: String,
     
     phone_number : String,
     sns : String,
@@ -148,70 +140,15 @@ const UserSchema = new Schema({
   external_activities: [ExternalActivitiesSchema],
   special_info: [SpecialSchema],
   question_info: [QuestionsSchema],
-  interview_info : [interviewSchema]
+  interview_info : [InterviewSchema]
 })
 
-
-// 몽고디비 저장
-// arrow function 이 안먹힘
-UserSchema.statics.create = function(user_name, email, password)  {
-  const secret = JWT_SECRET
-
-  const encrypted = crypto.createHmac('sha1', secret)
-                    .update(password)
-                    .digest('base64');
-  
-  const userinfo = new this({
-    basic_info:{
-      user_name, 
-      email, 
-      password : encrypted
-    }
-  })
-
-  return  userinfo.save()
-};
-
-// id 로 찾기
-UserSchema.statics.findOneById = function(id){
-  return this.findOne({
-    _id:id
-  }).exec();
-};
-
-UserSchema.statics.findOneUserInfo = function(user_name, email){
-  console.log(user_name, email)
-  return this.findOne({
-    'basic_info.user_name':user_name,
-    'basic_info.email' : email
-  }).exec();
-};
-
-// email 로 찾기
-UserSchema.statics.findOneByEmail = function(email){
-  return this.findOne({
-    'basic_info.email' : email
-  }).exec();
-};
-
-// 이름 으로 찾기
-UserSchema.statics.findOneByUsername = function(user_name) {
-  return this.findOne({
-      'basic_info.user_name' : user_name
-  }).exec();
-};
-
-// 비밀번호 암호화
-UserSchema.methods.verify = function(password) {
-  // console.log(this.password)
-  const encrypted = crypto.createHmac('sha1', JWT_SECRET)
-                          .update(password)
-                          .digest('base64');
-
-  return this.basic_info.password === encrypted
+module.exports = {
+  PortfoliosSchema,
+  ExternalActivitiesSchema,
+  SpecialSchema,
+  QuestionsSchema,
+  InterviewSchema,
+  UserSchema,
+  SpecialSchema,
 }
-
-UserSchema.plugin(multiUpdate);
-
-module.exports = mongoose.model('User', UserSchema);
-

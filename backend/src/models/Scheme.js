@@ -9,7 +9,7 @@ const PortfoliosSchema = new Schema({
   location: String,
   registedDate: {
     type: Date,
-    default: moment().format('YYYY-MM-DD HH:mm:ss')
+    default: moment().add('hours',9).format('YYYY-MM-DD HH:mm:ss')
   }
 })
 
@@ -79,7 +79,7 @@ const QuestionsSchema = new Schema({
   portfolios: [PortfoliosSchema],
   registedDate: {
     type: Date,
-    default: moment().format('YYYY-MM-DD HH:mm:ss')
+    default: moment().add('hours',9).format('YYYY-MM-DD HH:mm:ss')
   }
 })
 
@@ -98,7 +98,7 @@ const UserSchema = new Schema({
   },
   registedDate: {
     type: Date,
-    default: moment().format('YYYY-MM-DD HH:mm:ss'),
+    default: moment().add('hours',9).format('YYYY-MM-DD HH:mm:ss')
   },
   basic_info:{
     user_name : String,

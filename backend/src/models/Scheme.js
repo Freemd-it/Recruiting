@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment')
 
 const { Schema } = mongoose;
 
@@ -8,7 +9,7 @@ const PortfoliosSchema = new Schema({
   location: String,
   registedDate: {
     type: Date,
-    default: new Date(),
+    default: moment().format('YYYY-MM-DD HH:mm:ss')
   }
 })
 
@@ -78,7 +79,7 @@ const QuestionsSchema = new Schema({
   portfolios: [PortfoliosSchema],
   registedDate: {
     type: Date,
-    default: new Date() // 현재 날짜를 기본값으로 지정
+    default: moment().format('YYYY-MM-DD HH:mm:ss')
   }
 })
 
@@ -97,7 +98,7 @@ const UserSchema = new Schema({
   },
   registedDate: {
     type: Date,
-    default: new Date(),
+    default: moment().format('YYYY-MM-DD HH:mm:ss'),
   },
   basic_info:{
     user_name : String,

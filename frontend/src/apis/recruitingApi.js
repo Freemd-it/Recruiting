@@ -94,15 +94,8 @@ export {
 
 export default {
   submitRecruiting: (id, accessToken, body) => {
-    for (let pair of body.entries()) {
-      if (pair[0] == 'body') {
-        console.log(pair[0], JSON.parse(pair[1]));
-      } else {
-        console.log(pair);
-      }
-    }
     return axios.put(`${serverConfig[process.env.NODE_ENV].url}/api/recruits/${id}`, body, {
-        headers: { "x-access-token": `${accessToken}`, "Content-Type": 'multipart/form-data', }
+        headers: { 'x-access-token': `${accessToken}`, 'Content-Type': 'multipart/form-data', }
     }).then(res => res.data.isAlreadySubmitted)
   },
   getQuestionInfo: (questionClassIds) => {
@@ -116,12 +109,12 @@ export default {
       }
     });
     return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/questions/list?key=${key}`, 
-      { headers: { "x-access-token": `${window.localStorage.accessToken}` }}
+      { headers: { 'x-access-token': `${window.localStorage.accessToken}` }}
     ).then(res => res.data.results);
   },
   getInterviewInfo: () => {
     return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/interview/schedules/20`,
-      { headers: { "x-access-token": `${window.localStorage.accessToken}` }}
+      { headers: { 'x-access-token': `${window.localStorage.accessToken}` }}
     ).then(res => res.data.result);
   }
 }

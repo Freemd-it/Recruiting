@@ -28,7 +28,6 @@ const getCommonQuestions = () => {
 }
 
 const getDeptCommonQuestions = (deptCode) => {
-  console.log(3)
   return new Promise(async (resolve, reject) => {
     connection.db.collection("questions", function (err, collection) {
       err && reject(err)

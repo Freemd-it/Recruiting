@@ -19,7 +19,7 @@ class PageContainer extends Component {
   handlePreviousButtonClick = e => {
     const { history, config } = this.props;
     history.push(config.previousRoutePath);
-
+    window.scrollTo({ top: 100 });
   };
 
   handleNextButtonClick = e => {
@@ -35,10 +35,12 @@ class PageContainer extends Component {
           .then(checkResult => {
             if (checkResult) {
               history.push(config.nextRoutePath);
+              window.scrollTo({ top: 100 });
             }
           })
       } else {
         history.push(config.nextRoutePath);
+        window.scrollTo({ top: 100 });
       }
     }
   };

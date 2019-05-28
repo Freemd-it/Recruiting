@@ -15,14 +15,11 @@ import recruitingApi, { convertModelToSchemaBased } from '../../apis/recruitingA
 
 class PageContainer extends Component {
 
-  componentDidMount() {
-    window.scrollTo({ top: 100 });
-  };
 
   handlePreviousButtonClick = e => {
     const { history, config } = this.props;
     history.push(config.previousRoutePath);
-
+    window.scrollTo({ top: 100 });
   };
 
   handleNextButtonClick = e => {
@@ -38,10 +35,12 @@ class PageContainer extends Component {
           .then(checkResult => {
             if (checkResult) {
               history.push(config.nextRoutePath);
+              window.scrollTo({ top: 100 });
             }
           })
       } else {
         history.push(config.nextRoutePath);
+        window.scrollTo({ top: 100 });
       }
     }
   };
@@ -183,6 +182,7 @@ class PageContainer extends Component {
     window.onbeforeunload = function () {
       applyActions.pageRefreshed();
     }.bind(this);
+    window.scrollTo({ top: 100 });
   }
 
   render() {

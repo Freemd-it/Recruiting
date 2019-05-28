@@ -5,7 +5,7 @@ const deptHasTeam = require('lib/deptHasTeam')
 const node_env = process.env.NODE_ENV
 const { MONGO_URL } = envConfig(node_env)
 
-mongoose.connect(MONGO_URL);
+mongoose.connect(MONGO_URL, {useNewUrlParser: true});
 const connection = mongoose.connection;
 
 

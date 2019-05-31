@@ -129,7 +129,6 @@ const UserSchema = new Schema({
     team: String, 
     secondary_team: String, 
     bussiness_activity: String,
-    evaluation : String,
   },
   academic_career: {
     academic_name : String,
@@ -142,7 +141,11 @@ const UserSchema = new Schema({
   external_activities: [ExternalActivitiesSchema],
   special_info: [SpecialSchema],
   question_info: [QuestionsSchema],
-  interview_info : [InterviewSchema]
+  interview_info : [InterviewSchema],
+  evaluation : {
+    type: String,
+    default: '미평가'
+  },
 })
 
 module.exports = {

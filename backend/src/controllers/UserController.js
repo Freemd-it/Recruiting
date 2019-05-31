@@ -110,13 +110,15 @@ exports.update = async (req, res) => {
         secondary_team: String(basic_info.secondary_key).slice(3,5),
         other_assign_ngo: basic_info.other_assign_consent.ngo,
         other_assign_medical: basic_info.other_assign_consent.medical,
+        bussiness_activity: '' /*basic_info.business_activity*/,
       },
       academic_career: {...academic_career},
       external_activities: external_activities,
       special_info: special_info,
       question_info: questionList,
       interview_info: setInterviewList(interview_info),
-      support_status: 201
+      support_status: 201,
+      evaluation: '미평가',
     };
 
     await User.findByIdAndUpdate(

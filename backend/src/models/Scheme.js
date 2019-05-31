@@ -128,6 +128,8 @@ const UserSchema = new Schema({
     },
     team: String, 
     secondary_team: String, 
+    bussiness_activity: String,
+    evaluation : String,
   },
   academic_career: {
     academic_name : String,

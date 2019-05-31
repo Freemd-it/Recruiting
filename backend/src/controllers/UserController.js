@@ -104,8 +104,8 @@ exports.update = async (req, res) => {
       basic_info: {
         ...basic_info,
         password: user.basic_info.password,
-        department: String(basic_info.key).slice(0,3),
-        team: String(basic_info.key).slice(3,5),
+        first_department: String(basic_info.key).slice(0,3),
+        first_team: String(basic_info.key).slice(3,5),
         secondary_department: String(basic_info.secondary_key).slice(0,3),
         secondary_team: String(basic_info.secondary_key).slice(3,5),
         other_assign_ngo: basic_info.other_assign_consent.ngo,

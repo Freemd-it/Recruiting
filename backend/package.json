@@ -6,7 +6,7 @@
   "scripts": {
     "start": "pm2-dev start ecosystem.config.js",
     "deploy": "npm install && pm2 start ecosystem.config.js --env production",
-    "start:local": "cross-env NODE_ENV=local nodemon app.js",
+    "start:local": "cross-env NODE_ENV=local NODE_PATH=src nodemon app.js",
     "start:dev": "NODE_ENV=development NODE_PATH=src nodemon app.js",
     "start:prod": "NODE_ENV=production NODE_PATH=src nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"

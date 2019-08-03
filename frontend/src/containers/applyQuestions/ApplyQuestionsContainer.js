@@ -101,6 +101,7 @@ class ApplyQuestionsContainer extends Component {
           questions={questionData.common}
           onInputChange={this.handleInputChange}
         />
+
         <DepartmentQuestion
           questionModules={questionData.department}
           answers={state.department}

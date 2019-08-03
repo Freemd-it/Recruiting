@@ -1,0 +1,16 @@
+{
+  "apps" : [{
+    "name": "freemed.recruting.server.dev",
+    "script": "app.js",
+    "ignore_watch" : ["node_modules", "logs"],
+    "env": {
+      "NODE_ENV": "development",
+      "NODE_PATH": "src"
+    },
+    "merge_logs": true,
+    "log_date_format": "YYYY-MM-DD HH:mm:ss",
+    "error_file": "./logs/freemed.recruit.dev.stderr.log",
+    "out_file": "./logs/freemed.recruit.dev.stdout.log",
+    "pid_file": "./logs/freemed.recruit.dev.pid"
+  }]
+}

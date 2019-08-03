@@ -118,7 +118,7 @@ const UserSchema = new Schema({
     sns : String,
     address : String,
     
-    department: {
+    first_department: {
       type: String,
       enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
     },
@@ -126,7 +126,7 @@ const UserSchema = new Schema({
       type: String,
       enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
     },
-    team: String, 
+    first_team: String, 
     secondary_team: String, 
     bussiness_activity: String,
   },

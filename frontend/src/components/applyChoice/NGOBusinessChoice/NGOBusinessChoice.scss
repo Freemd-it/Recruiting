@@ -1,6 +1,8 @@
 .team-card-holder {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-gap: 40px;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   padding-top: 64px;
 }
 

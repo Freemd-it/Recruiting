@@ -1,6 +1,6 @@
 .team-card-item {
-  width: 134px;
-  height: 184px;
+  width: 100%;
+  height: 230px;
   border-radius: 4px;
   border: 1px solid #5c5959;
   background-color: #f8f8f8;
@@ -8,15 +8,15 @@
   img {
     padding-top: 20px;
     padding-left: 4px;
-    width: 78px;
-    height: 78px;
+    width: 110px;
+    height: 110px;
   }
   .team-card-name {
     padding-top: 16px;
     padding-left: 18px;
     span {
       color: #707070;
-      font-size: 14px;
+      font-size: 18px;
       font-family: 'NotoSans-Bold';
     }
   }
@@ -24,7 +24,7 @@
     padding-left: 18px;
     padding-top: 6px;
     span {
-      font-size: 10px;
+      font-size: 13px;
       color: #707070;
       font-family: 'NotoSans-Light';
     }

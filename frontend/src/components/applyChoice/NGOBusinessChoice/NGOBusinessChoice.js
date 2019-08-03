@@ -41,18 +41,23 @@ const colourStyles = {
 
 const NGOBusinessChoice = (props) => {
   const { applyChoice, departmentDatas, onChoiceNGOBusiness, onChoiceSelectBox } = props;
-
+  const choiceIndex = props.isSeconApply ? 1 : 0;
   const selectedDepartment = departmentDatas.find(department =>
-    department.name === (props.isSecondApply ? applyChoice[1].department : applyChoice[0].department)
+    department.name === applyChoice[choiceIndex].department
   );
 
-  const options = selectedDepartment && selectedDepartment.teams.length > 0 ?
-    selectedDepartment.teams.map(dataRow => ({value: dataRow, label: dataRow === '약무팀' ? '약무팀 (약대생만 선발)' : dataRow})) : [{value: '팀 없음', label: '팀 없음'}];
- 
-  const currentValue = {
-      value: applyChoice[props.isSecondApply ? 1 : 0].team || '팀 없음',
-      label: applyChoice[props.isSecondApply ? 1 : 0].team || '팀 없음',
-  };
+  const options = selectedDepartment && selectedDepartment.teams.length > 0
+    ? selectedDepartment.teams.map(row => (
+      {
+        value: row.name,
+        label: row.name === '약무팀' ? '약무팀 (약대생만 선발)' : row.name
+      }))
+    : [ {value: '팀 없음', label: '팀 없음'} ];
+
+  const currentTeam = selectedDepartment ? {
+      value: applyChoice[choiceIndex].team || selectedDepartment.teams[0].name,
+      label: applyChoice[choiceIndex].team || selectedDepartment.teams[0].name,
+  } : null;
 
   return (
     <>
@@ -63,7 +68,7 @@ const NGOBusinessChoice = (props) => {
               key={`TeamCard__${dataIndex}`}
               data={dataRow}
               image={images[dataRow.imageName]}
-              selected={!props.isSecondApply ? applyChoice[0].department === dataRow.name : applyChoice[1].department === dataRow.name}
+              selected={applyChoice[choiceIndex].department === dataRow.name}
               isSeconApply={props.isSecondApply}
               onChoiceNGOBusiness={onChoiceNGOBusiness}
             />
@@ -72,10 +77,10 @@ const NGOBusinessChoice = (props) => {
       </div>
 
       <Select
-        value={!selectedDepartment ? null : currentValue}
+        value={currentTeam}
         options={options}
         styles={colourStyles}
-        onChange={(value) => onChoiceSelectBox(`applyChoice.${props.isSecondApply ? 1 : 0}.team`, value.value)}
+        onChange={(value) => onChoiceSelectBox(`applyChoice.${choiceIndex}.team`, value.value)}
         isDisabled={!selectedDepartment || options[0].label === '팀 없음'}
         theme={(theme) => ({
           ...theme,

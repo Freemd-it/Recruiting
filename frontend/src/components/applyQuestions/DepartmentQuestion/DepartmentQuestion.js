@@ -22,7 +22,6 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
             answer={answer ? answer.text : ''}
             onInputChange={onInputChange}
           />
-
         )
       case 'file':
         return (

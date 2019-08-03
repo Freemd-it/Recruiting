@@ -41,7 +41,7 @@ const colourStyles = {
 
 const NGOBusinessChoice = (props) => {
   const { applyChoice, departmentDatas, onChoiceNGOBusiness, onChoiceSelectBox } = props;
-  const choiceIndex = props.isSeconApply ? 1 : 0;
+  const choiceIndex = props.isSecondApply ? 1 : 0;
   const selectedDepartment = departmentDatas.find(department =>
     department.name === applyChoice[choiceIndex].department
   );

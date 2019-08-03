@@ -4,31 +4,34 @@ const deptHasTeam = require('lib/deptHasTeam');
 const _ = require('lodash')
 
 exports.getQuestionslist = async (req, res) => {
-  const { key } = req.query;
-  const deptCode = []; const teamCode = []
-
-  key.split('_').map(code => {
-    deptCode.push(code.slice(0,3))
-    teamCode.push(code.slice(3,5))
-  })
+  const { department, secondary_department, team, secondary_team } = req.query;
 
   try {
     const common = await Questions.getCommonQuestions();
 
     // 본부별 공통질문 
-    let first = []; let second = []
+    let first = [];
+    let second = [];
 
-    for(let i=0; i <deptCode.length; i++)
-    {
-        const dept = await Questions.getDeptCommonQuestions(deptCode[i])
-        i === 0 ? first = dept : second = dept
-        
-        if(!deptHasTeam(deptCode[i])) {
-          const team = await Questions.getDeptTeamQuestions(deptCode[i], teamCode[i])
-          i === 0 ? team.forEach(_v => { first.push(_v)}) : team.forEach(_v => { second.push(_v)})
-        }
+    if (department !== '') {
+      const questions = await Questions.getQuestions(department, '공통');
+      first = first.concat(questions);
     }
-    
+
+    if (team !== '' && team !== '공통') {
+      const questions = await Questions.getQuestions(department, team);
+      first = first.concat(questions);
+    }
+
+    if (secondary_department !== '' && secondary_department !== department) {
+      const questions = await Questions.getQuestions(secondary_department, '공통');
+      second = second.concat(questions);
+    }
+
+    if (secondary_team !== '' && secondary_team !== '공통') {
+      const questions = await Questions.getQuestions(secondary_department, secondary_team);
+      second = second.concat(questions);
+    }
     res.json({
       message: 'GET LIST SUCCESS',
       results: {

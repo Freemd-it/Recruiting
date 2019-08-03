@@ -50,8 +50,8 @@ const MedicalBusinessChoice = (props) => {
     }));
 
     currentValue = {
-      value: applyChoice[choiceIndex].medical,
-      label: applyChoice[choiceIndex].medical,
+      value: applyChoice[choiceIndex].medical_field || options[0].value,
+      label: applyChoice[choiceIndex].medical_field || options[0].label,
     };
   }
 
@@ -60,7 +60,7 @@ const MedicalBusinessChoice = (props) => {
       <Select
         value={currentValue}
         options={options}
-        onChange={(value)=>onChoiceSelectBox(`applyChoice.${choiceIndex}.medical`, value.label)}
+        onChange={(value)=>onChoiceSelectBox(`applyChoice.${choiceIndex}.medical_field`, value.label)}
         styles={colourStyles}
         isDisabled={!selectedDepartment}
         theme={(theme) => ({

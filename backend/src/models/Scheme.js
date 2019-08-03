@@ -118,16 +118,12 @@ const UserSchema = new Schema({
     sns : String,
     address : String,
     
-    first_department: {
-      type: String,
-      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
-    },
-    secondary_department: {
-      type: String,
-      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
-    },
-    first_team: String, 
-    secondary_team: String, 
+    department: String,
+    secondary_department: String,
+    team: String, 
+    secondary_team: String,
+    medical_field: String,
+    secondary_medical_field: String,
     bussiness_activity: String,
   },
   academic_career: {

@@ -94,7 +94,6 @@ class ApplyQuestionsContainer extends Component {
   render() {
     const { state } = this.props;
     const questionData = this.state.questionData;
-    console.log(state);
     return (
       <>
         <CommonQuestion

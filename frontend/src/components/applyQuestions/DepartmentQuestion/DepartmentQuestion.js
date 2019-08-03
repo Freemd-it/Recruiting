@@ -10,7 +10,6 @@ import TechSelectForm from '../TechSelectForm';
 const cx = classNames.bind(styles);
 
 const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
-  console.log(questionModules);
   const answerFormByType = (answerType, index, key, answer, onInputChange) => {
     switch (answerType) {
 

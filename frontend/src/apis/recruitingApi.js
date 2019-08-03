@@ -24,6 +24,8 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
           secondary_department: apply.applyChoice[1].department,
           team: apply.applyChoice[0].team,
           secondary_team: apply.applyChoice[1].team,
+          medical: apply.applyChoice[0].medical,
+          secondary_medical: apply.applyChoice[1].medical,
           key: consts.getQuestionClassId(apply.applyChoice[0].department, apply.applyChoice[0].team).toString(),
           secondary_key: (
             consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team) &&

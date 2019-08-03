@@ -5,11 +5,11 @@ import styles from './AnswerArea.scss';
 
 const cx = classNames.bind(styles);
 
-const AnswerArea = ({ onInputChange, type, index, questionClassId, answer }) => {
+const AnswerArea = ({ onInputChange, type, index, questionKey, answer }) => {
   return (
     <div className={cx('answer-area-form')}>
       <textarea 
-        onChange={onInputChange({type, index, questionClassId, answerType: 'text'})} 
+        onChange={onInputChange({type, index, questionKey, answerType: 'text'})} 
         value={answer}
       >
       </textarea>

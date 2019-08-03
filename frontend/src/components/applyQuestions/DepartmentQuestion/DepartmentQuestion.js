@@ -10,7 +10,8 @@ import TechSelectForm from '../TechSelectForm';
 const cx = classNames.bind(styles);
 
 const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
-  const answerFormByType = (answerType, index, questionClassId, answer, onInputChange) => {
+  console.log(questionModules);
+  const answerFormByType = (answerType, index, key, answer, onInputChange) => {
     switch (answerType) {
 
       default:
@@ -19,7 +20,7 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
           <AnswerArea
             type={'department'}
             index={index}
-            questionClassId={questionClassId}
+            questionKey={key}
             answer={answer ? answer.text : ''}
             onInputChange={onInputChange}
           />
@@ -30,14 +31,14 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
             <AnswerArea
               type={'department'}
               index={index}
-              questionClassId={questionClassId}
+              questionKey={key}
               answer={answer ? answer.text : ''}
               onInputChange={onInputChange}
             />
             <FileUploadForm
               type={'department'}
               index={index}
-              questionClassId={questionClassId}
+              questionKey={key}
               answer={answer ? answer.file : null}
               onInputChange={onInputChange}
             />
@@ -49,14 +50,14 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
             <TechSelectForm
               type={'department'}
               index={index}
-              questionClassId={questionClassId}
+              questionKey={key}
               answer={answer ? answer.select : null}
               onInputChange={onInputChange}
             />
             <AnswerArea
               type={'department'}
               index={index}
-              questionClassId={questionClassId}
+              questionKey={key}
               answer={answer ? answer.text : ''}
               onInputChange={onInputChange}
             />
@@ -66,7 +67,7 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
   }
 
   const componentByModule = (questionModule, index) => {
-    const { department, team, rank, questions, questionClassId } = questionModule;
+    const { department, team, rank, questions, questionKey } = questionModule;
     return (
       <div key={index} className={cx('department-question-form')}>
         <div className={cx('department-title')}>
@@ -79,8 +80,8 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
               {answerFormByType(
                 answerType,
                 questionIndex,
-                questionClassId,
-                answers[questionClassId] ? answers[questionClassId][questionIndex] : '',
+                questionKey,
+                answers[questionKey] ? answers[questionKey][questionIndex] : '',
                 onInputChange)}
             </div>
           ))}

@@ -38,7 +38,7 @@ class ApplyChoiceContainer extends Component {
     const { departmentDatas } = staticData;
     applyActions.changeInput({[key] : value});
     applyActions.changeInput({[key.replace('department', 'team')]: departmentDatas.find(row => row.name === value).teams[0].name || ''});
-    applyActions.changeInput({[key.replace('department', 'medical')]: departmentDatas.find(row => row.name === value).teams[0].medicalOptions[0] || ''});
+    applyActions.changeInput({[key.replace('department', 'medical_field')]: departmentDatas.find(row => row.name === value).teams[0].medicalOptions[0] || ''});
   };
 
   handleChoiceSelectBox = (key, value) => {

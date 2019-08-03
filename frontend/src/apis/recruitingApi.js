@@ -1,7 +1,6 @@
 import axios from 'axios';
 import serverConfig from '../config/serverConfig';
 import * as _ from 'lodash';
-import consts from '../common/consts';
 
 const convertModelToSchemaBased = ({ personal, apply, interview }) => {
   const { personalIdentification, education, career, speciality } = personal;
@@ -24,13 +23,8 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
           secondary_department: apply.applyChoice[1].department,
           team: apply.applyChoice[0].team,
           secondary_team: apply.applyChoice[1].team,
-          medical: apply.applyChoice[0].medical,
-          secondary_medical: apply.applyChoice[1].medical,
-          key: consts.getQuestionClassId(apply.applyChoice[0].department, apply.applyChoice[0].team).toString(),
-          secondary_key: (
-            consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team) &&
-            consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team).toString()
-          ),
+          medical_field: apply.applyChoice[0].medical_field,
+          secondary_medical_field: apply.applyChoice[1].medical_field,
           other_assign_consent: apply.otherAssignConsent,
         },
         academic_career: {
@@ -100,18 +94,21 @@ export default {
         headers: { 'x-access-token': `${accessToken}`, 'Content-Type': 'multipart/form-data', }
     }).then(res => res.data.isAlreadySubmitted)
   },
-  getQuestionInfo: (questionClassIds) => {
-    let key = '';
-    questionClassIds.forEach((questionClassId, index) => {
-      if (questionClassId !== null) {
-        if (index > 0) {
-          key += '_';
-        }
-        key += questionClassId ? questionClassId.toString() : '';
+  getQuestionInfo: applyChoice => {
+    const department = applyChoice[0].department;
+    const team = applyChoice[0].team;
+    const secondaryDepartment = applyChoice[1].department;
+    const secondaryTeam = applyChoice[1].team;
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/questions/list`, 
+      { 
+          headers: { 'x-access-token': `${window.localStorage.accessToken}` },
+          params: {
+            department: department,
+            secondary_department: secondaryDepartment,
+            team: team,
+            secondary_team: secondaryTeam 
+          }
       }
-    });
-    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/questions/list?key=${key}`, 
-      { headers: { 'x-access-token': `${window.localStorage.accessToken}` }}
     ).then(res => res.data.results);
   },
   getInterviewInfo: () => {

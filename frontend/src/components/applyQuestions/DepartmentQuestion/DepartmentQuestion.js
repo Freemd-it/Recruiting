@@ -10,9 +10,11 @@ import TechSelectForm from '../TechSelectForm';
 const cx = classNames.bind(styles);
 
 const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
-
+  console.log({questionModules});
   const answerFormByType = (answerType, index, questionClassId, answer, onInputChange) => {
     switch (answerType) {
+
+      default:
       case 'text':
         return (
           <AnswerArea
@@ -61,8 +63,6 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
             />
           </>
         )
-      default:
-        break;
     }
   }
 

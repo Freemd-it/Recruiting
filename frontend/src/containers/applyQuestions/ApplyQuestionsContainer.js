@@ -60,6 +60,7 @@ class ApplyQuestionsContainer extends Component {
     applyActions.departmentChoiceChanged(state.applyChoice);
     recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)))
       .then(data => {
+        console.log({data});
         const commonData = data.common.map(row => ({ question: row.question, type: row.type }));
         applyActions.answerFormatInit({ type: 'common', data: commonData, });
         let questionData = {
@@ -94,6 +95,7 @@ class ApplyQuestionsContainer extends Component {
   render() {
     const { state } = this.props;
     const questionData = this.state.questionData;
+    console.log(state);
     return (
       <>
         <CommonQuestion
@@ -101,6 +103,7 @@ class ApplyQuestionsContainer extends Component {
           questions={questionData.common}
           onInputChange={this.handleInputChange}
         />
+
         <DepartmentQuestion
           questionModules={questionData.department}
           answers={state.department}

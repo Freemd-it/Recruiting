@@ -7,7 +7,7 @@
     "start": "cross-env NODE_ENV=development && pm2 start pm2/freemed.recruting.server.dev.json && pm2 logs freemed.recruting.server.dev",
     "deploy": "npm install && pm2 start ecosystem.config.js --env production",
     "start:dev": "NODE_ENV=development NODE_PATH=src nodemon app.js",
-    "start:local": "cross-env NODE_ENV=local nodemon app.js",
+    "start:local": "cross-env NODE_ENV=local nodemon app.js"
   },
   "author": "",
   "license": "ISC",

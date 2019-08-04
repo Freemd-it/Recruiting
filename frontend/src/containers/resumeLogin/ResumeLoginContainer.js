@@ -19,6 +19,13 @@ import userApi from '../../apis/userApi'
 
 class ResumeLoginContainer extends Component {
 
+  componentDidMount() {
+    const { userActions } = this.props;
+    userApi.getBatch().then(batch => {
+      userActions.changeInput({batch: batch});
+    });
+  }
+
   handleInputChange = name => event => {
     const { userActions } = this.props;
     userActions.changeInput({[name] : event.target.value});

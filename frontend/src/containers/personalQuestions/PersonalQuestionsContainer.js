@@ -17,7 +17,7 @@ import * as userActions from '../../modules/user';
 class PersonalQuestionsContainer extends Component {
 
   handleInputChange = (name, isSeperated, delimiter) => event => {
-    const { personalActions } = this.props;
+    const { personalActions, batch } = this.props;
     personalActions.changeInput({[name] : event.currentTarget.value});
 
     if (isSeperated) {
@@ -47,11 +47,12 @@ class PersonalQuestionsContainer extends Component {
 
 
   render() {
-    const { personalFields } = this.props;
+    const { personalFields, batch } = this.props;
 
     return (
       <>
         <RequestConsentForm
+          batch={batch}
           personalFields={personalFields}
           onInputChange={this.handleCheckBoxChange}
           onStopPropagation={this.handleStopPropagation}
@@ -84,6 +85,7 @@ export default withRouter(connect(
   (state) => ({
     personalFields: state.personal.toJS(),
     userFields: state.user.get('fields'),
+    batch: state.user.get('batch')
   }),
   (dispatch) => ({
     personalActions: bindActionCreators(personalActions, dispatch),

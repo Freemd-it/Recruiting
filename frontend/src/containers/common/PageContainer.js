@@ -78,7 +78,8 @@ class PageContainer extends Component {
       const sendData = convertModelToSchemaBased({
         personal: state.personal.toJS(),
         apply: state.apply.toJS(),
-        interview: state.interview.toJS()
+        interview: state.interview.toJS(),
+        user: state.user.toJS()
       });
       let isAlreadySubmitted = false;
       const body = await sendData;
@@ -115,34 +116,35 @@ class PageContainer extends Component {
   _validateByPage = (match, actionModule, { required }) => {
     const { state } = this.props;
 
-    let hasNotValidatedItem = false;
+    let isValid = true;
 
     switch (match.path) {
       case '/personalQuestions':
       case '/applyChoice':
-        hasNotValidatedItem = this._validate(actionModule, required);
-        return !hasNotValidatedItem;
+        isValid = this._validate(actionModule, required);
+        return isValid;
       case '/interviewChoice':
         const selectedDepartments = state.apply.toJS().applyChoice.map(d => d.department);
         const shouldInterviews = interviewActions.checkInterviewDates(selectedDepartments);
-        let hasNotValidatedItem = !shouldInterviews.every((shouldInterview, index) => {
+        isValid = shouldInterviews.every((shouldInterview, index) => {
           const timeCount = actionModule.interviewDates[index].times.length;
           const needMoreChoice = (timeCount < 1 && shouldInterview);
           const hasInvalidChoice = (timeCount > 0 && !shouldInterview);
 
-          if (needMoreChoice) {
-            window.alert(message.NEED_MORE_INTERVIEW_CHOICE);
-          }
+          // if (needMoreChoice) {
+          //   window.alert(message.NEED_MORE_INTERVIEW_CHOICE);
+          // }
 
-          if (hasInvalidChoice) {
-            window.alert(message.REMOVE_INVALID_INTERVIEW_CHOICE);
-          }
-          return !(needMoreChoice || hasInvalidChoice);
+          // if (hasInvalidChoice) {
+          //   window.alert(message.REMOVE_INVALID_INTERVIEW_CHOICE);
+          // }
+          return true
+          // return (needMoreChoice || hasInvalidChoice);
         });
 
-        return !hasNotValidatedItem;
+        return isValid;
       default:
-        return !hasNotValidatedItem;
+        return isValid;
     }
   };
 
@@ -164,7 +166,7 @@ class PageContainer extends Component {
 
   _validate = (actionModule, required) => {
     let hasNotValidatedItem;
-    return required.find(row => {
+    return !required.find(row => {
       if (row.checkLevel !== CheckLevelType.NESTED) {
         hasNotValidatedItem = !this._validateSingle(actionModule, row);
       } else {

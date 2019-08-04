@@ -36,4 +36,13 @@ export default {
       window.alert(message.serverError);
     })
   },
+
+  getBatch: () => {
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/batch`)
+      .then(res => res.data.batch);
+  },
+  getDepartmentData: () => {
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/department`)
+      .then(res => res.data);
+  }
 }

@@ -3,8 +3,8 @@ const router = express.Router();
 
 const auth = require('./auth');
 const user = require('./user');
+const recruit = require('./recruit');
 const questions = require('./questions');
-const interview = require('./interview');
 
 const authMiddleware = require('middlewares/Auth');
 const upload = require('lib/s3Connect');
@@ -19,7 +19,7 @@ router.use('/recruits', upload.any('files'), user);
 
 router.use('/questions', authMiddleware);
 router.use('/questions', questions);
-router.use('/interview', interview);
+router.use('/recruit', recruit)
 
 
 module.exports = router;

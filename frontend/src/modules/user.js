@@ -12,6 +12,7 @@ const initialState = fromJS({
   name: '',
   email: '',
   password: '',
+  batch: 0,
 });
 
 export default handleActions({

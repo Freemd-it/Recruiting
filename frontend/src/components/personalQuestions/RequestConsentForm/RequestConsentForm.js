@@ -14,10 +14,8 @@ import SubsectionHeader from '../../common/SubsectionHeader';
 
 import classNames from 'classnames/bind';
 import styles from './RequestConsentForm.scss';
-import pageStaticData from '../../../common/pageStaticData';
 
 const cx = classNames.bind({styles});
-const generation = pageStaticData.generation;
 
 const meterialStyles = theme => ({
   expansionPanelRoot: {
@@ -84,7 +82,7 @@ const meterialStyles = theme => ({
 
 class RequestConsentForm extends Component {
   render() {
-    const { classes, personalFields, onInputChange, onStopPropagation } = this.props;
+    const { classes, personalFields, onInputChange, onStopPropagation, batch } = this.props;
     const { requestConsent } = personalFields;
 
 
@@ -120,31 +118,31 @@ class RequestConsentForm extends Component {
                 1. 수집하는 개인정보 항목
               </strong><br/>
               {`- 이름, 주소, 전화번호, 이메일 주소, 휴대폰 번호를 비롯하여
-              ‘비영리민간의료단체 프리메드 제 ${generation}기 신입 단원 공개 선발 지원 서식’ 에 포함된 모든 정보`}<br/><br/>
+              ‘비영리민간의료단체 프리메드 제 ${batch}기 신입 단원 공개 선발 지원 서식’ 에 포함된 모든 정보`}<br/><br/>
               <strong className={cx('expand-panel-text-title')}>
                 2. 개인정보 수집 방법
               </strong><br/>
-              {`- 프리메드는 지원자가 직접 ‘비영리민간의료단체 프리메드 제 ${generation}기 신입 단원 공개 선발 지원 서식’에`}<br/>
+              {`- 프리메드는 지원자가 직접 ‘비영리민간의료단체 프리메드 제 ${batch}기 신입 단원 공개 선발 지원 서식’에`}<br/>
               {`작성하고 동의한 정보에 한해서만 수집하며,
               모든 지원서를 프리메드 공식 리크루팅 페이지 http://recruiting.freemed.or.kr 를 통해 수집하고 있습니다.`}<br/><br/>
               <strong className={cx('expand-panel-text-title')}>
                 3. 개인정보 수집 및 이용 목적
               </strong><br/>
-              {`- 프리메드 제 ${generation}기 신입 단원 공개 선발 시 인터뷰 대상자 선발 및 최종 수습 단원 선발을 위한 참고 자료`}<br/>
-              {`- 제 ${generation}기 신입 단원 공개 선발 기간 마감 후 추가 합격자 선발을 위한 참고 자료`}<br/>
-              {`- 제 ${generation}기 신입 단원 공개 선발 내부 통계 (지원자의 성별/전공/지원 일시 등) 작성 및 분석을 위한 자료`}<br/><br/>
+              {`- 프리메드 제 ${batch}기 신입 단원 공개 선발 시 인터뷰 대상자 선발 및 최종 수습 단원 선발을 위한 참고 자료`}<br/>
+              {`- 제 ${batch}기 신입 단원 공개 선발 기간 마감 후 추가 합격자 선발을 위한 참고 자료`}<br/>
+              {`- 제 ${batch}기 신입 단원 공개 선발 내부 통계 (지원자의 성별/전공/지원 일시 등) 작성 및 분석을 위한 자료`}<br/><br/>
               <strong className={cx('expand-panel-text-title')}>
                 4. 개인정보 보유 및 이용기간
               </strong><br/>
               {`- 프리메드 공식 리크루팅 페이지 http://recruiting.freemed.or.kr 에 수집된 지원서는
-              프리메드 제 ${generation}기 신입 단원 공개 선발 운영사무국 운영진에게만 공개되며,
+              프리메드 제 ${batch}기 신입 단원 공개 선발 운영사무국 운영진에게만 공개되며,
               이용 목적 달성 후 3개월 이내에 파기됩니다.`}<br/><br/>
               <strong className={cx('expand-panel-text-title')}>
                 5. 개인 정보 제 3자 제공 안내
               </strong><br/>
               - 프리메드는 수집된 정보를 제 3자에게 제공하지 않습니다.<br/>
               <br/>
-              {`약관 동의를 거부할 수 있으며, 동의 거부 시 프리메드 제 ${generation}기 신입 단원 공개 선발 과정에서 일부 불이익이 있을 수 있습니다.`}<br/>
+              {`약관 동의를 거부할 수 있으며, 동의 거부 시 프리메드 제 ${batch}기 신입 단원 공개 선발 과정에서 일부 불이익이 있을 수 있습니다.`}<br/>
               <br/><strong className={cx('expand-panel-text-center', 'expand-panel-text-title')}>
                 「개인정보보호법」 등 관련 법규에 의거하여 상기 본인은 위와 같이 개인정보 수집 및 활용에 동의합니다.
               </strong><br/>

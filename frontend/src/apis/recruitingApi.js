@@ -2,7 +2,7 @@ import axios from 'axios';
 import serverConfig from '../config/serverConfig';
 import * as _ from 'lodash';
 
-const convertModelToSchemaBased = ({ personal, apply, interview }) => {
+const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
   const { personalIdentification, education, career, speciality } = personal;
   const { common, department } = apply;
   return new Promise((resolve, reject) => {
@@ -10,6 +10,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
 
       let formData = new FormData();
       formData.append('body', JSON.stringify({
+        batch: user.batch,
         basic_info: {
           user_name: personalIdentification.name,
           english_name: personalIdentification.englishName,
@@ -60,7 +61,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
           fileKeys: Object.entries(department.files ? department.files : []).map(row => row[0]),
         },
         interview_info: interview.interviewDates.map((row, index) => ({
-          interview_date: row.day,
+          interview_date: row.date,
           interview_week: index === 0 ? '토' : '일',
           interview_time: row.times
         })),
@@ -112,8 +113,8 @@ export default {
     ).then(res => res.data.results);
   },
   getInterviewInfo: () => {
-    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/interview/schedules/20`,
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/interview`,
       { headers: { 'x-access-token': `${window.localStorage.accessToken}` }}
-    ).then(res => res.data.result);
+    ).then(res => res.data);
   }
 }

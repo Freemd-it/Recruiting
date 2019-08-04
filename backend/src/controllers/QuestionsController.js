@@ -4,7 +4,6 @@ const _ = require('lodash')
 
 exports.getQuestionslist = async (req, res) => {
   const { department, secondary_department, team, secondary_team } = req.query;
-
   try {
     const common = await Questions.getCommonQuestions();
 

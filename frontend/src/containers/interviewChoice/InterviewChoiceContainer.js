@@ -18,10 +18,10 @@ class InterviewChoiceContainer extends Component {
     };
   }
 
-  handleCheckedChange = ({day, time, index}) => event => {
+  handleCheckedChange = ({date, time, index}) => event => {
     const { interviewActions } = this.props;
     interviewActions.changeChecked({ 
-      day, 
+      date, 
       time, 
       index, 
       checked: event.target.checked, 
@@ -29,22 +29,19 @@ class InterviewChoiceContainer extends Component {
   };
 
   componentDidMount() {
-    recruitingApi.getInterviewInfo()
-      .then(data => {
-        this.setState({
-          interviewData: Object.entries(data).map(([day, times]) => ({day, times})),
-        });
-      });
+    recruitingApi.getInterviewInfo().then(interviewData => {
+      this.setState({ interviewData });
+    });
   }
 
 
   render() {
-    const { checkedFields } = this.props;
+    const { checkedFields, batch } = this.props;
     const interviewData = this.state.interviewData;
     return (
       <>
         <SectionTitle title='인터뷰 시간 선택' />
-        <InterviewNotice />
+        <InterviewNotice batch={batch} />
         <TimeSelection 
           interviewData={interviewData}
           checkedFields={checkedFields} 
@@ -59,6 +56,7 @@ class InterviewChoiceContainer extends Component {
 export default withRouter(connect(
   (state) => ({
     checkedFields: state.interview.get('interviewDates').toJS(),
+    batch: state.user.get('batch')
   }),
   (dispatch) => ({
     interviewActions: bindActionCreators(interviewActions, dispatch)

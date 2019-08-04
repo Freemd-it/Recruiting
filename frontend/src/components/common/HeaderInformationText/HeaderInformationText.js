@@ -7,8 +7,24 @@ import styles from './HeaderInformationText.scss';
 
 const cx = classNames.bind(styles);
 
+const getTitleText = (batch, pageTitleType) => {
+  if (pageTitleType === 'default') {
+    return {
+      customText: `본 서식을 작성하기 앞서 제 ${batch}기 신입 단원\n공개 선발 안내문 필히 숙지해 주시길 바랍니다.`,
+      underlineText: ['공개 선발 안내문'],
+    }
+  } else {
+    return {
+      customText: `설정하고자 하는 비밀번호를 신중히 입력 후\n지원서를 작성해주세요`,
+      enlargeText: ['비밀번호'],
+    }
+  }
+}
+
 const HeaderInformationText = (props) => {
-  let { fullText: customText, enlargeText =[],  underlineText=[] } = props.staticData;
+  const { pageTitleType } = props.staticData;
+  const { batch } = props;
+  let { customText, enlargeText = [], underlineText = [] } = getTitleText(batch, pageTitleType);
   customText = Utils.lineBreak(customText);
 
   enlargeText.forEach(text => {

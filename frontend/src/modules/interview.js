@@ -15,22 +15,22 @@ export const validate = createAction(VALIDATE);
 const initialState = fromJS({
   interviewDates: [
     {
-      day: '',
+      date: '',
       times: [],
     },
     {
-      day: '',
+      date: '',
       times: [],
     }
   ],
 });
 
-export const checkInterviewDates = (selectedDepartments) => {
+export const checkInterviewDates = (selectedTeams) => {
   const interviewChoiceData = staticData.default.interviewChoice;
   let shouldInterviews = [false, false];
-  for (let department of selectedDepartments) {
-    shouldInterviews[0] = shouldInterviews[0] || interviewChoiceData.firstDayDepartments.includes(department);
-    shouldInterviews[1] = shouldInterviews[1] || interviewChoiceData.secondDayDepartments.includes(department);
+  for (let team of selectedTeams) {
+    shouldInterviews[0] = shouldInterviews[0] || interviewChoiceData.firstDayTeams.includes(team);
+    shouldInterviews[1] = shouldInterviews[1] || interviewChoiceData.secondDayTeams.includes(team);
   }
   return shouldInterviews;
 }
@@ -42,7 +42,7 @@ export default handleActions({
   [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
-    const { day, time, index, checked } = action.payload;
+    const { date, time, index, checked } = action.payload;
     if (checked) {
       if (interviewDates.get(index).get('times').count() > 0) {
         const newTimes = interviewDates.get(index).get('times').push(time);
@@ -51,7 +51,7 @@ export default handleActions({
       } else {
         return state.setIn(['interviewDates', index.toString()],
           fromJS({
-            day: day,
+            date: date,
             times: [time]
           })
         );

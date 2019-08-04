@@ -1,5 +1,4 @@
 const Questions = require('../models/QuestionsModel');
-const deptHasTeam = require('lib/deptHasTeam');
 
 const _ = require('lodash')
 

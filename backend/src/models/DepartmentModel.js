@@ -1,31 +1,31 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose
+const { envConfig } = require('../../config/constants');
 
-const QuestionsSchema = new Schema({
-  content : String,
-  register : String,
-  type: Number,
-  registedDate: {
-    type: Date,
-    default: Date.now // 현재 날짜를 기본값으로 지정
-  }
-})
+const node_env = process.env.NODE_ENV
+const { MONGO_URL } = envConfig(node_env)
 
-const InterviewAvailableSchema = new Schema({
-  interviewDate : String,
-  interviewTime : String
-})
+mongoose.connect(MONGO_URL, {useNewUrlParser: true});
+const connection = mongoose.connection;
 
-const TeamsSchema = new Schema({
-  teamName : String,
-  questions : [QuestionsSchema],
-  interviewAvailable : [InterviewAvailableSchema]
-})
+connection.on('error', console.error.bind(console, 'connection error:'));
 
-const DepartmentMetaSchema = new Schema({
-  batch : Number,
-  departmentName: String,
-  teams : [TeamsSchema],
-})
 
-module.exports = mongoose.model('Departmentmeta', DepartmentMetaSchema);
+const getDepartmentInfoList = () => {
+  return new Promise ((resolve, reject) => {
+    connection.db.collection("departmentmetas", ()=> {
+      if(err) console.log(err);
+      collection
+        .find({})
+        .sort({registedData: -1})
+        // .limit()
+        .toArray((err, data) => {
+          console.log('data', data)
+          err ? console.log(err) : resolve(data)
+        })
+    })
+  })
+}
+
+module.exports = {
+  getDepartmentInfoList
+}

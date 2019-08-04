@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.set('jwt-secret', JWT_SECRET)
 
 app.get('/', (req, res) => {
-    res.send('api 서버')
+    res.send('리쿠르팅 api 서버')
 });
 
 

@@ -17,7 +17,8 @@ router.use('/auth', auth)
 router.use('/recruits', authMiddleware);
 router.use('/recruits', upload.any('files'), user);
 
-router.use('/questions', authMiddleware);
+//test 를 위해 잠시 꺼둠 
+// router.use('/questions', authMiddleware);
 router.use('/questions', questions);
 router.use('/interview', interview);
 

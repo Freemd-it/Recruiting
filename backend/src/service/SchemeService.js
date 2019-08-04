@@ -1,4 +1,4 @@
-const DepartmentModel = require('../models/DepartmentModel');
+const DepartmentModel = require('../models/DepartmentSchema');
 
 
 const dummy = require('../../config/dbinit')

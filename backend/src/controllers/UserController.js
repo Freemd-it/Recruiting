@@ -42,7 +42,7 @@ exports.read = async (req, res) => {
 exports.update = async (req, res) => {
   const { id } = req.params;
   const { files } = req;
-  const { basic_info, academic_career, external_activities, special_info, question_info, interview_info} = jsonParser(req.body.body);
+  const { batch, basic_info, academic_career, external_activities, special_info, question_info, interview_info} = jsonParser(req.body.body);
   const questionList = []
   
   const setQuestionList = (question_info) => _.forEach(question_info, (v, k) => makeQuestionObject(v,k))
@@ -101,6 +101,7 @@ exports.update = async (req, res) => {
     
     setQuestionList(question_info)
     const data = {
+      batch,
       basic_info: {
         ...basic_info,
         password: user.basic_info.password,

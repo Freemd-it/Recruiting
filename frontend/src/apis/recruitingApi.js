@@ -2,7 +2,7 @@ import axios from 'axios';
 import serverConfig from '../config/serverConfig';
 import * as _ from 'lodash';
 
-const convertModelToSchemaBased = ({ personal, apply, interview }) => {
+const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
   const { personalIdentification, education, career, speciality } = personal;
   const { common, department } = apply;
   return new Promise((resolve, reject) => {
@@ -10,6 +10,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
 
       let formData = new FormData();
       formData.append('body', JSON.stringify({
+        batch: user.batch,
         basic_info: {
           user_name: personalIdentification.name,
           english_name: personalIdentification.englishName,

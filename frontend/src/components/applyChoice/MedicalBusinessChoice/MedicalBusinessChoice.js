@@ -36,15 +36,16 @@ const MedicalBusinessChoice = (props) => {
   const { applyChoice, departmentDatas, onChoiceSelectBox } = props;
   const choiceIndex = props.isSecondApply ? 1 : 0;
   const selectedDepartment = departmentDatas.find(department =>
-    department.name === applyChoice[choiceIndex].department
+    department.departmentName === applyChoice[choiceIndex].department
   );
 
   let options = [];
   let currentValue = null;
   if (selectedDepartment) {
-    const selectedTeam = selectedDepartment.teams.find(team => team.name === applyChoice[choiceIndex].team) 
-      || { name: '', medicalOptions: [] };
-    options = selectedTeam.medicalOptions.map(row => ({
+    const selectedTeam = selectedDepartment.teams
+      .find(team => team.teamName === applyChoice[choiceIndex].team) 
+      || { name: '', medicalFieldOptions: [] };
+    options = selectedTeam.medicalFieldOptions.map(row => ({
         value: row,
         label: row,
     }));

@@ -6,11 +6,11 @@ import ResumeComplete from '../../components/resumeComplete/ResumeComplete';
 
 class ResumeCompleteContainer extends Component {
   render() {
-    const { } = this.props;
+    const { batch } = this.props;
 
     return (
       <>
-        <ResumeComplete />
+        <ResumeComplete batch={batch} />
       </>
     );
   }
@@ -18,6 +18,7 @@ class ResumeCompleteContainer extends Component {
 
 export default withRouter(connect(
   (state) => ({
+    batch: state.user.get('batch')
   }),
   (dispatch) => ({
   })

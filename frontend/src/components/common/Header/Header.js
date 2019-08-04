@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import HeaderInformationText from '../HeaderInformationText';
@@ -7,7 +8,6 @@ import classNames from 'classnames/bind';
 import styles from './Header.scss';
 
 import headerImage from '../../../images/header_image.png';
-import pageStaticData from '../../../common/pageStaticData';
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +21,7 @@ class Header extends Component {
   };
 
   render() {
-    const { config } = this.props;
+    const { config, batch } = this.props;
     const { showHeaderInformation } = config;
 
     return (
@@ -31,7 +31,7 @@ class Header extends Component {
       <header className={cx('header', 'container')} onClick={this.handleMove}>
         <div className={cx('header-text-holder')}>
           <div className={cx('header-text-title')}>RECRUIT</div>
-          <span className={cx('header-text')}>{`제 ${pageStaticData.generation}기 프리메드 신입 단원 모집`}</span>
+          <span className={cx('header-text')}>{`제 ${batch}기 프리메드 신입 단원 모집`}</span>
         </div>
         <img src={headerImage} className={cx('header-image')} alt=""/>
         { showHeaderInformation && <HeaderInformationText {...this.props}/> }
@@ -41,4 +41,8 @@ class Header extends Component {
   }
 };
 
-export default withRouter(Header);
+export default withRouter(connect(
+  (state) => ({
+    batch: state.user.get('batch')
+  })
+)(Header));

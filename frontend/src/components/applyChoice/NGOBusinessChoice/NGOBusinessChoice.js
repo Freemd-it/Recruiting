@@ -3,7 +3,6 @@ import React from 'react';
 import Select from 'react-select';
 import TeamCard from '../TeamCard';
 
-import images from '../../../images';
 import classNames from 'classnames/bind';
 import styles from './NGOBusinessChoice.scss';
 
@@ -43,32 +42,32 @@ const NGOBusinessChoice = (props) => {
   const { applyChoice, departmentDatas, onChoiceNGOBusiness, onChoiceSelectBox } = props;
   const choiceIndex = props.isSecondApply ? 1 : 0;
   const selectedDepartment = departmentDatas.find(department =>
-    department.name === applyChoice[choiceIndex].department
+    department.departmentName === applyChoice[choiceIndex].department
   );
 
   const options = selectedDepartment && selectedDepartment.teams.length > 0
     ? selectedDepartment.teams.map(row => (
       {
-        value: row.name,
-        label: row.name === '약무팀' ? '약무팀 (약대생만 선발)' : row.name
+        value: row.teamName,
+        label: row.teamName === '약무팀' ? '약무팀 (약대생만 선발)' : row.teamName
       }))
     : [ {value: '팀 없음', label: '팀 없음'} ];
 
   const currentTeam = selectedDepartment ? {
-      value: applyChoice[choiceIndex].team || selectedDepartment.teams[0].name,
-      label: applyChoice[choiceIndex].team || selectedDepartment.teams[0].name,
+      value: applyChoice[choiceIndex].team || selectedDepartment.teams[0].teamName,
+      label: applyChoice[choiceIndex].team || selectedDepartment.teams[0].teamName,
   } : null;
 
   return (
     <>
       <div className={cx('team-card-holder')}>
 
-        {departmentDatas.map((dataRow, dataIndex) => (
+        {departmentDatas.map((row, index) => (
             <TeamCard
-              key={`TeamCard__${dataIndex}`}
-              data={dataRow}
-              image={images[dataRow.imageName]}
-              selected={applyChoice[choiceIndex].department === dataRow.name}
+              key={`TeamCard__${index}`}
+              data={row}
+              image={row.departmentImageUrl}
+              selected={applyChoice[choiceIndex].department === row.departmentName}
               isSeconApply={props.isSecondApply}
               onChoiceNGOBusiness={onChoiceNGOBusiness}
             />

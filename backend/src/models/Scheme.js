@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-
 const PortfoliosSchema = new Schema({
   originalname: String,
   location: String,
@@ -142,6 +141,32 @@ const UserSchema = new Schema({
     type: String,
     default: '미평가'
   },
+});
+
+const RecruitSchema = new Schema({
+  batch: Number,
+  period: {
+    startDate: Date,
+    endDate: Date
+  },
+  announceDate: Date,
+  recruitStatus: Number,
+  medicalFields: [String],
+  departments: [{
+    departmentName: String,
+    departmentDescription: String,
+    departmentImageUrl: String,
+    teams: [
+      {
+        teamName: String,
+        medicalFieldOptions: [String]
+      }
+    ]
+  }],
+  interviewTimes: [{
+    date: Date,
+    time: String
+  }]
 })
 
 module.exports = {
@@ -152,4 +177,5 @@ module.exports = {
   InterviewSchema,
   UserSchema,
   SpecialSchema,
+  RecruitSchema,
 }

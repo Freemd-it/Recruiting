@@ -25,12 +25,12 @@ const initialState = fromJS({
   ],
 });
 
-export const checkInterviewDates = (selectedDepartments) => {
+export const checkInterviewDates = (selectedTeams) => {
   const interviewChoiceData = staticData.default.interviewChoice;
   let shouldInterviews = [false, false];
-  for (let department of selectedDepartments) {
-    shouldInterviews[0] = shouldInterviews[0] || interviewChoiceData.firstDayDepartments.includes(department);
-    shouldInterviews[1] = shouldInterviews[1] || interviewChoiceData.secondDayDepartments.includes(department);
+  for (let team of selectedTeams) {
+    shouldInterviews[0] = shouldInterviews[0] || interviewChoiceData.firstDayTeams.includes(team);
+    shouldInterviews[1] = shouldInterviews[1] || interviewChoiceData.secondDayTeams.includes(team);
   }
   return shouldInterviews;
 }

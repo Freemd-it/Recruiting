@@ -78,7 +78,8 @@ class PageContainer extends Component {
       const sendData = convertModelToSchemaBased({
         personal: state.personal.toJS(),
         apply: state.apply.toJS(),
-        interview: state.interview.toJS()
+        interview: state.interview.toJS(),
+        user: state.user.toJS()
       });
       let isAlreadySubmitted = false;
       const body = await sendData;
@@ -125,7 +126,7 @@ class PageContainer extends Component {
       case '/interviewChoice':
         const selectedDepartments = state.apply.toJS().applyChoice.map(d => d.department);
         const shouldInterviews = interviewActions.checkInterviewDates(selectedDepartments);
-        let hasNotValidatedItem = !shouldInterviews.every((shouldInterview, index) => {
+        hasNotValidatedItem = !shouldInterviews.every((shouldInterview, index) => {
           const timeCount = actionModule.interviewDates[index].times.length;
           const needMoreChoice = (timeCount < 1 && shouldInterview);
           const hasInvalidChoice = (timeCount > 0 && !shouldInterview);

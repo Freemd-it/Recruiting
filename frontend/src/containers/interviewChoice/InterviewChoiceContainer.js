@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom'
 import { SectionTitle } from '../../components/common';
-import { InterviewNotice, TimeSelection } from '../../components/interviewChoice';
+import { InterviewNotice, TimeSelection, SubmitWarningMessage } from '../../components/interviewChoice';
 
 import recruitingApi from '../../apis/recruitingApi';
 
@@ -50,6 +50,7 @@ class InterviewChoiceContainer extends Component {
           checkedFields={checkedFields} 
           onCheckedChange={this.handleCheckedChange} 
         />
+        <SubmitWarningMessage />
       </>
     );
   }

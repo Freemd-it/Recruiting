@@ -6,7 +6,6 @@ import { } from '../../components/applyQuestions';
 
 import * as applyActions from '../../modules/apply';
 import recruitingApi from '../../apis/recruitingApi';
-import Consts from '../../common/consts';
 import message from '../../common/message';
 
 import CommonQuestion from '../../components/applyQuestions/CommonQuestion';
@@ -26,7 +25,7 @@ class ApplyQuestionsContainer extends Component {
 
   handleInputChange = (props) => event => {
     const { applyActions } = this.props;
-    const { type, questionClassId, answerType, index, techName } = props;
+    const { type, questionKey, answerType, index, techName } = props;
     switch (type) {
       case 'common':
         applyActions.textAnswerChanged({ type, index, content: event.target.value.substring(0, 500) });
@@ -34,17 +33,17 @@ class ApplyQuestionsContainer extends Component {
       case 'department':
         switch (answerType) {
           case 'text':
-            applyActions.textAnswerChanged({ type, index, questionClassId, answerType, content: event.target.value.substring(0, 500) });
+            applyActions.textAnswerChanged({ type, index, questionKey, answerType, content: event.target.value.substring(0, 500) });
             break;
           case 'file':
             if (event.target.files[0].size > 1048576 * 10) {
               window.alert(message.EXCEED_FILE_CAPACITY);
               break;
             }
-            applyActions.fileAnswerChanged({ type, index, questionClassId, answerType, file: event.target.files[0] });
+            applyActions.fileAnswerChanged({ type, index, questionKey, answerType, file: event.target.files[0] });
             break;
           case 'select':
-            applyActions.selectAnswerChanged({ type, index, questionClassId, answerType, techName, abilityIndex: event.target.value });
+            applyActions.selectAnswerChanged({ type, index, questionKey, answerType, techName, abilityIndex: event.target.value });
             break;
           default:
             break;
@@ -58,7 +57,7 @@ class ApplyQuestionsContainer extends Component {
   componentDidMount() {
     const { state, applyActions } = this.props;
     applyActions.departmentChoiceChanged(state.applyChoice);
-    recruitingApi.getQuestionInfo(state.applyChoice.map(row => Consts.getQuestionClassId(row.department, row.team)))
+    recruitingApi.getQuestionInfo(state.applyChoice)
       .then(data => {
         const commonData = data.common.map(row => ({ question: row.question, type: row.type }));
         applyActions.answerFormatInit({ type: 'common', data: commonData, });
@@ -67,23 +66,23 @@ class ApplyQuestionsContainer extends Component {
           department: [],
         };
         state.applyChoice.forEach((choice, index) => {
-          const questionKey = index === 0 ? 'first' : 'second';
+          const applyChoiceKey = index === 0 ? 'first' : 'second';
           if (choice.department !== '') {
-            const questionClassId = Consts.getQuestionClassId(choice.department, choice.team);
-            const questions = data[questionKey].map(row => (
+            const questions = data[applyChoiceKey].map(row => (
               {
                 question: row.question, 
                 answerType: row.type,
-                isTeamQuestion: row.team !== '00',
+                isTeamQuestion: row.team !== '공통',
               }));
             const departmentData = questions.map(elem => ({ question: elem.question, type: elem.answerType }));
-            applyActions.answerFormatInit({ type: 'department', key: questionClassId, data: departmentData });
+            const questionKey = `${choice.department}_${choice.team}`;
+            applyActions.answerFormatInit({ type: 'department', key: `${choice.department}_${choice.team}`, data: departmentData });
             questionData.department.push({
               department: choice.department,
               team: choice.team,
-              questionClassId,
               rank: index + 1,
               questions,
+              questionKey,
             })
           }
         });
@@ -101,6 +100,7 @@ class ApplyQuestionsContainer extends Component {
           questions={questionData.common}
           onInputChange={this.handleInputChange}
         />
+
         <DepartmentQuestion
           questionModules={questionData.department}
           answers={state.department}

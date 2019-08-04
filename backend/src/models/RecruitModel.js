@@ -22,6 +22,20 @@ RecruitSchema.statics.getDepartmentData = function() {
 RecruitSchema.statics.getInterviewTimes = function() {
   return this.findOne({ recruitStatus: 1001 })
     .then(result => result.interviewTimes)
+    .then(interviewTimes => {
+      const aggregated = [];
+      interviewTimes.forEach(elem => {
+        const { date, time } = elem;
+        const dateIndex = aggregated.findIndex(d => d.date.toString() == date.toString());
+        console.log({date, time, dateIndex });
+        if (dateIndex === -1) {
+          aggregated.push({ date, times: [time] });
+        } else {
+          aggregated[dateIndex].times.push(time);
+        }
+      });
+      return aggregated.sort(d => -1 * d.date);
+    });
 }
 
 module.exports = mongoose.model('Recruit', RecruitSchema, 'recruitmetas'); 

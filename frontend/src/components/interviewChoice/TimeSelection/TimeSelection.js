@@ -24,12 +24,12 @@ const TimeSelection = ({ interviewData, onCheckedChange, checkedFields }) => {
           ))}
       </div>
       <hr />
-      {interviewData.map((interviewDate, index) => (
+      {interviewData.map((elem, index) => (
         <TimeCheckForm 
           key={index} 
           checkedFields={checkedFields} 
           onCheckedChange={onCheckedChange} 
-          date={interviewDate} 
+          elem={elem} 
           index={index} 
         />
       ))}

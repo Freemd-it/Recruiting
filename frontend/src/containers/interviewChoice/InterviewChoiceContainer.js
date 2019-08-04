@@ -18,10 +18,10 @@ class InterviewChoiceContainer extends Component {
     };
   }
 
-  handleCheckedChange = ({day, time, index}) => event => {
+  handleCheckedChange = ({date, time, index}) => event => {
     const { interviewActions } = this.props;
     interviewActions.changeChecked({ 
-      day, 
+      date, 
       time, 
       index, 
       checked: event.target.checked, 
@@ -29,12 +29,9 @@ class InterviewChoiceContainer extends Component {
   };
 
   componentDidMount() {
-    recruitingApi.getInterviewInfo()
-      .then(data => {
-        this.setState({
-          interviewData: Object.entries(data).map(([day, times]) => ({day, times})),
-        });
-      });
+    recruitingApi.getInterviewInfo().then(interviewData => {
+      this.setState({ interviewData });
+    });
   }
 
 

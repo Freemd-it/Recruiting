@@ -61,7 +61,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
           fileKeys: Object.entries(department.files ? department.files : []).map(row => row[0]),
         },
         interview_info: interview.interviewDates.map((row, index) => ({
-          interview_date: row.day,
+          interview_date: row.date,
           interview_week: index === 0 ? '토' : '일',
           interview_time: row.times
         })),
@@ -113,8 +113,8 @@ export default {
     ).then(res => res.data.results);
   },
   getInterviewInfo: () => {
-    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/interview/schedules/20`,
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/interview`,
       { headers: { 'x-access-token': `${window.localStorage.accessToken}` }}
-    ).then(res => res.data.result);
+    ).then(res => res.data);
   }
 }

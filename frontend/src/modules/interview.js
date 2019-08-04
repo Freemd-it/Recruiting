@@ -15,11 +15,11 @@ export const validate = createAction(VALIDATE);
 const initialState = fromJS({
   interviewDates: [
     {
-      day: '',
+      date: '',
       times: [],
     },
     {
-      day: '',
+      date: '',
       times: [],
     }
   ],
@@ -42,7 +42,7 @@ export default handleActions({
   [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
-    const { day, time, index, checked } = action.payload;
+    const { date, time, index, checked } = action.payload;
     if (checked) {
       if (interviewDates.get(index).get('times').count() > 0) {
         const newTimes = interviewDates.get(index).get('times').push(time);
@@ -51,7 +51,7 @@ export default handleActions({
       } else {
         return state.setIn(['interviewDates', index.toString()],
           fromJS({
-            day: day,
+            date: date,
             times: [time]
           })
         );

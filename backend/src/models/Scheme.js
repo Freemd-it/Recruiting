@@ -88,6 +88,7 @@ const InterviewSchema = new Schema({
 })
 
 const UserSchema = new Schema({
+  batch: Number,
   clientStoreData:{
   },
   support_status: {

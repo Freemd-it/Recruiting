@@ -1,4 +1,5 @@
 const Recruit = require('../models/RecruitModel');
+const Department = require('../models/DepartmentSchema');
 
 exports.getBatch = async (_, res) => {
   try {
@@ -29,38 +30,8 @@ exports.getInterviewTimes = async (req, res) => {
 
 exports.getTeamsByDateInfo = async (req, res) => {
   try {
-    res.json([
-      {
-        date: new Date('2019-09-14T09:00:00'),
-        teams: [
-          {
-            departmentName: '경영지원본부',
-            name: 'IT기획팀'
-          },
-          {
-            departmentName: '브랜드마케팅본부',
-            name: '디자인팀'
-          },
-          {
-            departmentName: '해외의료사업본부',
-            name: '공통'
-          }
-        ]
-      },
-      {
-        date: new Date('2019-09-15T09:00:00'),
-        teams: [
-          {
-            departmentName: '경영지원본부',
-            name: '인사조직팀'
-          },
-          {
-            departmentName: '경영지원본부',
-            name: '통계팀'
-          }
-        ]
-      }
-    ]);
+    const { batch } = req.query;
+    res.json(await Department.getTeamsByDateInfo(batch));
   } catch (err) {
     console.error(err);
     res.status(500).json({ err });

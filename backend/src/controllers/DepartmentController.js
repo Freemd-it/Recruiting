@@ -14,29 +14,29 @@ exports.getDepartmentQuestionsList = async (req, res) => {
  
      if (departmentName !== '') {
        const questions = await DepartmentModel.getDepartmentQuestions(departmentName, '공통');
-       const q_array = questions[0].teams
-       var item = q_array.find(item => item.teamName === '공통');
+       const q_array = questions[0].teams;
+       const item = q_array.find(item => item.teamName === '공통');
        first = first.concat(item);
      }
  
      if (teamName !== '' && teamName !== '공통') {
        const questions = await DepartmentModel.getDepartmentQuestions(departmentName, teamName);
-       const q_array = questions[0].teams
-       var item = q_array.find(item => item.teamName === teamName);
+       const q_array = questions[0].teams;
+       const item = q_array.find(item => item.teamName === teamName);
         first = first.concat(item);
      }
  
      if (secondary_departmentName !== '' && secondary_departmentName !== departmentName) {
        const questions = await DepartmentModel.getDepartmentQuestions(secondary_departmentName, '공통');
-       const q_array = questions[0].teams
-       var item = q_array.find(item => item.teamName === '공통');
+       const q_array = questions[0].teams;
+       const item = q_array.find(item => item.teamName === '공통');
        second = second.concat(item);
      }
  
      if (secondary_teamName !== '' && secondary_teamName !== '공통') {
        const questions = await DepartmentModel.getDepartmentQuestions(secondary_departmentName, secondary_teamName);
-       const q_array = questions[0].teams
-       var item = q_array.find(item => item.teamName === secondary_teamName);
+       const q_array = questions[0].teams;
+       const item = q_array.find(item => item.teamName === secondary_teamName);
        second = second.concat(item);
      }
 

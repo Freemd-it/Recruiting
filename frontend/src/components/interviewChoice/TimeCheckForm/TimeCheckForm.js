@@ -19,7 +19,6 @@ const isChecked = (checkedFields, date, time) => {
 }
 
 const TimeCheckForm = ({ elem, index, onCheckedChange, checkedFields }) => {
-
   const { date, times } = elem;
   return (
     <div className={(cx('time-check-form'))}>

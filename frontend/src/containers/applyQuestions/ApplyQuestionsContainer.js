@@ -59,7 +59,6 @@ class ApplyQuestionsContainer extends Component {
     applyActions.departmentChoiceChanged(state.applyChoice);
     recruitingApi.getQuestionInfo(state.applyChoice)
       .then(data => {
-        console.log(data);
         const commonData = data.common.map(row => ({ question: row.question, type: row.type }));
         applyActions.answerFormatInit({ type: 'common', data: commonData, });
         let questionData = {

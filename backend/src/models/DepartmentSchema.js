@@ -11,15 +11,10 @@ const QuestionsSchema = new Schema({
   }
 })
 
-const InterviewAvailableSchema = new Schema({
-  interviewDate : String,
-  interviewTime : String
-})
-
 const TeamsSchema = new Schema({
   teamName : String,
   questions : [QuestionsSchema],
-  interviewAvailable : [InterviewAvailableSchema]
+  interviewAvailable : Date
 })
 
 const DepartmentMetaSchema = new Schema({
@@ -27,9 +22,5 @@ const DepartmentMetaSchema = new Schema({
   departmentName: String,
   teams : [TeamsSchema],
 })
-
-
-
-
 
 module.exports = mongoose.model('Departmentmeta', DepartmentMetaSchema);

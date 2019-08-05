@@ -26,7 +26,8 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
           secondary_team: apply.applyChoice[1].team,
           medical_field: apply.applyChoice[0].medical_field,
           secondary_medical_field: apply.applyChoice[1].medical_field,
-          other_assign_consent: apply.otherAssignConsent,
+          other_assign_ngo: apply.otherAssignConsent.ngo,
+          other_assign_medical: apply.otherAssignConsent.medical,
         },
         academic_career: {
           academic_name: education.schoolNameText,

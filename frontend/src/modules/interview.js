@@ -78,7 +78,6 @@ export default handleActions({
   },
   [UPDATE_TEAMS_BY_DATE_INFO]: (state, action) => {
     const { info } = action.payload;
-    console.log(info);
     return state.set('teamsByDate', fromJS(info));
   }
 }, initialState)

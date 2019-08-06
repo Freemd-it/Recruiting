@@ -29,9 +29,15 @@ class InterviewChoiceContainer extends Component {
   };
 
   componentDidMount() {
+    const { batch } = this.props;
     recruitingApi.getInterviewInfo().then(interviewData => {
       this.setState({ interviewData });
     });
+
+    recruitingApi.getTeamsByDateInfo(batch)
+      .then(result => {
+        console.log(result);
+      });
   }
 
 

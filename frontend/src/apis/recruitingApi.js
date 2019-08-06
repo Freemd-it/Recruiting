@@ -26,7 +26,8 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
           secondary_team: apply.applyChoice[1].team,
           medical_field: apply.applyChoice[0].medical_field,
           secondary_medical_field: apply.applyChoice[1].medical_field,
-          other_assign_consent: apply.otherAssignConsent,
+          other_assign_ngo: apply.otherAssignConsent.ngo,
+          other_assign_medical: apply.otherAssignConsent.medical,
         },
         academic_career: {
           academic_name: education.schoolNameText,
@@ -104,10 +105,10 @@ export default {
       { 
           headers: { 'x-access-token': `${window.localStorage.accessToken}` },
           params: {
-            department: department,
-            secondary_department: secondaryDepartment,
-            team: team,
-            secondary_team: secondaryTeam 
+            departmentName: department,
+            secondary_departmentName: secondaryDepartment,
+            teamName: team,
+            secondary_teamName: secondaryTeam 
           }
       }
     ).then(res => res.data.results);
@@ -115,6 +116,15 @@ export default {
   getInterviewInfo: () => {
     return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/interview`,
       { headers: { 'x-access-token': `${window.localStorage.accessToken}` }}
+    ).then(res => res.data);
+  },
+
+  getTeamsByDateInfo: batch => {
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/team_date`,
+      { 
+        headers: { 'x-access-token': `${window.localStorage.accessToken}` },
+        params: { batch }
+      }
     ).then(res => res.data);
   }
 }

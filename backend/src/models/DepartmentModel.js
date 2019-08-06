@@ -15,7 +15,6 @@ const schema = "departmentmetas"
 // 각 본부 전체 질문 리스트
 // 쿼리 스트링 적용
 const getDepartmentQuestions = (department, team) => {
-  console.log(department, team)
   return new Promise ((resolve, reject) => {
     connection.db.collection(schema, (err, collection) => {
       if(err) console.log(err);
@@ -39,14 +38,13 @@ const getDepartmentQuestions = (department, team) => {
   })
 }
 
-// 프리메드 본부 공통
 const getCommonQuestions = () => {
   return new Promise((resolve, reject) => {
     connection.db.collection(schema, (err, collection) => {
       if(err) console.log(err);
       collection
         .find({
-          'departmentName' : '프리메드',
+          'departmentName' : '공통',
         })
         .sort({registedData: -1})
         .limit(2)

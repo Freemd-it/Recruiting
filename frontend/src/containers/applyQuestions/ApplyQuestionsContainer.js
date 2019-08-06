@@ -59,21 +59,29 @@ class ApplyQuestionsContainer extends Component {
     applyActions.departmentChoiceChanged(state.applyChoice);
     recruitingApi.getQuestionInfo(state.applyChoice)
       .then(data => {
-        const commonData = data.common.map(row => ({ question: row.question, type: row.type }));
-        applyActions.answerFormatInit({ type: 'common', data: commonData, });
-        let questionData = {
-          common: data.common.map(row => row.question),
-          department: [],
+        const questionData = {
+          common: [],
+          department: []
         };
+
+        const commonData = data.common[0].questions.map(row => ({ question: row.content, type: row.type }));
+        applyActions.answerFormatInit({ type: 'common', data: commonData });
+        questionData.common = commonData.map(d => d.question);
+
         state.applyChoice.forEach((choice, index) => {
           const applyChoiceKey = index === 0 ? 'first' : 'second';
           if (choice.department !== '') {
-            const questions = data[applyChoiceKey].map(row => (
-              {
-                question: row.question, 
-                answerType: row.type,
-                isTeamQuestion: row.team !== '공통',
-              }));
+            const questions = data[applyChoiceKey].reduce((acc, curr) => {
+              return acc.concat(curr.questions.map(question => {
+                const { type, content } = question;
+                return { 
+                  question: content,
+                  answerType: type,
+                  isTeamQuestion: curr.teamName !== '공통' 
+                }
+              }))
+            }, []);
+
             const departmentData = questions.map(elem => ({ question: elem.question, type: elem.answerType }));
             const questionKey = `${choice.department}_${choice.team}`;
             applyActions.answerFormatInit({ type: 'department', key: `${choice.department}_${choice.team}`, data: departmentData });
@@ -86,7 +94,7 @@ class ApplyQuestionsContainer extends Component {
             })
           }
         });
-        this.setState({questionData});
+        this.setState({ questionData });
       });
   }
 

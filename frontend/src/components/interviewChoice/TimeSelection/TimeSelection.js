@@ -8,11 +8,14 @@ import styles from './TimeSelection.scss';
 
 const cx = classNames.bind(styles);
 
-const TimeSelection = ({ interviewData, onCheckedChange, checkedFields }) => {
-
+const TimeSelection = ({ interviewData, onCheckedChange, checkedFields, teamsByDate }) => {
+  const buildTeamsByDateString = (index) => {
+    const teams = teamsByDate[index].teams;
+    return teams.map(team => `${team.departmentName}${team.name === '공통' ? '' : '-' + team.name}`).join(', ');
+  }
   const departmentNotices = [
-    (<span><strong>토요일</strong> - 디자인본부, IT기획본부, 해외의료사업본부</span>),
-    (<span><strong>일요일</strong> - 경영지원본부, 브랜드마케팅본부, 무료진료소사업본부, 보건교육사업본부</span>)
+    (<span><strong>토요일</strong> - {buildTeamsByDateString(0)}</span>),
+    (<span><strong>일요일</strong> - {buildTeamsByDateString(1)}</span>)
   ];
 
   return (
@@ -24,7 +27,7 @@ const TimeSelection = ({ interviewData, onCheckedChange, checkedFields }) => {
           ))}
       </div>
       <hr />
-      {interviewData.map((elem, index) => (
+      {interviewData.interviewDates.map((elem, index) => (
         <TimeCheckForm 
           key={index} 
           checkedFields={checkedFields} 

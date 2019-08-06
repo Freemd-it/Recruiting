@@ -40,6 +40,7 @@ exports.read = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
+  console.log(req.body);
   const { id } = req.params;
   const { files } = req;
   const { batch, basic_info, academic_career, external_activities, special_info, question_info, interview_info} = jsonParser(req.body.body);

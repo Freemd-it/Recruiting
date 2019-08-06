@@ -21,8 +21,8 @@ RecruitSchema.statics.getDepartmentData = function() {
 
 RecruitSchema.statics.getInterviewTimes = function() {
   return this.findOne({ recruitStatus: 1001 })
-    .then(result => result.interviewTimes)
-    .then(interviewTimes => {
+    .then(result => {
+      const { interviewTimes, announceDate } = result;
       const aggregated = [];
       interviewTimes.forEach(elem => {
         const { date, time } = elem;
@@ -33,7 +33,10 @@ RecruitSchema.statics.getInterviewTimes = function() {
           aggregated[dateIndex].times.push(time);
         }
       });
-      return aggregated.sort(d => new Date(d.date));
+      return {
+        announceDate,
+        interviewDates: aggregated.sort((a, b) => new Date(a.date) - new Date(b.date))
+      };
     });
 }
 

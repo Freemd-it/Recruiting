@@ -124,22 +124,31 @@ class PageContainer extends Component {
         isValid = this._validate(actionModule, required);
         return isValid;
       case '/interviewChoice':
-        const selectedDepartments = state.apply.toJS().applyChoice.map(d => d.department);
-        const shouldInterviews = interviewActions.checkInterviewDates(selectedDepartments);
+        const selectedTeams = state.apply.toJS().applyChoice.map(d => ({
+          department: d.department,
+          name: d.team
+        }));
+        const teamsByDate = state.interview.get('teamsByDate').toJS();
+        let shouldInterviews = [false, false];
+        for (const team of selectedTeams) {
+          for (let i = 0; i < 2; i++) {
+            shouldInterviews[i] = shouldInterviews[i] || teamsByDate[i].teams.findIndex(d => {
+              return d.departmentName === team.department && d.name === team.name;
+            }) !== -1;
+          }
+        }
         isValid = shouldInterviews.every((shouldInterview, index) => {
           const timeCount = actionModule.interviewDates[index].times.length;
           const needMoreChoice = (timeCount < 1 && shouldInterview);
           const hasInvalidChoice = (timeCount > 0 && !shouldInterview);
+          if (needMoreChoice) {
+            window.alert(message.NEED_MORE_INTERVIEW_CHOICE);
+          }
 
-          // if (needMoreChoice) {
-          //   window.alert(message.NEED_MORE_INTERVIEW_CHOICE);
-          // }
-
-          // if (hasInvalidChoice) {
-          //   window.alert(message.REMOVE_INVALID_INTERVIEW_CHOICE);
-          // }
-          return true
-          // return (needMoreChoice || hasInvalidChoice);
+          if (hasInvalidChoice) {
+            window.alert(message.REMOVE_INVALID_INTERVIEW_CHOICE);
+          }
+          return !(needMoreChoice || hasInvalidChoice);
         });
 
         return isValid;

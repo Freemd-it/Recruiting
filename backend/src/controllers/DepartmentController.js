@@ -14,15 +14,14 @@ const convertType = (num) => {
 // 각 본부 전체 질문 리스트
 exports.getDepartmentQuestionsList = async (req, res) => {
   const {departmentName, secondary_departmentName, teamName, secondary_teamName } = req.query;
-
   try {
       let common = [];
       const common_questions = await DepartmentModel.getCommonQuestions()
       const q_array = common_questions[0].teams
-      var item = q_array.find(item => item.teamName === '공통');
-      var array = item.questions
+      const item = q_array.find(item => item.teamName === '공통');
+      const array = item.questions
 
-      var result = array.map(i =>{
+      const result = array.map(i =>{
         return {
           'content' : i.content,
           'type' : convertType(i.type)
@@ -40,10 +39,10 @@ exports.getDepartmentQuestionsList = async (req, res) => {
      if (departmentName !== '') {
        const questions = await DepartmentModel.getDepartmentQuestions(departmentName, '공통');
        const q_array = questions[0].teams
-       var item = q_array.find(item => item.teamName === '공통');
+       const item = q_array.find(item => item.teamName === '공통');
 
-        var array = item.questions
-        var result = array.map(i =>{
+        const array = item.questions
+        const result = array.map(i =>{
           return {
             'content' : i.content,
             'type' : convertType(i.type)
@@ -59,10 +58,10 @@ exports.getDepartmentQuestionsList = async (req, res) => {
      if (teamName !== '' && teamName !== '공통') {
        const questions = await DepartmentModel.getDepartmentQuestions(departmentName, teamName);
        const q_array = questions[0].teams
-       var item = q_array.find(item => item.teamName === teamName);
+       const item = q_array.find(item => item.teamName === teamName);
 
-       var array = item.questions
-       var result = array.map(i =>{
+       const array = item.questions
+       const result = array.map(i =>{
         return {
           'content' : i.content,
           'type' : convertType(i.type)
@@ -78,10 +77,10 @@ exports.getDepartmentQuestionsList = async (req, res) => {
      if (secondary_departmentName !== '' && secondary_departmentName !== departmentName) {
        const questions = await DepartmentModel.getDepartmentQuestions(secondary_departmentName, '공통');
        const q_array = questions[0].teams
-       var item = q_array.find(item => item.teamName === '공통');
+       const item = q_array.find(item => item.teamName === '공통');
        
-       var array = item.questions
-       var result = array.map(i =>{
+       const array = item.questions
+       const result = array.map(i =>{
         return {
           'content' : i.content,
           'type' : convertType(i.type)
@@ -97,10 +96,10 @@ exports.getDepartmentQuestionsList = async (req, res) => {
      if (secondary_teamName !== '' && secondary_teamName !== '공통') {
        const questions = await DepartmentModel.getDepartmentQuestions(secondary_departmentName, secondary_teamName);
        const q_array = questions[0].teams
-       var item = q_array.find(item => item.teamName === secondary_teamName);
+       const item = q_array.find(item => item.teamName === secondary_teamName);
 
-       var array = item.questions
-       var result = array.map(i =>{
+       const array = item.questions
+       const result = array.map(i =>{
         return {
           'content' : i.content,
           'type' : convertType(i.type)

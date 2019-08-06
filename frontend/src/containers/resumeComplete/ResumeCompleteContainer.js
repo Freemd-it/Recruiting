@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
 import userApi from '../../apis/userApi';
+import recruitingApi from '../../apis/recruitingApi';
 import ResumeComplete from '../../components/resumeComplete/ResumeComplete';
 
 class ResumeCompleteContainer extends Component {
@@ -10,19 +11,29 @@ class ResumeCompleteContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      batch: 0
+      batch: 0,
+      announceDate: ''
     }
   }
   componentDidMount() {
-    userApi.getBatch().then(batch => this.setState({ batch }));
+    userApi.getBatch().then(batch => {
+      this.setState({ batch });
+    });
+    recruitingApi.getInterviewInfo()
+      .then(info => {
+        this.setState({ announceDate: info.announceDate });
+      });
   }
 
   render() {
-    const { batch } = this.state;
+    const { batch, announceDate } = this.state;
 
     return (
       <>
-        <ResumeComplete batch={batch} />
+        <ResumeComplete 
+          batch={batch} 
+          announceDate={announceDate}
+        />
       </>
     );
   }
@@ -30,7 +41,6 @@ class ResumeCompleteContainer extends Component {
 
 export default withRouter(connect(
   (state) => ({
-    batch: state.user.get('batch')
   }),
   (dispatch) => ({
   })

@@ -26,10 +26,12 @@ const DepartmentMetaSchema = new Schema({
 DepartmentMetaSchema.statics.getTeamsByDateInfo = function (batch) {
   return this.find({batch: batch})
     .then(departments => {
-      console.log(batch);
       const aggregated = [];
       departments.forEach(department => {
         const { departmentName, teams } = department;
+        if (departmentName === '공통') {
+          return;
+        }
         teams.forEach(team => {
           const { teamName, interviewAvailable } = team;
           const dateIndex = aggregated.findIndex(d => d.date.toString() == interviewAvailable.toString());
@@ -44,7 +46,7 @@ DepartmentMetaSchema.statics.getTeamsByDateInfo = function (batch) {
           }
         });
       });
-      return aggregated.sort(d => new Date(d.date));
+      return aggregated.sort((a, b) => new Date(a.date) - new Date(b.date));
     });
 }
 

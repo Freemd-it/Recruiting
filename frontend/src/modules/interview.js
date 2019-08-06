@@ -6,11 +6,13 @@ const INIT_STATE = 'interview/INIT_STATE';
 const LOAD_SAVED_STATE = 'interview/LOAD_SAVED_STATE';
 const CHANGE_CHECKED = 'interview/CHANGE_CHECKED';
 const VALIDATE = 'interview/VALIDATE';
+const UPDATE_TEAMS_BY_DATE_INFO = 'interview/UPDATE_TEAMS_BY_DATE_INFO';
 
 export const initState = createAction(INIT_STATE);
 export const loadSavedState = createAction(LOAD_SAVED_STATE);
 export const changeChecked = createAction(CHANGE_CHECKED);
 export const validate = createAction(VALIDATE);
+export const updateTeamsByDateInfo = createAction(UPDATE_TEAMS_BY_DATE_INFO);
 
 const initialState = fromJS({
   interviewDates: [
@@ -23,6 +25,17 @@ const initialState = fromJS({
       times: [],
     }
   ],
+  // teams: [{ departmentName: '경영지원본부', name: 'IT기획팀' }]
+  teamsByDate: [
+    {
+      date: '',
+      teams: []
+    },
+    {
+      date: '',
+      teams: []
+    }
+  ]
 });
 
 export const checkInterviewDates = (selectedTeams) => {
@@ -63,4 +76,9 @@ export default handleActions({
       return state.set('interviewDates', interviewDates.set(index, newDate));
     }
   },
+  [UPDATE_TEAMS_BY_DATE_INFO]: (state, action) => {
+    const { info } = action.payload;
+    console.log(info);
+    return state.set('teamsByDate', fromJS(info));
+  }
 }, initialState)

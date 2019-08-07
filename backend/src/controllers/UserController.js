@@ -65,31 +65,31 @@ exports.n_update = async(req, res) => {
             batch : batch,
             departmentName : '공통',
             teamName : '공통',
-            question : row[1].question,
             type : row[1].type === 'text' ? 101 : 102,
-            text : row[1].text
+            question : row[1].question,
+            text : row[1].text,
+            questionType : 'common',
           }) 
         })
       } else if (key === 'department') {
-        let cnt = 0;
-        Object.entries(value).map((row, index) => {
-          if(index !== 'files') {
-            Object.entries(row).map((_row, _index) => {
-              // console.log('_row', _row)
-                Object.entries(_row).map((__row, __index) => {
-                 console.log('__row!!!!!', __row[1])
-                 console.log('__index!!!!!!', __index)
-                })
-            })
-          }
 
-        })
+        var results = Object.entries(value)
+        .filter(d => d[0] !== 'files')
+        .reduce((acc, curr) => {
+          const [departmentName, teamName] = curr[0].split('_');
+          const questions = Object.entries(curr[1])
+            .sort((a, b) => +a - +b)
+            .map(d => d[1])
+            .map((d, index) => ({...d, 
+              departmentName, teamName : index === 0 ? '공통' : teamName, type : d.type === 'text' ? 101 : 102}));
+          return acc.concat(questions);
+        }, []);
+
+        for(index in results) {
+          questionList.push(results[index])
+        }
       }
     }
-
-
-
-
 
   try{
     // console.log('batch',batch)
@@ -97,32 +97,36 @@ exports.n_update = async(req, res) => {
     // console.log('academicCareer',academicCareer)
     // console.log('externalActivities',externalActivities)
     // console.log('specialinfo',specialInfo)
-    console.log('questionInfo',questionInfo)
+    // console.log('questionInfo',questionInfo)
     // console.log('interviewInfo',interviewInfo)
 
     const user = await User.findOneById(id);
     // console.log('user.basicInfo',user.basicInfo)
     setQuestionList(questionInfo)
-    
     const data = {
       batch,
       basicInfo : {
-        ...user.basicInfo,
+        ...basicInfo,
         password : user.basicInfo.password,
         departments : basicInfo.departments,
-        academicCareer : {...academicCareer},
-        externalActivities : externalActivities,
-        specialinfo: specialInfo,
-        questionInfo : questionList
-      }
-    }
+      },
+      academicCareer : {...academicCareer},
+      externalActivities : externalActivities,
+      specialInfo: specialInfo,
+      questionInfo : questionList,
+      interviewInfo: setInterviewList(interviewInfo),
+
+      // supportStatus: 201,
+      evaluation: '미평가',
+    };
+    // console.log('data', data)
 
     await User.findByIdAndUpdate(
       {_id : id},
       { $set: JSON.parse(JSON.stringify(data)) },
       {new:true, upsert: true});
-      // console.log('questionList',questionList)
 
+    console.log('data', data)
    
     res.status(200).json({
       message : 'UPDATE SUCCESS',

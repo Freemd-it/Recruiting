@@ -5,11 +5,12 @@ const User = require('models/UserModel');
 
 
 exports.login = async (req, res) => {
-  const { user_name, email, password } = req.body;
+  const { userName, email, password } = req.body;
+  console.log(req.body)
   const secret = req.app.get('jwt-secret');
 
   try {
-    let user = await User.findOneUserInfo(user_name, email);
+    let user = await User.findOneUserInfo(userName, email);
 
     if (!user) {
       const isExistEmail = await User.findOneByEmail(email);
@@ -22,11 +23,11 @@ exports.login = async (req, res) => {
         });
         return;
       }
-      user = await User.create(user_name, email, password);
+      user = await User.create(userName, email, password);
     }
 
     const token = await AuthService.makeToken(user, secret, password);
-    const response = [token, user._id, user.support_status];
+    const response = [token, user._id, user.supportStatus];
     
     res.json({ message: 'login Success', results: response })
 

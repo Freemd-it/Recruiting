@@ -32,15 +32,15 @@ const UserSchema = new Schema({
 
   // 기본정보
   basicInfo: {
-    englishName: String,// 지원자 영어이름
-    isMale: Boolean, // 남여
     userName: String, // 지원자 이름
     email: {
       type : String,
       // unique : true
     },
     password : String,
-    
+
+    englishName: String,// 지원자 영어이름
+    isMale: Boolean, // 남여
     brithDate: Date, // 생일
     phoneNumber: String, // 폰
     sns: String, // sns url
@@ -103,6 +103,7 @@ const UserSchema = new Schema({
 
   // 본부 질문
   questionInfo: [{
+    batch : Number,
     departmentName: String,
     teamName: String,
     type: {

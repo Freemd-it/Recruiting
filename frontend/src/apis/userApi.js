@@ -5,7 +5,7 @@ import message from '../common/message';
 export default {
   login: ({name, email, password}) => {
     return axios.post(`${serverConfig[process.env.NODE_ENV].url}/api/auth/login`, {
-      user_name: name,
+      userName: name,
       email,
       password
     }).then(res => {

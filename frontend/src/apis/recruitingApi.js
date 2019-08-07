@@ -11,60 +11,66 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
       let formData = new FormData();
       formData.append('body', JSON.stringify({
         batch: user.batch,
-        basic_info: {
-          user_name: personalIdentification.name,
-          english_name: personalIdentification.englishName,
+
+        basicInfo: {
+          userName: personalIdentification.name,
+          englishName: personalIdentification.englishName,
           email: personalIdentification.emailText,
-          is_male: personalIdentification.gender === 'male',
-          birth_date: personalIdentification.birthText,
-          phone_number: personalIdentification.phoneNumberText,
+          isMale: personalIdentification.gender === 'male',
+          brithDate: personalIdentification.birthText,
+          phoneNumber: personalIdentification.phoneNumberText,
           sns: personalIdentification.sns,
           address: personalIdentification.address,
-          department: apply.applyChoice[0].department,
-          secondary_department: apply.applyChoice[1].department,
-          team: apply.applyChoice[0].team,
-          secondary_team: apply.applyChoice[1].team,
-          medical_field: apply.applyChoice[0].medical_field,
-          secondary_medical_field: apply.applyChoice[1].medical_field,
-          other_assign_ngo: apply.otherAssignConsent.ngo,
-          other_assign_medical: apply.otherAssignConsent.medical,
+
+          departments: (
+            apply.applyChoice.length > 0 ? (
+              apply.applyChoice.map((row, index) => ({
+                departmentName: row.department,
+                teamName: row.team,
+                medicalField: row.medical_field,
+                order : index
+              }))) : []
+          ),
+          otherAssignNgo: apply.otherAssignConsent.ngo,
+          otherAssignMedical: apply.otherAssignConsent.medical,
         },
-        academic_career: {
-          academic_name: education.schoolNameText,
+        academicCareer: {
+          academicName: education.schoolNameText,
           location: education.location,
           major: education.major,
-          entrance_date: education.graduationYear.entrance,
-          graduation_date: education.graduationYear.graduation,
+          entranceDate: education.graduationYear.entrance,
+          graduationDate: education.graduationYear.graduation,
           degree: education.graduationYear.status,
         },
-        special_info: (
+        specialInfo: (
           speciality.detail[0].activityDetail.length > 0 ? (
             speciality.detail.map(row => ({
-              special_type: row.activityDetail,
-              self_evaluation_ability: row.grade,
+              specialType: row.activityDetail,
+              selfEvaluationAbility: row.grade,
               content: row.content,
             }))) : []
         ),
-        external_activities: (
+        externalActivities: (
           career.detail[0].activityDetail.length > 0 ? (
             career.detail.map(row => ({
-              external_type: row.activityType,
+              externalType: row.activityType,
               organizer: row.activityDetail,
-              start_date: row.durationStart,
-              end_date: row.durationEnd,
-              turnaround_time: row.turnaround_time,
+              startDate: row.durationStart,
+              endDate: row.durationEnd,
+              turnaroundTime: row.turnaround_time,
               content: row.content,
             }))) : []
         ),
-        question_info: {
+        questionInfo: {
           common: common,
           department: department,
           fileKeys: Object.entries(department.files ? department.files : []).map(row => row[0]),
         },
-        interview_info: interview.interviewDates.map((row, index) => ({
-          interview_date: row.date,
-          interview_week: index === 0 ? '토' : '일',
-          interview_time: row.times
+
+        interviewInfo: interview.interviewDates.map((row, index) => ({
+          interviewDate: row.date,
+          interviewWeek: index === 0 ? '토' : '일',
+          interviewTime: row.times
         })),
       }))
 

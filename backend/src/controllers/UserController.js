@@ -39,6 +39,36 @@ exports.read = async (req, res) => {
   }
 }
 
+
+exports.n_update = async(req, res) => {
+  const { id } = req.params;
+  const { files } = req;
+  const { batch, basic_info, academic_career, external_activities, special_info, question_info, interview_info} = jsonParser(req.body.body);
+
+  try{
+    console.log('body:', req.body.body)
+    // const user = await User.findOneById(id);
+
+   
+   
+    // console.log('data:', data)
+
+    res.status(200).json({
+      message : 'SUCCESS'
+    })
+
+
+  }catch(err){
+    console.log(err)
+    res.status(500).json({
+      message : err.message
+    })
+  }
+
+
+}
+
+
 exports.update = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
@@ -90,7 +120,9 @@ exports.update = async (req, res) => {
   }
   
   try {
+    
     let user = await User.findOneById(id);
+    
     if (user.support_status !== 200) {
       res.json({
         message: 'already submitted',
@@ -101,6 +133,7 @@ exports.update = async (req, res) => {
     }
     
     setQuestionList(question_info)
+   
     const data = {
       batch,
       basic_info: {
@@ -140,6 +173,9 @@ exports.update = async (req, res) => {
     })
   }
 }
+
+
+
 // 스토어 데이터 확인 
 exports.readStoreData = async(req, res) => {
   const { id } = req.params;

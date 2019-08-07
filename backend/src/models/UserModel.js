@@ -4,10 +4,10 @@ const encrypted = require('lib/encrypted')
 
 const { UserSchema } = require('./Scheme')
 
-UserSchema.statics.create = function (user_name, email, password) {  
+UserSchema.statics.create = function (userName, email, password) {  
   const userinfo = new this({
     basicInfo: {
-      user_name, 
+      userName, 
       email, 
       password: encrypted(password),
     }
@@ -19,9 +19,9 @@ UserSchema.statics.findOneById = function (id) {
   return this.findOne({ _id:id }).exec();
 };
 
-UserSchema.statics.findOneUserInfo = function (user_name, email) {
+UserSchema.statics.findOneUserInfo = function (userName, email) {
   return this.findOne({
-    'basicInfo.userName':user_name,
+    'basicInfo.userName':userName,
     'basicInfo.email' : email
   }).exec();
 };
@@ -34,15 +34,15 @@ UserSchema.statics.findOneByEmail = function(email){
 };
 
 // 이름 으로 찾기
-UserSchema.statics.findOneByUsername = function(user_name) {
+UserSchema.statics.findOneByUsername = function(userName) {
   return this.findOne({
-    'basicInfo.userName' : user_name
+    'basicInfo.userName' : userName
   }).exec();
 };
 
 // 비밀번호 암호화
 UserSchema.methods.verify = function(password) {
-  return this.basic_info.password === encrypted(password)
+  return this.basicInfo.password === encrypted(password)
 }
 
 UserSchema.plugin(multiUpdate);

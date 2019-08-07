@@ -6,7 +6,7 @@ const { UserSchema } = require('./Scheme')
 
 UserSchema.statics.create = function (user_name, email, password) {  
   const userinfo = new this({
-    basic_info: {
+    basicInfo: {
       user_name, 
       email, 
       password: encrypted(password),
@@ -21,22 +21,22 @@ UserSchema.statics.findOneById = function (id) {
 
 UserSchema.statics.findOneUserInfo = function (user_name, email) {
   return this.findOne({
-    'basic_info.user_name':user_name,
-    'basic_info.email' : email
+    'basicInfo.userName':user_name,
+    'basicInfo.email' : email
   }).exec();
 };
 
 // email 로 찾기
 UserSchema.statics.findOneByEmail = function(email){
   return this.findOne({
-    'basic_info.email' : email
+    'basicInfo.email' : email
   }).exec();
 };
 
 // 이름 으로 찾기
 UserSchema.statics.findOneByUsername = function(user_name) {
   return this.findOne({
-    'basic_info.user_name' : user_name
+    'basicInfo.userName' : user_name
   }).exec();
 };
 

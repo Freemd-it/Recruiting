@@ -14,7 +14,7 @@ const upload = require('lib/s3Connect');
 router.use('/auth', auth)
 
 // 해당 router 에 middleware를 적용
-router.use('/recruits', authMiddleware);
+// router.use('/recruits', authMiddleware);
 router.use('/recruits', upload.any('files'), user);
 
 //test 를 위해 잠시 꺼둠 

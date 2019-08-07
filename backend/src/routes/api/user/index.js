@@ -9,7 +9,9 @@ const upload = require('lib/s3Connect')
 router.get('/list', userController.list);
 
 router.get('/:id', userController.read);
-router.put('/:id', userController.update);
+router.put('/:id', userController.n_update);
+// router.put('/:id', userController.update);
+
 
 // 임시저장
 router.get('/:id/clientStoreData', userController.readStoreData);

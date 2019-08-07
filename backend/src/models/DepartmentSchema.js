@@ -5,7 +5,7 @@ const QuestionsSchema = new Schema({
   content : String,
   register : String,
   type: Number,
-  registedDate: {
+  registerDate: {
     type: Date,
     default: Date.now // 현재 날짜를 기본값으로 지정
   }

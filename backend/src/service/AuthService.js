@@ -6,7 +6,7 @@ module.exports = {
       return new Promise((resovle, reject) => {
         jwt.sign({
           _id : user._id,
-          user_name: user.user_name,
+          userName: user.user_name,
           email: user.email,
         }, secret, {
           expiresIn: '7d',

@@ -63,9 +63,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
         ),
         questionInfo: {
           common: common,
-          department: Object.entries(department).map((row, index) => {
-            console.log(row, index)
-          })
+          department: department
           // fileKeys: Object.entries(department.files ? department.files : []).map(row => row[0]),
         },
 

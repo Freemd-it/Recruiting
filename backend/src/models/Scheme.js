@@ -21,7 +21,7 @@ const UserSchema = new Schema({
   // 등록일자
   registedDate: {
     type: Date,
-    default: Date.now,
+    default: Date.now()
   },
   
   // 평가

@@ -38,9 +38,8 @@ exports.read = async (req, res) => {
   }
 }
 
-exports.update = async(req, res) => {
+exports.update = async (req, res) => {
   const { id } = req.params;
-  const { files } = req;
   const { 
      batch, 
      basicInfo,
@@ -48,20 +47,22 @@ exports.update = async(req, res) => {
      externalActivities, 
      specialInfo, 
      questionInfo, 
-     interviewInfo
+     interviewInfo,
+
     } = jsonParser(req.body.body);
 
-    const obtainQuestionList = (questionInfo) => {
-      return Object.entries(questionInfo).reduce((acc, curr) => {
+    const obtainQuestionList = questionInfo => {
+      return Object.entries(questionInfo).filter(d => d[0] !== 'fileKeys').reduce((acc, curr) => {
         const [key, value] = curr;
-        return acc.concat(obtainQuestionListByDept(key, value));
+        const questionList = obtainQuestionListByDept(key, value);
+        return acc.concat(questionList);
       }, []);
     }
     const obtainInterviewList = (interviewInfo) => _.forEach(interviewInfo, (v, k) => makeInterviewObject(v,k))
 
     const obtainQuestionListByDept = (key, value) => {
       if (key === 'common') {
-        return Object.entries(value).map((row, _) => {
+        return Object.entries(value).map((row, index) => {
           return {
             batch,
             departmentName : '공통',
@@ -70,6 +71,7 @@ exports.update = async(req, res) => {
             question : row[1].question,
             text : row[1].text,
             questionType : 'common',
+            index
           };
         });
 
@@ -85,7 +87,8 @@ exports.update = async(req, res) => {
                 batch,
                 departmentName,
                 teamName : index === 0 ? '공통' : teamName,
-                type : d.type === 'text' ? 101 : 102
+                type : d.type === 'text' ? 101 : 102,
+                index
             }));
             return acc.concat(questions);
         }, []);
@@ -95,6 +98,25 @@ exports.update = async(req, res) => {
   try {
     const user = await User.findOneById(id);
     const questionList = obtainQuestionList(questionInfo);
+    req.files.map((d, i) => ({
+      fileLink: d.location,
+      path: questionInfo.fileKeys[i],
+      oriName: d.originalname,
+      key: d.key
+    })).forEach(file => {
+      const { fileLink, path, oriName, key } = file;
+      const [department, teamAndIndex] = path.split('_');
+      const [team, index] = teamAndIndex.split('.');
+      const fileIndex = questionList.findIndex(d => {
+        return d.departmentName === department 
+          && d.teamName === team 
+          && d.index === +index;
+      });
+      questionList[fileIndex].file = {
+        url: fileLink, oriName, key
+      };
+    });
+
     const data = {
       batch,
       basicInfo : {
@@ -120,9 +142,7 @@ exports.update = async(req, res) => {
       result: data
     })
 
-
-  }catch(err){
-    console.log(err)
+  } catch (err) {
     res.status(500).json({
       message : err.message
     })

@@ -5,11 +5,13 @@ RUN apk update && \
     apk add git
 
 WORKDIR /app
-COPY ./build /app/build
 COPY package.json .
-COPY ./node_modules /app/node_modules
+RUN npm install --production
 
-RUN cd /app && npm install --production
+COPY . /app
+RUN npm run build
 
-RUN npm install -g serve
-CMD serve -s build -p 80
+FROM nginx:1.13.9-alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

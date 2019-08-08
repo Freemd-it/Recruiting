@@ -13,7 +13,7 @@ const convertType = (num) => {
 
 // 각 본부 전체 질문 리스트
 exports.getDepartmentQuestionsList = async (req, res) => {
-  const {departmentName, secondary_departmentName, teamName, secondary_teamName } = req.query;
+  const { departmentName, secondary_departmentName, teamName, secondary_teamName } = req.query;
   try {
       let common = [];
       const common_questions = await DepartmentModel.getCommonQuestions()

@@ -16,7 +16,15 @@ RecruitSchema.statics.getBatch = function() {
 
 RecruitSchema.statics.getDepartmentData = function() {
   return this.findOne({ recruitStatus: 1001 }, {'_id': 0})
-    .then(result => result.departments);
+    .then(result => result.departments
+      .filter(department => department.departmentName !== '공통')
+      .map(department => {
+      const teams = department.teams;
+      if (teams.length > 1) {
+        department.teams = teams.filter(team => team.teamName !== '공통')
+      }
+      return department;
+    }));
 }
 
 RecruitSchema.statics.getInterviewTimes = function() {

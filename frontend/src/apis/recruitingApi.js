@@ -63,8 +63,8 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
         ),
         questionInfo: {
           common: common,
-          department: department
-          // fileKeys: Object.entries(department.files ? department.files : []).map(row => row[0]),
+          department: department,
+          fileKeys: Object.keys(department.files ? department.files : []).map(d => d.slice(0, -5))
         },
 
         interviewInfo: interview.interviewDates.map((row, index) => ({
@@ -74,11 +74,11 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
         })),
       }))
 
-      const fileKeys = Object.entries(department.files ? department.files : []).map(row => row[0]);
       const filesPromise = Object.entries(department.files ? department.files : []).map(row => {
         return fetch(row[1]).then(r => r.blob());
       });
 
+      const fileKeys = Object.keys(department.files ? department.files : []);
       Promise.all(filesPromise)
         .then(files => {
           for (let index = 0; index < files.length; index++) {

@@ -9,6 +9,12 @@ COPY package.json .
 RUN npm install --production
 
 COPY . /app
+
+RUN apk update && \
+    apk add tzdata && \
+    cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime && \
+    echo "Asia/Seoul" > /etc/timezone
+    
 RUN npm run build
 
 FROM nginx:1.13.9-alpine

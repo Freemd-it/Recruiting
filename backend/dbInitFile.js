@@ -3,8 +3,9 @@ const {defaultConfig, envConfig} = require('./config/constants');
 const { schemeInit } = require('./src/service/SchemeService');
 
 // mongoose.Promise = global.Promise;
-
-const { MONGO_URL } = envConfig('development')
+const node_env = process.env.NODE_ENV;
+const { MONGO_URL } = envConfig(node_env);
+console.log(MONGO_URL);
 
 const close = async () => {
   await mongoose.connection.close(async () => {

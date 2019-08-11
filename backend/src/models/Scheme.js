@@ -37,6 +37,7 @@ const UserSchema = new Schema({
       type : String,
       unique : true
     },
+    emailText : String,
     password : String,
 
     englishName: String,// 지원자 영어이름

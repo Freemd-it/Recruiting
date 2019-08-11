@@ -41,7 +41,6 @@ class PageContainer extends Component {
           })
       } else {
         history.push(config.nextRoutePath);
-        console.log('next button click');
         this._callStoreDataSaveAPI();
         window.scrollTo({ top: 100 });
       }

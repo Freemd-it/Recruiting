@@ -36,7 +36,7 @@ const initialState = fromJS({
     address: '',
     email: {
       text: '',
-      type: ''
+      type: '@naver.com'
     },
     emailText: '',
     sns: '',

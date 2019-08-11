@@ -9,11 +9,12 @@ const AnswerArea = ({ onInputChange, type, index, questionKey, answer }) => {
   return (
     <div className={cx('answer-area-form')}>
       <textarea 
+        placeholder={'답변은 500자 내외로 작성해주세요'}
         onChange={onInputChange({type, index, questionKey, answerType: 'text'})} 
         value={answer}
       >
       </textarea>
-      <div className={cx('text-length-view')}>{answer ? answer.length : '0'}/500</div>
+      <div className={cx('text-length-view')}>{answer ? answer.length : '0'}/600</div>
     </div>
   )
 }

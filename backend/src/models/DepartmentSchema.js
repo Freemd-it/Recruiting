@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose
+const moment = require('moment');
 
 const QuestionsSchema = new Schema({
   content : String,
@@ -37,7 +38,8 @@ DepartmentMetaSchema.statics.getTeamsByDateInfo = function (batch) {
           if (teamName === '공통' && teams.length > 1) {
               return;
           }
-          const dateIndex = aggregated.findIndex(d => d.date.toString() == interviewAvailable.toString());
+          const format = (date) => moment(date).format('YYYYMMDD')
+          const dateIndex = aggregated.findIndex(d => format(d.date)== format(interviewAvailable));
           if (dateIndex === -1) {
             aggregated.push({ date: interviewAvailable, teams: [{
               departmentName, name: teamName

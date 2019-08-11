@@ -15,7 +15,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
         basicInfo: {
           userName: personalIdentification.name,
           englishName: personalIdentification.englishName,
-          emailText : personalIdentification.emailText,
+          email : personalIdentification.emailText,
           isMale: personalIdentification.gender === 'male',
           birthDate: personalIdentification.birthText,
           phoneNumber: personalIdentification.phoneNumberText,

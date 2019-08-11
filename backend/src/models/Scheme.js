@@ -41,7 +41,7 @@ const UserSchema = new Schema({
 
     englishName: String,// 지원자 영어이름
     isMale: Boolean, // 남여
-    brithDate: Date, // 생일
+    birthDate: Date, // 생일
     phoneNumber: String, // 폰
     sns: String, // sns url
     address: String, // 주소

@@ -38,7 +38,7 @@ DepartmentMetaSchema.statics.getTeamsByDateInfo = function (batch) {
           if (teamName === '공통' && teams.length > 1) {
               return;
           }
-          const format = (date) => moment(date).format('YYYYMMDD')
+          const format = (date) => moment(date).format('YYYYMMDD');
           const dateIndex = aggregated.findIndex(d => format(d.date)== format(interviewAvailable));
           if (dateIndex === -1) {
             aggregated.push({ date: interviewAvailable, teams: [{

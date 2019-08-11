@@ -175,7 +175,8 @@ class PersonalInformation extends Component {
                 value={email.type}
                 onChange={onInputChange('personalIdentification.email.type', true)}
               >
-                <option value=''> 직접입력 </option>
+                {/* TODO: 추후에 직접입력 로직을 따로 구현하거나 입력해야함. */}
+                {/* <option value=''> 직접입력 </option> */}
                 <option value='@naver.com'> naver.com </option>
                 <option value='@daum.net'> daum.net </option>
                 <option value='@gmail.com'> gmail.com </option>

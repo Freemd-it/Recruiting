@@ -15,7 +15,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
         basicInfo: {
           userName: personalIdentification.name,
           englishName: personalIdentification.englishName,
-          email: personalIdentification.emailText,
+          emailText : personalIdentification.emailText,
           isMale: personalIdentification.gender === 'male',
           birthDate: personalIdentification.birthText,
           phoneNumber: personalIdentification.phoneNumberText,
@@ -57,7 +57,7 @@ const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
               organizer: row.activityDetail,
               startDate: row.durationStart,
               endDate: row.durationEnd,
-              turnaroundTime: row.turnaround_time,
+              turnaroundTime: row.turnaroundTime,
               content: row.content,
             }))) : []
         ),

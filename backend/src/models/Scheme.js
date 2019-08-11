@@ -35,7 +35,7 @@ const UserSchema = new Schema({
     userName: String, // 지원자 이름
     email: {
       type : String,
-      // unique : true
+      unique : true
     },
     password : String,
 

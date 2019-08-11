@@ -129,6 +129,7 @@ exports.update = async (req, res) => {
       specialInfo: specialInfo,
       questionInfo : questionList,
       interviewInfo: obtainInterviewList(interviewInfo),
+      supportStatus : 201,
       evaluation: '미평가',
     };
 

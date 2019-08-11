@@ -6,7 +6,6 @@ const User = require('models/UserModel');
 
 exports.login = async (req, res) => {
   const { userName, email, password } = req.body;
-  console.log(req.body)
   const secret = req.app.get('jwt-secret');
 
   try {

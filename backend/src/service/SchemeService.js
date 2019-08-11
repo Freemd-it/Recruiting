@@ -6,8 +6,8 @@ const dummy = require('../../config/dbinit')
 
 async function schemeInit () {
   try {
-    // await DepartmentModel.insertMany(dummy.department_metas);
-    await UserModel.insertMany(dummy.users);
+    await DepartmentModel.insertMany(dummy.department_metas);
+    // await UserModel.insertMany(dummy.users);
 
     return true;
   } catch(e) {

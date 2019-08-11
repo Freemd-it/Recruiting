@@ -23,6 +23,7 @@ class PageContainer extends Component {
   };
 
   handleNextButtonClick = e => {
+    
     const { match, history, config, state } = this.props;
 
     const actionModule = state[config.validationModuleKey].toJS();
@@ -40,12 +41,19 @@ class PageContainer extends Component {
           })
       } else {
         history.push(config.nextRoutePath);
+        console.log('next button click');
+        this._callStoreDataSaveAPI();
         window.scrollTo({ top: 100 });
       }
     }
   };
 
-  handleSaveStoreDataByUser = () => {
+  handleSaveStoreDataByUser = (e) => {
+    this._callStoreDataSaveAPI();
+    window.alert(message.TEMPORARY_SAVE)
+  };
+
+  _callStoreDataSaveAPI = () => {
     const { state } = this.props;
     const userId = state.user.toJS().id;
 
@@ -54,9 +62,7 @@ class PageContainer extends Component {
       apply: state.apply.toJS(),
       interview: state.interview.toJS()
     });
-
-    window.alert(message.TEMPORARY_SAVE)
-  };
+  }
 
   _checkSubmit = async () => {
     let checkSubmit = false;

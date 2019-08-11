@@ -16,11 +16,6 @@ export default {
       validationType: ValidationType.CONSENT,
       checkLevel: CheckLevelType.VALUE,
     },{
-      key: 'personalIdentification.name',
-      message: '이름을 입력해 주세요.',
-      validationType: ValidationType.EMPTY,
-      checkLevel: CheckLevelType.VALUE,
-    },{
       key: 'personalIdentification.englishName',
       message: '영어 이름을 입력해 주세요.',
       validationType: ValidationType.EMPTY,
@@ -44,16 +39,6 @@ export default {
       key: 'personalIdentification.address',
       message: '주소를 입력해 주세요.',
       validationType: ValidationType.EMPTY,
-      checkLevel: CheckLevelType.VALUE,
-    }, {
-      key: 'personalIdentification.email.text',
-      message: '이메일을 정확히 입력해 주세요.',
-      validationType: ValidationType.EMPTY,
-      checkLevel: CheckLevelType.VALUE,
-    },{
-      key: 'personalIdentification.emailText',
-      message: '이메일을 정확히 입력해 주세요.',
-      validationType: ValidationType.EMAIL,
       checkLevel: CheckLevelType.VALUE,
     },{
       key: 'education.schoolName.text',

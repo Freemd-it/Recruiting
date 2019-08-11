@@ -45,7 +45,7 @@ const meterialStyles = theme => ({
 
 class PersonalInformation extends Component {
   render() {
-    const { classes, personalFields, onInputChange, onButtonChange } = this.props;
+    const { classes, userFields, personalFields, onInputChange, onButtonChange } = this.props;
     const { name, englishName, gender, email, birth, phoneNumber, address, sns } = personalFields.personalIdentification;
 
     return (
@@ -58,8 +58,9 @@ class PersonalInformation extends Component {
             placeholder='이름을 입력하세요.'
             label='이름(한글)'
             bsClass='form-control personal-text-custom-form custom-form'
-            value={name}
-            onChange={onInputChange('personalIdentification.name', false)}
+            value={userFields.name}
+            readonly={true}
+            // onChange={onInputChange('personalIdentification.name', false)}
           />
 
           <FieldGroupWithLabelInline
@@ -159,7 +160,7 @@ class PersonalInformation extends Component {
         </div>
 
         <div className={cx('form-row')}>
-          <FieldGroupWithLabelInlineAndChildren
+          {/* <FieldGroupWithLabelInlineAndChildren
             label='E-mail'
           >
             <div className={cx('personal-form-holder')}>
@@ -175,8 +176,8 @@ class PersonalInformation extends Component {
                 value={email.type}
                 onChange={onInputChange('personalIdentification.email.type', true)}
               >
-                {/* TODO: 추후에 직접입력 로직을 따로 구현하거나 입력해야함. */}
-                {/* <option value=''> 직접입력 </option> */}
+                TODO: 추후에 직접입력 로직을 따로 구현하거나 입력해야함.
+                <option value=''> 직접입력 </option>
                 <option value='@naver.com'> naver.com </option>
                 <option value='@daum.net'> daum.net </option>
                 <option value='@gmail.com'> gmail.com </option>
@@ -184,7 +185,7 @@ class PersonalInformation extends Component {
                 <option value='@nate.com'> nate.com </option>
               </FormControl>
             </div>
-          </FieldGroupWithLabelInlineAndChildren>
+          </FieldGroupWithLabelInlineAndChildren> */}
 
           <FieldGroupWithLabelInline
             type='text'

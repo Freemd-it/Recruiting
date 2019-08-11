@@ -47,7 +47,7 @@ class PersonalQuestionsContainer extends Component {
 
 
   render() {
-    const { personalFields, batch } = this.props;
+    const { personalFields, userFields, batch } = this.props;
 
     return (
       <>
@@ -58,6 +58,7 @@ class PersonalQuestionsContainer extends Component {
           onStopPropagation={this.handleStopPropagation}
         />
         <PersonalInformation
+          userFields={userFields}
           personalFields={personalFields}
           onInputChange={this.handleInputChange}
           onButtonChange={this.handleButtonChange}
@@ -84,7 +85,7 @@ class PersonalQuestionsContainer extends Component {
 export default withRouter(connect(
   (state) => ({
     personalFields: state.personal.toJS(),
-    userFields: state.user.get('fields'),
+    userFields: state.user.toJS(),
     batch: state.user.get('batch')
   }),
   (dispatch) => ({

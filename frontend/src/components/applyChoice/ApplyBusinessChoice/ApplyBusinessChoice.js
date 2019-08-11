@@ -30,7 +30,7 @@ const ApplyBusinessChoice = (props) => {
         (!isSecondApply || (isSecondApply && isSecondApplyChoice )) && (
           <div className={cx('apply-business-choice-container')}>
             <div className={cx('ngo-business-form')}>
-              <SubsectionHeader title="NGO 사업"/>
+              <SubsectionHeader title="NGO 운영"/>
               <NGOBusinessChoice {...props}/>
             </div>
             <div className={cx('medical-business-form')}>

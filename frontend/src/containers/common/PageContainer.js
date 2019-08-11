@@ -15,17 +15,15 @@ import recruitingApi, { convertModelToSchemaBased } from '../../apis/recruitingA
 
 class PageContainer extends Component {
 
-  componentDidMount() {
-    window.scrollTo({ top: 100 });
-  };
 
   handlePreviousButtonClick = e => {
     const { history, config } = this.props;
     history.push(config.previousRoutePath);
-
+    window.scrollTo({ top: 100 });
   };
 
   handleNextButtonClick = e => {
+    
     const { match, history, config, state } = this.props;
 
     const actionModule = state[config.validationModuleKey].toJS();
@@ -38,15 +36,24 @@ class PageContainer extends Component {
           .then(checkResult => {
             if (checkResult) {
               history.push(config.nextRoutePath);
+              window.scrollTo({ top: 100 });
             }
           })
       } else {
         history.push(config.nextRoutePath);
+        console.log('next button click');
+        this._callStoreDataSaveAPI();
+        window.scrollTo({ top: 100 });
       }
     }
   };
 
-  handleSaveStoreDataByUser = () => {
+  handleSaveStoreDataByUser = (e) => {
+    this._callStoreDataSaveAPI();
+    window.alert(message.TEMPORARY_SAVE)
+  };
+
+  _callStoreDataSaveAPI = () => {
     const { state } = this.props;
     const userId = state.user.toJS().id;
 
@@ -55,9 +62,7 @@ class PageContainer extends Component {
       apply: state.apply.toJS(),
       interview: state.interview.toJS()
     });
-
-    window.alert(message.TEMPORARY_SAVE)
-  };
+  }
 
   _checkSubmit = async () => {
     let checkSubmit = false;
@@ -79,7 +84,8 @@ class PageContainer extends Component {
       const sendData = convertModelToSchemaBased({
         personal: state.personal.toJS(),
         apply: state.apply.toJS(),
-        interview: state.interview.toJS()
+        interview: state.interview.toJS(),
+        user: state.user.toJS()
       });
       let isAlreadySubmitted = false;
       const body = await sendData;
@@ -116,21 +122,31 @@ class PageContainer extends Component {
   _validateByPage = (match, actionModule, { required }) => {
     const { state } = this.props;
 
-    let hasNotValidatedItem = false;
+    let isValid = true;
 
     switch (match.path) {
       case '/personalQuestions':
       case '/applyChoice':
-        hasNotValidatedItem = this._validate(actionModule, required);
-        return !hasNotValidatedItem;
+        isValid = this._validate(actionModule, required);
+        return isValid;
       case '/interviewChoice':
-        const selectedDepartments = state.apply.toJS().applyChoice.map(d => d.department);
-        const shouldInterviews = interviewActions.checkInterviewDates(selectedDepartments);
-        let hasNotValidatedItem = !shouldInterviews.every((shouldInterview, index) => {
+        const selectedTeams = state.apply.toJS().applyChoice.map(d => ({
+          department: d.department,
+          name: d.team
+        }));
+        const teamsByDate = state.interview.get('teamsByDate').toJS();
+        let shouldInterviews = [false, false];
+        for (const team of selectedTeams) {
+          for (let i = 0; i < 2; i++) {
+            shouldInterviews[i] = shouldInterviews[i] || teamsByDate[i].teams.findIndex(d => {
+              return d.departmentName === team.department && d.name === team.name;
+            }) !== -1;
+          }
+        }
+        isValid = shouldInterviews.every((shouldInterview, index) => {
           const timeCount = actionModule.interviewDates[index].times.length;
           const needMoreChoice = (timeCount < 1 && shouldInterview);
           const hasInvalidChoice = (timeCount > 0 && !shouldInterview);
-
           if (needMoreChoice) {
             window.alert(message.NEED_MORE_INTERVIEW_CHOICE);
           }
@@ -141,9 +157,9 @@ class PageContainer extends Component {
           return !(needMoreChoice || hasInvalidChoice);
         });
 
-        return !hasNotValidatedItem;
+        return isValid;
       default:
-        return !hasNotValidatedItem;
+        return isValid;
     }
   };
 
@@ -165,7 +181,7 @@ class PageContainer extends Component {
 
   _validate = (actionModule, required) => {
     let hasNotValidatedItem;
-    return required.find(row => {
+    return !required.find(row => {
       if (row.checkLevel !== CheckLevelType.NESTED) {
         hasNotValidatedItem = !this._validateSingle(actionModule, row);
       } else {
@@ -183,6 +199,7 @@ class PageContainer extends Component {
     window.onbeforeunload = function () {
       applyActions.pageRefreshed();
     }.bind(this);
+    window.scrollTo({ top: 100 });
   }
 
   render() {

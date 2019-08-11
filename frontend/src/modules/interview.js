@@ -6,31 +6,44 @@ const INIT_STATE = 'interview/INIT_STATE';
 const LOAD_SAVED_STATE = 'interview/LOAD_SAVED_STATE';
 const CHANGE_CHECKED = 'interview/CHANGE_CHECKED';
 const VALIDATE = 'interview/VALIDATE';
+const UPDATE_TEAMS_BY_DATE_INFO = 'interview/UPDATE_TEAMS_BY_DATE_INFO';
 
 export const initState = createAction(INIT_STATE);
 export const loadSavedState = createAction(LOAD_SAVED_STATE);
 export const changeChecked = createAction(CHANGE_CHECKED);
 export const validate = createAction(VALIDATE);
+export const updateTeamsByDateInfo = createAction(UPDATE_TEAMS_BY_DATE_INFO);
 
 const initialState = fromJS({
   interviewDates: [
     {
-      day: '',
+      date: '',
       times: [],
     },
     {
-      day: '',
+      date: '',
       times: [],
     }
   ],
+  // teams: [{ departmentName: '경영지원본부', name: 'IT기획팀' }]
+  teamsByDate: [
+    {
+      date: '',
+      teams: []
+    },
+    {
+      date: '',
+      teams: []
+    }
+  ]
 });
 
-export const checkInterviewDates = (selectedDepartments) => {
+export const checkInterviewDates = (selectedTeams) => {
   const interviewChoiceData = staticData.default.interviewChoice;
   let shouldInterviews = [false, false];
-  for (let department of selectedDepartments) {
-    shouldInterviews[0] = shouldInterviews[0] || interviewChoiceData.firstDayDepartments.includes(department);
-    shouldInterviews[1] = shouldInterviews[1] || interviewChoiceData.secondDayDepartments.includes(department);
+  for (let team of selectedTeams) {
+    shouldInterviews[0] = shouldInterviews[0] || interviewChoiceData.firstDayTeams.includes(team);
+    shouldInterviews[1] = shouldInterviews[1] || interviewChoiceData.secondDayTeams.includes(team);
   }
   return shouldInterviews;
 }
@@ -42,7 +55,7 @@ export default handleActions({
   [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
-    const { day, time, index, checked } = action.payload;
+    const { date, time, index, checked } = action.payload;
     if (checked) {
       if (interviewDates.get(index).get('times').count() > 0) {
         const newTimes = interviewDates.get(index).get('times').push(time);
@@ -51,7 +64,7 @@ export default handleActions({
       } else {
         return state.setIn(['interviewDates', index.toString()],
           fromJS({
-            day: day,
+            date: date,
             times: [time]
           })
         );
@@ -63,4 +76,8 @@ export default handleActions({
       return state.set('interviewDates', interviewDates.set(index, newDate));
     }
   },
+  [UPDATE_TEAMS_BY_DATE_INFO]: (state, action) => {
+    const { info } = action.payload;
+    return state.set('teamsByDate', fromJS(info));
+  }
 }, initialState)

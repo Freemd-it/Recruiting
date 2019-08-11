@@ -2,153 +2,170 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-
-const PortfoliosSchema = new Schema({
-  originalname: String,
-  location: String,
-  registedDate: {
-    type: Date,
-    default: new Date(),
-  }
-})
-
-// 경력사항
-const ExternalActivitiesSchema = new Schema({
-  external_type:{
-    type: String,
-    enum : ['인턴', '봉사활동']
-  },
-  organizer: String, 
-  start_date: String,
-  end_date: String, 
-  turnaround_time: Number,
-  content: String 
-})
-
-// 자격증
-const SpecialSchema = new Schema({
-  special_type: {
-    type: String,
-    enum: ['자격증', '어학능력', '기타능력']
-  },
-  acquisition_date: Date,
-  self_evaluation_ability: {
-    type: String,
-    enum: ['상', '중', '하']
-  },
-  content: String 
-});
-
-// 질문 스키마
-const QuestionsSchema = new Schema({
-  classify: Number,
-  department: String,
-  team: String,
-  key: String,
-  question : String,
-  type: String,
-  content: String,
-  select :{
-    SQL: {
-      type: String,
-    },
-    jQuery: {
-      type: String,
-    },
-    HTML: {
-      type: String,
-    },
-    Javascipt: {
-      type: String,
-    },
-    CSS: {
-      type: String,
-    },
-    Linux: {
-      type: String,
-    },
-    NODEJS: {
-      type: String,
-    },
-    PHP: {
-      type: String,
-    },
-  } ,
-  batch: Number, //기수
-  portfolios: [PortfoliosSchema],
-  registedDate: {
-    type: Date,
-    default: new Date() // 현재 날짜를 기본값으로 지정
-  }
-})
-
-const InterviewSchema = new Schema({
-  interview_date : Date,
-  interview_week : String,
-  interview_time : [String]
-})
-
 const UserSchema = new Schema({
+  // 기수
+  batch: Number,
+
+  // 임시저장
   clientStoreData:{
+
   },
-  support_status: {
+
+  // 제출여부
+  supportStatus: {
     type: Number,
+    enum : [200, 201],
     default: '200'
   },
+
+  // 등록일자
   registedDate: {
     type: Date,
-    default: new Date(),
+    default: Date.now()
   },
-  basic_info:{
-    user_name : String,
+  
+  // 평가
+  evaluation : {
+    type: String,
+    default: '미평가'
+  },
+
+  // 기본정보
+  basicInfo: {
+    userName: String, // 지원자 이름
     email: {
       type : String,
       unique : true
     },
     password : String,
+
+    englishName: String,// 지원자 영어이름
+    isMale: Boolean, // 남여
+    brithDate: Date, // 생일
+    phoneNumber: String, // 폰
+    sns: String, // sns url
+    address: String, // 주소
+    password : String,
+
+    departments: [{ // 1지망 && 2지망 등등..
+      departmentName: String, // 본부
+      teamName: String, // 팀이름
+      order: Number, // 1,2, ...
+      medicalField: {
+        type : String,
+        enum : ["무료진료", "보건교육", '해외진료']
+      },
+    }],
     
-    other_assign_ngo: Boolean,
-    other_assign_medical: Boolean,
-    
-    english_name: String,
-    is_male: Boolean,
-    birth_date: String,
-    
-    phone_number : String,
-    sns : String,
-    address : String,
-    
-    department: {
-      type: String,
-      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
-    },
-    secondary_department: {
-      type: String,
-      enum: ['경영지원본부', '브랜드마케팅본부', '디자인본부','IT기획본부', '무료진료소사업본부', '보건교육산업본부', '해외의료사업본부']
-    },
-    team: String, 
-    secondary_team: String, 
+    otherAssignNgo: Boolean, // NGO 동의
+    otherAssignMedical: Boolean, // 다른의료 동의?
   },
-  academic_career: {
-    academic_name : String,
-    location : String,
-    degree : String,
-    major: String,
-    entrance_date : String,
-    graduation_date: String
+
+  // 학력사항
+  academicCareer: {
+    academicName: String, // 학교이름
+    location: String, // 지역
+    major: String, // 전공
+    entranceDate: Date, // 입학년도 
+    graduationDate: Date, // 졸업년도
+    degree: {
+      type: String,
+      enum: ["졸업", "휴학", "재학", "대학원"],
+    },
   },
-  external_activities: [ExternalActivitiesSchema],
-  special_info: [SpecialSchema],
-  question_info: [QuestionsSchema],
-  interview_info : [InterviewSchema]
+
+  // 특기사항
+  specialInfo: [{ // 특기사항
+    specialType: {
+      type: String,
+      enum: ["자격증", "어학능력", "기타능력"],
+    },
+    acquisitionDate: Date,
+    selfEvaluationAbility: { // 본인 수준평가
+      type: String,
+      enum: ["상", "중", "하"]
+    },
+    content: String ,
+  }],
+
+  // 경력사항
+  externalActivities: [{
+    externalType:{
+      type: String,
+      enum : ['인턴', '봉사활동'],
+    },
+    organizer: String, // 회사이름
+    startDate: Date, // 시작날짜
+    endDate: Date, // 종료날짜
+    turnaroundTime: Number, // 시작 ~ 종료까지의 총 시간
+    content: String // 내용
+  }],
+
+  // 본부 질문
+  questionInfo: [{
+    batch : Number,
+    departmentName: String,
+    teamName: String,
+    type: {
+      type: Number,
+      enum: [101, 102, 103] // 텍스트, 파일첨부, 선택
+    },
+    question: String, // 질문내용
+    text: String, // 답변
+    questionType: {
+      type: String,
+      enum: ["common", "department"], // 공통질문, 본부질문
+    },
+    file: {
+      oriName: String, // 파일이름
+      key: String, // 변환된 파일이름
+      url: String, // s3링크
+    },
+  }],
+
+  // 인터뷰시간
+  interviewInfo: [{
+    interviewDate: Date,
+    interviewWeek: String,
+    interviewTime: [String]
+  }],
+
+  // 평가여부
+  evaluation : {
+    type: String,
+    default: '미평가'
+  },
+});
+
+// ?
+const RecruitSchema = new Schema({
+  batch: Number,
+  period: {
+    startDate: Date,
+    endDate: Date
+  },
+  announceDate: Date,
+  recruitStatus: Number,
+  medicalFields: [String],
+  departments: [{
+    departmentName: String,
+    departmentDescription: String,
+    departmentImageUrl: String,
+    teams: [
+      {
+        teamName: String,
+        medicalFieldOptions: [String]
+      }
+    ]
+  }],
+  interviewTimes: [{
+    date: Date,
+    time: String
+  }]
 })
+// module.exports = mongoose.model('User', UserSchema);
 
 module.exports = {
-  PortfoliosSchema,
-  ExternalActivitiesSchema,
-  SpecialSchema,
-  QuestionsSchema,
-  InterviewSchema,
   UserSchema,
-  SpecialSchema,
+  RecruitSchema,
 }

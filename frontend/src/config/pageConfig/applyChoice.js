@@ -17,7 +17,7 @@ export default {
       validationType: ValidationType.EMPTY,
       checkLevel: CheckLevelType.VALUE,
     }, {
-      key: 'applyChoice.0.medical',
+      key: 'applyChoice.0.medical_field',
       message: '의료 사업을 선택해 주세요.',
       validationType: ValidationType.EMPTY,
       checkLevel: CheckLevelType.VALUE,

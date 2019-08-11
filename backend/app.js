@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.set('jwt-secret', JWT_SECRET)
 
 app.get('/', (req, res) => {
-    res.send('api 서버')
+    res.send('리쿠르팅 api 서버')
 });
 
 
@@ -44,6 +44,7 @@ app.use('/api', api);
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  console.log(err);
   res.status(err.status || 500);
   res.json({message : err.message})
 });

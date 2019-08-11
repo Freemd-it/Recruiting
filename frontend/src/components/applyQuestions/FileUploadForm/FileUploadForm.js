@@ -7,7 +7,7 @@ import AttachmentIcon from '@material-ui/icons/Attachment';
 
 const cx = classNames.bind(styles);
 
-const FileUploadForm = ({ onInputChange, type, index, questionClassId, answer }) => {
+const FileUploadForm = ({ onInputChange, type, index, questionKey, answer }) => {
 
   return (
     <div className={cx('file-upload-form')}>
@@ -16,14 +16,14 @@ const FileUploadForm = ({ onInputChange, type, index, questionClassId, answer })
         <div className={cx('file-upload-name')}>
           {answer ? answer.name : ''}
         </div>
-        <label htmlFor={`${questionClassId}__${index}`} className={cx('file-upload-btn')}>
+        <label htmlFor={`${questionKey}__${index}`} className={cx('file-upload-btn')}>
           <AttachmentIcon />
         </label>
         <input
-          id={`${questionClassId}__${index}`}
+          id={`${questionKey}__${index}`}
           type='file'
           accept=".pdf"
-          onChange={onInputChange({ type, index, questionClassId, answerType: 'file' })}
+          onChange={onInputChange({ type, index, questionKey: questionKey, answerType: 'file' })}
         >
         </input>
       </div>

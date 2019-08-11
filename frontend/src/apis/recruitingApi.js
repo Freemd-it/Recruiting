@@ -1,9 +1,8 @@
 import axios from 'axios';
 import serverConfig from '../config/serverConfig';
 import * as _ from 'lodash';
-import consts from '../common/consts';
 
-const convertModelToSchemaBased = ({ personal, apply, interview }) => {
+const convertModelToSchemaBased = ({ personal, apply, interview, user }) => {
   const { personalIdentification, education, career, speciality } = personal;
   const { common, department } = apply;
   return new Promise((resolve, reject) => {
@@ -11,74 +10,79 @@ const convertModelToSchemaBased = ({ personal, apply, interview }) => {
 
       let formData = new FormData();
       formData.append('body', JSON.stringify({
-        basic_info: {
-          user_name: personalIdentification.name,
-          english_name: personalIdentification.englishName,
+        batch: user.batch,
+
+        basicInfo: {
+          userName: personalIdentification.name,
+          englishName: personalIdentification.englishName,
           email: personalIdentification.emailText,
-          is_male: personalIdentification.gender === 'male',
-          birth_date: personalIdentification.birthText,
-          phone_number: personalIdentification.phoneNumberText,
+          isMale: personalIdentification.gender === 'male',
+          brithDate: personalIdentification.birthText,
+          phoneNumber: personalIdentification.phoneNumberText,
           sns: personalIdentification.sns,
           address: personalIdentification.address,
-          department: apply.applyChoice[0].department,
-          secondary_department: apply.applyChoice[1].department,
-          team: apply.applyChoice[0].team,
-          secondary_team: apply.applyChoice[1].team,
-          key: consts.getQuestionClassId(apply.applyChoice[0].department, apply.applyChoice[0].team).toString(),
-          secondary_key: (
-            consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team) &&
-            consts.getQuestionClassId(apply.applyChoice[1].department, apply.applyChoice[1].team).toString()
+
+          departments: (
+            apply.applyChoice.length > 0 ? (
+              apply.applyChoice.map((row, index) => ({
+                departmentName: row.department,
+                teamName: row.team,
+                medicalField: row.medical_field,
+                order : index
+              }))) : []
           ),
-          other_assign_consent: apply.otherAssignConsent,
+          otherAssignNgo: apply.otherAssignConsent.ngo,
+          otherAssignMedical: apply.otherAssignConsent.medical,
         },
-        academic_career: {
-          academic_name: education.schoolNameText,
+        academicCareer: {
+          academicName: education.schoolNameText,
           location: education.location,
           major: education.major,
-          entrance_date: education.graduationYear.entrance,
-          graduation_date: education.graduationYear.graduation,
+          entranceDate: education.graduationYear.entrance,
+          graduationDate: education.graduationYear.graduation,
           degree: education.graduationYear.status,
         },
-        special_info: (
+        specialInfo: (
           speciality.detail[0].activityDetail.length > 0 ? (
             speciality.detail.map(row => ({
-              special_type: row.activityDetail,
-              self_evaluation_ability: row.grade,
+              specialType: row.activityDetail,
+              selfEvaluationAbility: row.grade,
               content: row.content,
             }))) : []
         ),
-        external_activities: (
+        externalActivities: (
           career.detail[0].activityDetail.length > 0 ? (
             career.detail.map(row => ({
-              external_type: row.activityType,
+              externalType: row.activityType,
               organizer: row.activityDetail,
-              start_date: row.durationStart,
-              end_date: row.durationEnd,
-              turnaround_time: row.turnaround_time,
+              startDate: row.durationStart,
+              endDate: row.durationEnd,
+              turnaroundTime: row.turnaround_time,
               content: row.content,
             }))) : []
         ),
-        question_info: {
+        questionInfo: {
           common: common,
           department: department,
-          fileKeys: Object.entries(department.files ? department.files : []).map(row => row[0]),
+          fileKeys: Object.keys(department.files ? department.files : []).map(d => d.slice(0, -5))
         },
-        interview_info: interview.interviewDates.map((row, index) => ({
-          interview_date: row.day,
-          interview_week: index === 0 ? '토' : '일',
-          interview_time: row.times
+
+        interviewInfo: interview.interviewDates.map((row, index) => ({
+          interviewDate: row.date,
+          interviewWeek: index === 0 ? '토' : '일',
+          interviewTime: row.times
         })),
       }))
 
-      const fileKeys = Object.entries(department.files ? department.files : []).map(row => row[0]);
       const filesPromise = Object.entries(department.files ? department.files : []).map(row => {
         return fetch(row[1]).then(r => r.blob());
       });
 
+      const fileKeys = Object.keys(department.files ? department.files : []);
       Promise.all(filesPromise)
         .then(files => {
           for (let index = 0; index < files.length; index++) {
-            formData.append(`files[${index}]`, files[index], _.get(department, fileKeys[index].split('.')).name);
+            formData.append('files', files[index], _.get(department, fileKeys[index].split('.')).name);
           }
           resolve(formData);
         });
@@ -98,23 +102,35 @@ export default {
         headers: { 'x-access-token': `${accessToken}`, 'Content-Type': 'multipart/form-data', }
     }).then(res => res.data.isAlreadySubmitted)
   },
-  getQuestionInfo: (questionClassIds) => {
-    let key = '';
-    questionClassIds.forEach((questionClassId, index) => {
-      if (questionClassId !== null) {
-        if (index > 0) {
-          key += '_';
-        }
-        key += questionClassId ? questionClassId.toString() : '';
+  getQuestionInfo: applyChoice => {
+    const department = applyChoice[0].department;
+    const team = applyChoice[0].team;
+    const secondaryDepartment = applyChoice[1].department;
+    const secondaryTeam = applyChoice[1].team;
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/questions/list`, 
+      { 
+          headers: { 'x-access-token': `${window.localStorage.accessToken}` },
+          params: {
+            departmentName: department,
+            secondary_departmentName: secondaryDepartment,
+            teamName: team,
+            secondary_teamName: secondaryTeam 
+          }
       }
-    });
-    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/questions/list?key=${key}`, 
-      { headers: { 'x-access-token': `${window.localStorage.accessToken}` }}
     ).then(res => res.data.results);
   },
   getInterviewInfo: () => {
-    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/interview/schedules/20`,
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/interview`,
       { headers: { 'x-access-token': `${window.localStorage.accessToken}` }}
-    ).then(res => res.data.result);
+    ).then(res => res.data);
+  },
+
+  getTeamsByDateInfo: batch => {
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/team_date`,
+      { 
+        headers: { 'x-access-token': `${window.localStorage.accessToken}` },
+        params: { batch }
+      }
+    ).then(res => res.data);
   }
 }

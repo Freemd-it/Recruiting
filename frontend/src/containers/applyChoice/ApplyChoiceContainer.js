@@ -10,14 +10,23 @@ import {
 } from '../../components/applyChoice';
 
 import * as applyActions from '../../modules/apply';
-import * as interviewActions from '../../modules/interview';
+
+import userApi from '../../apis/userApi'
 
 class ApplyChoiceContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      applyInformationModalVisible: false
+      applyInformationModalVisible: false,
+      departmentDatas: []
     }
+  }
+
+  componentDidMount() {
+    userApi.getDepartmentData()
+      .then(departmentDatas => {
+        this.setState({ departmentDatas });
+      });
   }
 
   handleMedicalDescriptionClick = e => {
@@ -35,11 +44,18 @@ class ApplyChoiceContainer extends Component {
 
   handleChoiceNGOBusiness = (key, value) => {
     const { staticData, selectedDepartments, applyActions } = this.props;
-    const { departmentDatas } = staticData;
-
+    const { departmentDatas } = this.state;
     applyActions.changeInput({[key] : value});
-    applyActions.changeInput({[key.replace('department', 'team')]: departmentDatas.find(row => row.name === value).teams[0] || ''});
-    applyActions.changeInput({[key.replace('department', 'medical')]: departmentDatas.find(row => row.name === value).medicalOptions[0]} || '');
+    applyActions.changeInput({
+      [key.replace('department', 'team')]: departmentDatas
+        .find(row => row.departmentName === value).teams[0].teamName 
+      || ''
+    });
+    applyActions.changeInput({
+      [key.replace('department', 'medical_field')]: departmentDatas
+        .find(row => row.departmentName === value).teams[0].medicalFieldOptions[0]
+      || ''
+    });
   };
 
   handleChoiceSelectBox = (key, value) => {
@@ -56,7 +72,8 @@ class ApplyChoiceContainer extends Component {
 
   render() {
     const { applyChoice, otherAssignConsent, isSecondApplyChoice } = this.props.applyState;
-    const { departmentDatas, medicalAllOptions, medicalModalMessage } = this.props.staticData;
+    const { medicalAllOptions, medicalModalMessage } = this.props.staticData;
+    const { departmentDatas } = this.state;
 
     return (
       <>

@@ -1,6 +1,5 @@
 const User = require('../models/UserModel');
 const jsonParser = require('parse-json')
-const moment = require('moment')
 const _ = require('lodash')
 
 exports.list = async(req, res) => {
@@ -11,7 +10,7 @@ exports.list = async(req, res) => {
    .exec()
 
    res.json({result:user})
-  }catch(err) {
+  } catch(err) {
     res.status(500).json({err})
   }
 }
@@ -41,102 +40,116 @@ exports.read = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { id } = req.params;
-  const { files } = req;
-  const { basic_info, academic_career, external_activities, special_info, question_info, interview_info} = jsonParser(req.body.body);
-  const questionList = []
-  
-  const setQuestionList = (question_info) => _.forEach(question_info, (v, k) => makeQuestionObject(v,k))
-  const setInterviewList = (interview_info) => _.forEach(interview_info, (v, k) => makeInterviewObject(v,k))
+  const { 
+     batch, 
+     basicInfo,
+     academicCareer, 
+     externalActivities, 
+     specialInfo, 
+     questionInfo, 
+     interviewInfo,
 
-  const makeQuestionObject = (value, key) => {
-    if(key === 'common') {
-      _.forEach(value, (v, k) => {
-        questionList.push({
-          classify: 102,
-          department: '900',
-          team: '00',
-          question : v.question,
-          content: v.text,
-          type: v.type,
-          batch: 20,
-          portfolios: [],
-          registedDate: moment().format('YYYY-MM-DD HH:mm:ss')
-        })
-      })
-    } else if (key == 'department' ) {
-        let cnt = 0
-        _.forEach(value, (_v, _k) => {
-          if(_k !== 'files') {
-            _.forEach(_v, (__v, __k) => {
-              questionList.push({
-                classify: 102,
-                department: _k.slice(0,3),
-                team: _k.slice(3,5),
-                question : __v.question,
-                content: __v.text,
-                type: __v.type,
-                select: __v.select,
-                batch: 20,
-                portfolios: __v.type === 'file' ? files[cnt] : [],
-                registedDate: moment().format('YYYY-MM-DD HH:mm:ss')
-              })
-              __v.type === 'file' && cnt++
-            })
-            
-          }
-        })
-      }
-  }
-  
-  try {
-    let user = await User.findOneById(id);
-    if (user.support_status !== 200) {
-      res.json({
-        message: 'already submitted',
-        result: false,
-        isAlreadySubmitted: true
-      });
-      return;
+    } = jsonParser(req.body.body);
+
+    const obtainQuestionList = questionInfo => {
+      return Object.entries(questionInfo).filter(d => d[0] !== 'fileKeys').reduce((acc, curr) => {
+        const [key, value] = curr;
+        const questionList = obtainQuestionListByDept(key, value);
+        return acc.concat(questionList);
+      }, []);
     }
-    
-    setQuestionList(question_info)
+    const obtainInterviewList = (interviewInfo) => _.forEach(interviewInfo, (v, k) => makeInterviewObject(v,k))
+
+    const obtainQuestionListByDept = (key, value) => {
+      if (key === 'common') {
+        return Object.entries(value).map((row, index) => {
+          return {
+            batch,
+            departmentName : '공통',
+            teamName : '공통',
+            type : row[1].type === 'text' ? 101 : 102,
+            question : row[1].question,
+            text : row[1].text,
+            questionType : 'common',
+            index
+          };
+        });
+
+      } else if (key === 'department') {
+        return Object.entries(value)
+          .filter(d => d[0] !== 'files')
+          .reduce((acc, curr) => {
+            const [departmentName, teamName] = curr[0].split('_');
+            const questions = Object.entries(curr[1])
+              .sort((a, b) => +a - +b)
+              .map(d => d[1])
+              .map((d, index) => ({...d, 
+                batch,
+                departmentName,
+                teamName : index === 0 ? '공통' : teamName,
+                type : d.type === 'text' ? 101 : 102,
+                index
+            }));
+            return acc.concat(questions);
+        }, []);
+      }
+    }
+
+  try {
+    const user = await User.findOneById(id);
+    const questionList = obtainQuestionList(questionInfo);
+    req.files.map((d, i) => ({
+      fileLink: d.location,
+      path: questionInfo.fileKeys[i],
+      oriName: d.originalname,
+      key: d.key
+    })).forEach(file => {
+      const { fileLink, path, oriName, key } = file;
+      const [department, teamAndIndex] = path.split('_');
+      const [team, index] = teamAndIndex.split('.');
+      const fileIndex = questionList.findIndex(d => {
+        return d.departmentName === department 
+          && d.teamName === team 
+          && d.index === +index;
+      });
+      questionList[fileIndex].file = {
+        url: fileLink, oriName, key
+      };
+    });
+
     const data = {
-      basic_info: {
-        ...basic_info,
-        password: user.basic_info.password,
-        department: String(basic_info.key).slice(0,3),
-        team: String(basic_info.key).slice(3,5),
-        secondary_department: String(basic_info.secondary_key).slice(0,3),
-        secondary_team: String(basic_info.secondary_key).slice(3,5),
-        other_assign_ngo: basic_info.other_assign_consent.ngo,
-        other_assign_medical: basic_info.other_assign_consent.medical,
+      batch,
+      basicInfo : {
+        ...basicInfo,
+        password : user.basicInfo.password,
+        departments : basicInfo.departments,
       },
-      academic_career: {...academic_career},
-      external_activities: external_activities,
-      special_info: special_info,
-      question_info: questionList,
-      interview_info: setInterviewList(interview_info),
-      support_status: 201
+      academicCareer : {...academicCareer},
+      externalActivities : externalActivities,
+      specialInfo: specialInfo,
+      questionInfo : questionList,
+      interviewInfo: obtainInterviewList(interviewInfo),
+      supportStatus : 201,
+      evaluation: '미평가',
     };
 
     await User.findByIdAndUpdate(
       {_id : id},
       { $set: JSON.parse(JSON.stringify(data)) },
-      {new:true, upsert: true});
-    
-    res.json({
-      message: 'Update Success',
+      { new:true, upsert: true });
+
+    res.status(200).json({
+      message : 'UPDATE SUCCESS',
       result: data
     })
 
-  } catch(err){
-    console.log(err)
+  } catch (err) {
     res.status(500).json({
-      message: 'Update Fail',
-      error : err
+      message : err.message
     })
   }
 }
+
 // 스토어 데이터 확인 
 exports.readStoreData = async(req, res) => {
   const { id } = req.params;

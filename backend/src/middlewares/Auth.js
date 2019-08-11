@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const authMiddleware = async (req, res, next) => {
   const token = req.headers['x-access-token'] || req.query.token;
   const secret = req.app.get('jwt-secret');
-  
+
   if(!token) {
     return res.status(403).json({
       success : false,

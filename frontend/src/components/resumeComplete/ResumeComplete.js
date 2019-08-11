@@ -1,5 +1,5 @@
 import React from 'react';
-
+import moment from 'moment';
 import { Button } from '@material-ui/core';
 
 import classNames from 'classnames/bind';
@@ -7,17 +7,19 @@ import styles from './ResumeComplete.scss';
 
 const cx = classNames.bind(styles);
 
-const ResumeComplete = () => {
-
+const ResumeComplete = (props) => {
+  const { batch, announceDate } = props;
+  const announceString = moment(announceDate)
+    .format("YYYY년 MM월 DD일 오후 6시");
   return (
     <div className={cx('resume-complete-form')}>
       <div>
-        비영리민간의료단체 프리메드 제 20기 신입 단원 공개 선발에 <span>지원해주셔서 대단히 감사합니다.</span>
+        {`비영리민간의료단체 프리메드 제 ${batch}기 신입 단원 공개 선발에 `}<span>지원해주셔서 대단히 감사합니다.</span>
       </div>
       <div>
         지원해주신 결과는 <span><strong> 개별 문자 </strong></span>와
         <span><strong> 홈페이지 공고 </strong></span>를 통해 
-        <strong> 3월 07일 오후6시에 발표</strong>됩니다.
+        <strong> {announceString}에 발표</strong>됩니다.
       </div>
 
       <Button 

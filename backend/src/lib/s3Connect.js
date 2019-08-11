@@ -11,7 +11,7 @@ module.exports = multer({
     s3 : S3,
     bucket: 'freemed.recruiting',
     acl: 'public-read',
-    key(req, file, cb) {
+    key(_, file, cb) {
       cb(null, Date.now() + '.' + file.originalname.split('.').pop())
     },
   }),

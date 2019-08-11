@@ -3,8 +3,8 @@ const router = express.Router();
 
 const auth = require('./auth');
 const user = require('./user');
+const recruit = require('./recruit');
 const questions = require('./questions');
-const interview = require('./interview');
 
 const authMiddleware = require('middlewares/Auth');
 const upload = require('lib/s3Connect');
@@ -14,12 +14,13 @@ const upload = require('lib/s3Connect');
 router.use('/auth', auth)
 
 // 해당 router 에 middleware를 적용
-router.use('/recruits', authMiddleware);
-router.use('/recruits', upload.any('files'), user);
+// router.use('/recruits', authMiddleware);
+router.use('/recruits', upload.array('files'), user);
 
-router.use('/questions', authMiddleware);
+//test 를 위해 잠시 꺼둠 
+// router.use('/questions', authMiddleware);
 router.use('/questions', questions);
-router.use('/interview', interview);
+router.use('/recruit', recruit)
 
 
 module.exports = router;

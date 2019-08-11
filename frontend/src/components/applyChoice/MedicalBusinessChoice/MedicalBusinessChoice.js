@@ -33,30 +33,35 @@ const colourStyles = {
 };
 
 const MedicalBusinessChoice = (props) => {
-  const { applyChoice, departmentDatas, medicalAllOptions, onChoiceSelectBox } = props;
-
+  const { applyChoice, departmentDatas, onChoiceSelectBox } = props;
+  const choiceIndex = props.isSecondApply ? 1 : 0;
   const selectedDepartment = departmentDatas.find(department =>
-    department.name === (props.isSecondApply ? applyChoice[1].department : applyChoice[0].department)
+    department.departmentName === applyChoice[choiceIndex].department
   );
 
-  const options = medicalAllOptions.map(dataRow => ({
-      value: dataRow,
-      label: dataRow,
-      isDisabled: selectedDepartment && selectedDepartment.medicalOptions.indexOf(dataRow) === -1
-  }));
+  let options = [];
+  let currentValue = null;
+  if (selectedDepartment) {
+    const selectedTeam = selectedDepartment.teams
+      .find(team => team.teamName === applyChoice[choiceIndex].team) 
+      || { name: '', medicalFieldOptions: [] };
+    options = selectedTeam.medicalFieldOptions.map(row => ({
+        value: row,
+        label: row,
+    }));
 
-  const currentValue = {
-    value: applyChoice[props.isSecondApply ? 1 : 0].medical,
-    label: applyChoice[props.isSecondApply ? 1 : 0].medical,
-  };
-
+    currentValue = {
+      value: applyChoice[choiceIndex].medical_field || options[0].value,
+      label: applyChoice[choiceIndex].medical_field || options[0].label,
+    };
+  }
 
   return (
     <>
       <Select
-        value={!selectedDepartment ? null : currentValue}
+        value={currentValue}
         options={options}
-        onChange={(value)=>onChoiceSelectBox(`applyChoice.${props.isSecondApply ? 1 : 0}.medical`, value.label)}
+        onChange={(value)=>onChoiceSelectBox(`applyChoice.${choiceIndex}.medical_field`, value.label)}
         styles={colourStyles}
         isDisabled={!selectedDepartment}
         theme={(theme) => ({

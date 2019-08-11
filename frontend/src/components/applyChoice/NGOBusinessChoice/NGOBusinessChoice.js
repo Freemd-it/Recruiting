@@ -3,7 +3,6 @@ import React from 'react';
 import Select from 'react-select';
 import TeamCard from '../TeamCard';
 
-import images from '../../../images';
 import classNames from 'classnames/bind';
 import styles from './NGOBusinessChoice.scss';
 
@@ -41,29 +40,34 @@ const colourStyles = {
 
 const NGOBusinessChoice = (props) => {
   const { applyChoice, departmentDatas, onChoiceNGOBusiness, onChoiceSelectBox } = props;
-
+  const choiceIndex = props.isSecondApply ? 1 : 0;
   const selectedDepartment = departmentDatas.find(department =>
-    department.name === (props.isSecondApply ? applyChoice[1].department : applyChoice[0].department)
+    department.departmentName === applyChoice[choiceIndex].department
   );
 
-  const options = selectedDepartment && selectedDepartment.teams.length > 0 ?
-    selectedDepartment.teams.map(dataRow => ({value: dataRow, label: dataRow === '약무팀' ? '약무팀 (약대생만 선발)' : dataRow})) : [{value: '팀 없음', label: '팀 없음'}];
- 
-  const currentValue = {
-      value: applyChoice[props.isSecondApply ? 1 : 0].team || '팀 없음',
-      label: applyChoice[props.isSecondApply ? 1 : 0].team || '팀 없음',
-  };
+  const options = selectedDepartment && selectedDepartment.teams.length > 0
+    ? selectedDepartment.teams.map(row => (
+      {
+        value: row.teamName,
+        label: row.teamName === '약무팀' ? '약무팀 (약대생만 선발)' : row.teamName
+      }))
+    : [ {value: '팀 없음', label: '팀 없음'} ];
+
+  const currentTeam = selectedDepartment ? {
+      value: applyChoice[choiceIndex].team || selectedDepartment.teams[0].teamName,
+      label: applyChoice[choiceIndex].team || selectedDepartment.teams[0].teamName,
+  } : null;
 
   return (
     <>
       <div className={cx('team-card-holder')}>
 
-        {departmentDatas.map((dataRow, dataIndex) => (
+        {departmentDatas.map((row, index) => (
             <TeamCard
-              key={`TeamCard__${dataIndex}`}
-              data={dataRow}
-              image={images[dataRow.imageName]}
-              selected={!props.isSecondApply ? applyChoice[0].department === dataRow.name : applyChoice[1].department === dataRow.name}
+              key={`TeamCard__${index}`}
+              data={row}
+              image={row.departmentImageUrl}
+              selected={applyChoice[choiceIndex].department === row.departmentName}
               isSeconApply={props.isSecondApply}
               onChoiceNGOBusiness={onChoiceNGOBusiness}
             />
@@ -72,10 +76,10 @@ const NGOBusinessChoice = (props) => {
       </div>
 
       <Select
-        value={!selectedDepartment ? null : currentValue}
+        value={currentTeam}
         options={options}
         styles={colourStyles}
-        onChange={(value) => onChoiceSelectBox(`applyChoice.${props.isSecondApply ? 1 : 0}.team`, value.value)}
+        onChange={(value) => onChoiceSelectBox(`applyChoice.${choiceIndex}.team`, value.value)}
         isDisabled={!selectedDepartment || options[0].label === '팀 없음'}
         theme={(theme) => ({
           ...theme,

@@ -5,7 +5,7 @@ import message from '../common/message';
 export default {
   login: ({name, email, password}) => {
     return axios.post(`${serverConfig[process.env.NODE_ENV].url}/api/auth/login`, {
-      user_name: name,
+      userName: name,
       email,
       password
     }).then(res => {
@@ -36,4 +36,13 @@ export default {
       window.alert(message.serverError);
     })
   },
+
+  getBatch: () => {
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/batch`)
+      .then(res => res.data.batch);
+  },
+  getDepartmentData: () => {
+    return axios.get(`${serverConfig[process.env.NODE_ENV].url}/api/recruit/department`)
+      .then(res => res.data);
+  }
 }

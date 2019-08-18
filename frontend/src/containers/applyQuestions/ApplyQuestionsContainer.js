@@ -28,12 +28,12 @@ class ApplyQuestionsContainer extends Component {
     const { type, questionKey, answerType, index, techName } = props;
     switch (type) {
       case 'common':
-        applyActions.textAnswerChanged({ type, index, content: event.target.value.substring(0, 500) });
+        applyActions.textAnswerChanged({ type, index, content: event.target.value.substring(0, 600) });
         break;
       case 'department':
         switch (answerType) {
           case 'text':
-            applyActions.textAnswerChanged({ type, index, questionKey, answerType, content: event.target.value.substring(0, 500) });
+            applyActions.textAnswerChanged({ type, index, questionKey, answerType, content: event.target.value.substring(0, 600) });
             break;
           case 'file':
             if (event.target.files[0].size > 1048576 * 10) {

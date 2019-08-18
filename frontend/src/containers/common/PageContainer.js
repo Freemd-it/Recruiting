@@ -41,7 +41,6 @@ class PageContainer extends Component {
           })
       } else {
         history.push(config.nextRoutePath);
-        console.log('next button click');
         this._callStoreDataSaveAPI();
         window.scrollTo({ top: 100 });
       }
@@ -125,6 +124,7 @@ class PageContainer extends Component {
     let isValid = true;
 
     switch (match.path) {
+      case '/resumeLogin':
       case '/personalQuestions':
       case '/applyChoice':
         isValid = this._validate(actionModule, required);

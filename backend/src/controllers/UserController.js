@@ -131,6 +131,7 @@ exports.update = async (req, res) => {
       interviewInfo: obtainInterviewList(interviewInfo),
       supportStatus : 201,
       evaluation: '미평가',
+      registedDate : Date.now()
     };
 
     await User.findByIdAndUpdate(

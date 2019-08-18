@@ -24,11 +24,21 @@ const ResumeComplete = (props) => {
 
       <Button 
         className={cx('survey-link')} 
-        href="https://docs.google.com/forms/d/e/1FAIpQLSf3iP1GTL6qbXv2cB_XuIzspMhvrpbVn1eMQ14bUpY-41si5A/viewform?c=0&w=1"
+        href="https://forms.gle/y9Lb4rd5rwyt4Eq36"
       >
         <span>설문조사</span>
         <span>></span>
       </Button>
+
+      <div className={cx('survey-description')}>
+        {`설문은 ${batch}기 지원자분들의 단체 인지 경로를 알아보고자 함이며,`} 후에 리크루팅 홍보 및 단체 운영 시 참고하기 위하여 진행합니다.
+      </div>
+      <div>
+        지원자 분들의 성실한 답변 부탁드리겠습니다. 
+      </div>
+      <div>
+        <span><strong>감사합니다</strong></span>
+      </div>
     </div>
   );
 }

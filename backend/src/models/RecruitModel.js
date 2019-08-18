@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { envConfig } = require('../../config/constants');
 const { MONGO_URL } = envConfig(process.env.NODE_ENV);
 const { RecruitSchema } = require('./Scheme');
+const moment = require('moment');
 
 mongoose.connect(MONGO_URL, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
@@ -34,7 +35,8 @@ RecruitSchema.statics.getInterviewTimes = function() {
       const aggregated = [];
       interviewTimes.forEach(elem => {
         const { date, time } = elem;
-        const dateIndex = aggregated.findIndex(d => d.date.toString() == date.toString());
+        const format = (date) => moment(date).format('YYYYMMDD');
+        const dateIndex = aggregated.findIndex(d => format(d.date) == format(date));
         if (dateIndex === -1) {
           aggregated.push({ date, times: [time] });
         } else {

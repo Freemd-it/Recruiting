@@ -86,7 +86,7 @@ exports.update = async (req, res) => {
               .map((d, index) => ({...d, 
                 batch,
                 departmentName,
-                teamName : index === 0 ? '공통' : teamName,
+                teamName, 
                 type : d.type === 'text' ? 101 : 102,
                 index
             }));

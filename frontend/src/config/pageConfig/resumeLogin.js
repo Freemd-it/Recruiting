@@ -1,3 +1,5 @@
+import { CheckLevelType, ValidationType } from '../../common/types';
+
 export default {
   pageType: 'resumeLogin',
   showHeaderInformation: true,
@@ -5,4 +7,8 @@ export default {
   showNextSection: false,
   nextRoutePath: '/personalQuestions',
   previousRoutePath: '/',
+  validation: {
+    required: [
+    ]
+  }
 }

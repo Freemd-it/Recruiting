@@ -18,7 +18,6 @@ export const validate = createAction(VALIDATE);
 const initialState = fromJS({
   requestConsent: false,
   personalIdentification: {
-    name: '',
     englishName: '',
     gender: '',
     birth: {
@@ -34,11 +33,6 @@ const initialState = fromJS({
     },
     phoneNumberText: '',
     address: '',
-    email: {
-      text: '',
-      type: '@naver.com'
-    },
-    emailText: '',
     sns: '',
   },
   education: {

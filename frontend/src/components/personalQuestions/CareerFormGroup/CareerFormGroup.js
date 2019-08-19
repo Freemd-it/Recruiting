@@ -15,7 +15,7 @@ const cx = classNames.bind({...stylesCommon, ...styles});
 class CareerFormGroup extends Component {
   render() {
     const { personalFields, formGroupIndex, onInputChange } = this.props;
-    const { activityType, activityDetail, durationStart, durationEnd, content } = personalFields.career.detail[formGroupIndex];
+    const { activityType, activityDetail, durationStart, durationEnd, content, turnaroundTime } = personalFields.career.detail[formGroupIndex];
 
     return (
       <>
@@ -60,6 +60,7 @@ class CareerFormGroup extends Component {
                 type='text'
                 placeholder="시간"
                 bsClass='form-control career-duration-time placeholder-right custom-form'
+                value={turnaroundTime}
                 onChange={onInputChange(`career.detail.${formGroupIndex}.time`, false)}
               />
             </div>

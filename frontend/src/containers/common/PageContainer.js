@@ -124,6 +124,7 @@ class PageContainer extends Component {
     let isValid = true;
 
     switch (match.path) {
+      case '/resumeLogin':
       case '/personalQuestions':
       case '/applyChoice':
         isValid = this._validate(actionModule, required);

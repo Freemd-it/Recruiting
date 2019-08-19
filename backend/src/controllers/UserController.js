@@ -81,7 +81,7 @@ exports.update = async (req, res) => {
           .reduce((acc, curr) => {
             const [departmentName, teamName] = curr[0].split('_');
             const questions = Object.entries(curr[1])
-              .sort((a, b) => +a - +b)
+              .sort((a, b) => +a[0] - +b[0])
               .map(d => d[1])
               .map((d, index) => ({...d, 
                 batch,

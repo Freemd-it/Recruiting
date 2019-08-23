@@ -107,6 +107,7 @@ const UserSchema = new Schema({
     batch : Number,
     departmentName: String,
     teamName: String,
+    index: Number,
     type: {
       type: Number,
       enum: [101, 102, 103] // 텍스트, 파일첨부, 선택

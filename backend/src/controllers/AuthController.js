@@ -31,8 +31,11 @@ exports.login = async (req, res) => {
     res.json({ message: 'login Success', results: response })
 
   } catch(err) {
-    console.log(err)
-    res.status(500).json({ message: err.message })
+    console.log(err, err.message);
+    if (err.message==='Login Failed') {
+      return res.status(403).json({ message: err.message })
+    }
+    return res.status(500).json({ message: err.message })
   }
 };
 

@@ -44,8 +44,12 @@ class ResumeLoginContainer extends Component {
         return;
       }
     } catch (err) {
+        console.log(err.message);
+        if (err.message.includes('failed with status code 403')) {
+          window.alert(message.LOGIN_FAIL);
+          return;
+        }
         window.alert(message.SERVER_ERROR);
-        return;
     }
 
     /**

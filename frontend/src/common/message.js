@@ -1,5 +1,6 @@
 // 다국어 용도로 사용 가능
 export default {
+  LOGIN_FAIL: '이메일과 비밀번호를 확인해주세요.',
   SERVER_ERROR: '서버 문제로 로그인이 실패하였습니다.',
   ALREADY_SUBMITTED: '이미 지원서를 제출하였습니다.',
   LOAD_SAVED: '기존에 작성하신 내역이 있습니다. 저장된 내역을 불러오겠습니까?',

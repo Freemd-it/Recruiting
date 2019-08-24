@@ -75,7 +75,7 @@ const DepartmentQuestion = ({ questionModules, answers, onInputChange }) => {
         <div>
           {questions.map(({ question, answerType, isTeamQuestion }, questionIndex) => (
             <div key={`${index}__${questionIndex}`} className={cx('department-answer-form')}>
-              <SubsectionHeader title={`Q. ${question} ${isTeamQuestion ? '(팀 질문)' : '(본부 공통 질문)'}`} />
+              <SubsectionHeader title={`Q. ${isTeamQuestion ? '(팀 질문)' : '(본부 공통 질문)'} ${question}`} />
               {answerFormByType(
                 answerType,
                 questionIndex,

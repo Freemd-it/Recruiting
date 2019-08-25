@@ -20,6 +20,9 @@ export default {
   [ValidationType.YEAR_MONTH]: value => (
     /^(19|20)\d{2}\/(0[1-9]|1[012])$/.test(value)
   ),
+  [ValidationType.CAREER_TIME]: value => (
+    /^([0-9]*)$/.test(value)
+  ),
   [ValidationType.NOT_EQUAL]: (value1, value2) => (
     value1 !== value2
   ),

@@ -3,12 +3,14 @@ import { fromJS } from 'immutable';
 import * as staticData from '../common/pageStaticData';
 
 const INIT_STATE = 'interview/INIT_STATE';
+const INIT_DATE = 'interview/INIT_DATE';
 const LOAD_SAVED_STATE = 'interview/LOAD_SAVED_STATE';
 const CHANGE_CHECKED = 'interview/CHANGE_CHECKED';
 const VALIDATE = 'interview/VALIDATE';
 const UPDATE_TEAMS_BY_DATE_INFO = 'interview/UPDATE_TEAMS_BY_DATE_INFO';
 
 export const initState = createAction(INIT_STATE);
+export const initDate = createAction(INIT_DATE);
 export const loadSavedState = createAction(LOAD_SAVED_STATE);
 export const changeChecked = createAction(CHANGE_CHECKED);
 export const validate = createAction(VALIDATE);
@@ -38,6 +40,16 @@ const initialState = fromJS({
   ]
 });
 
+export const initializeInterviewDates = (selectedTeams) => {
+  const interviewChoiceData = staticData.default.interviewChoice;
+  let shouldInterviews = [false, false];
+  for (let team of selectedTeams) {
+    shouldInterviews[0] = shouldInterviews[0] || interviewChoiceData.firstDayTeams.includes(team);
+    shouldInterviews[1] = shouldInterviews[1] || interviewChoiceData.secondDayTeams.includes(team);
+  }
+  return shouldInterviews;
+}
+
 export const checkInterviewDates = (selectedTeams) => {
   const interviewChoiceData = staticData.default.interviewChoice;
   let shouldInterviews = [false, false];
@@ -52,10 +64,14 @@ export default handleActions({
   [INIT_STATE]: (state, action) => {
     return initialState
   },
+  [INIT_DATE]: (state, action) => {
+    const { interviewDates, i } = action.payload;
+    return state.setIn(['interviewDates', i, 'date'], interviewDates[i].date);
+  },
   [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
-    const { date, time, index, checked } = action.payload;
+    const { date, time, checked, index } = action.payload;
     if (checked) {
       if (interviewDates.get(index).get('times').count() > 0) {
         const newTimes = interviewDates.get(index).get('times').push(time);

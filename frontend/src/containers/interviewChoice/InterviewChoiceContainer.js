@@ -32,9 +32,14 @@ class InterviewChoiceContainer extends Component {
   };
 
   componentDidMount() {
-    const { batch } = this.props;
+    const { batch, interviewActions } = this.props;
     recruitingApi.getInterviewInfo().then(interviewData => {
-      this.setState({ interviewData });
+      this.setState({ interviewData }, () => {
+        const { interviewDates } = interviewData;
+        for (let i=0; i<interviewDates.length; i++) {
+          interviewActions.initDate({ interviewDates, i });
+        }
+      });
     });
 
     recruitingApi.getTeamsByDateInfo(batch)

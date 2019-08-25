@@ -70,6 +70,12 @@ export default {
       message: '졸업 년월을 정확히 입력해 주세요.(ex: 2001/01)',
       validationType: ValidationType.YEAR_MONTH,
       checkLevel: CheckLevelType.VALUE,
+    },{
+      arrayKey: 'career.detail',
+      valueKey: 'time',
+      message: '경력 시간 부분에 숫자만 입력해주세요.(ex: 200)',
+      validationType: ValidationType.CAREER_TIME,
+      checkLevel: CheckLevelType.ARRAY,
     }]
   }
 }

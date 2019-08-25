@@ -40,16 +40,6 @@ const initialState = fromJS({
   ]
 });
 
-export const initializeInterviewDates = (selectedTeams) => {
-  const interviewChoiceData = staticData.default.interviewChoice;
-  let shouldInterviews = [false, false];
-  for (let team of selectedTeams) {
-    shouldInterviews[0] = shouldInterviews[0] || interviewChoiceData.firstDayTeams.includes(team);
-    shouldInterviews[1] = shouldInterviews[1] || interviewChoiceData.secondDayTeams.includes(team);
-  }
-  return shouldInterviews;
-}
-
 export const checkInterviewDates = (selectedTeams) => {
   const interviewChoiceData = staticData.default.interviewChoice;
   let shouldInterviews = [false, false];
@@ -71,7 +61,7 @@ export default handleActions({
   [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
-    const { date, time, checked, index } = action.payload;
+    const { date, time, index, checked } = action.payload;
     if (checked) {
       if (interviewDates.get(index).get('times').count() > 0) {
         const newTimes = interviewDates.get(index).get('times').push(time);

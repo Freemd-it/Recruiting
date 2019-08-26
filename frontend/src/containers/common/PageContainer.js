@@ -169,6 +169,15 @@ class PageContainer extends Component {
       case CheckLevelType.VALUE:
         isValid = validation[row.validationType](_.get(actionModule, [...row.key.split('.')]));
         break;
+      case CheckLevelType.ARRAY:
+        const array = _.get(actionModule, [...row.arrayKey.split('.')]);
+        for (let i=0; i<array.length; i++) {
+          isValid = validation[row.validationType](_.get(array[i], row.valueKey));
+          if (!isValid) {
+            break;
+          }
+        }
+        break;
       case CheckLevelType.COMPARE:
         isValid = validation[row.validationType](_.get(actionModule, [...row.key1.split('.')]), _.get(actionModule, [...row.key2.split('.')]));
         break;

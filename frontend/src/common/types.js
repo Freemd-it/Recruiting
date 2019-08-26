@@ -8,12 +8,14 @@ const SupportStatusType = {
 
 const CheckLevelType = {
   VALUE: 'value',
+  ARRAY: 'array',
   COMPARE: 'compare',
   NESTED: 'nested',
 };
 
 const ValidationType  = {
   CONSENT: 'consent',
+  CAREER_TIME: 'careerTime',
   EMAIL: 'email',
   DATE_OF_BIRTH: 'dateOfBirth',
   EMPTY: 'empty',

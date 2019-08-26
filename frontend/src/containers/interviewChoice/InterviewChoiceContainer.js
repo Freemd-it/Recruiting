@@ -36,8 +36,8 @@ class InterviewChoiceContainer extends Component {
     recruitingApi.getInterviewInfo().then(interviewData => {
       this.setState({ interviewData }, () => {
         const { interviewDates } = interviewData;
-        for (let i=0; i<interviewDates.length; i++) {
-          interviewActions.initDate({ interviewDates, i });
+        for (let index = 0; index < interviewDates.length; index++) {
+          interviewActions.initDate({ interviewDates, index });
         }
       });
     });

@@ -51,14 +51,14 @@ export const checkInterviewDates = (selectedTeams) => {
 }
 
 export default handleActions({
-  [INIT_STATE]: (state, action) => {
+  [INIT_STATE]: (_, action) => {
     return initialState
   },
   [INIT_DATE]: (state, action) => {
-    const { interviewDates, i } = action.payload;
-    return state.setIn(['interviewDates', i, 'date'], interviewDates[i].date);
+    const { interviewDates, index } = action.payload;
+    return state.setIn(['interviewDates', index, 'date'], interviewDates[index].date);
   },
-  [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
+  [LOAD_SAVED_STATE]: (_, action) => state = fromJS(action.payload),
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
     const { date, time, index, checked } = action.payload;

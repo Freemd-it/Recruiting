@@ -3,12 +3,14 @@ import { fromJS } from 'immutable';
 import * as staticData from '../common/pageStaticData';
 
 const INIT_STATE = 'interview/INIT_STATE';
+const INIT_DATE = 'interview/INIT_DATE';
 const LOAD_SAVED_STATE = 'interview/LOAD_SAVED_STATE';
 const CHANGE_CHECKED = 'interview/CHANGE_CHECKED';
 const VALIDATE = 'interview/VALIDATE';
 const UPDATE_TEAMS_BY_DATE_INFO = 'interview/UPDATE_TEAMS_BY_DATE_INFO';
 
 export const initState = createAction(INIT_STATE);
+export const initDate = createAction(INIT_DATE);
 export const loadSavedState = createAction(LOAD_SAVED_STATE);
 export const changeChecked = createAction(CHANGE_CHECKED);
 export const validate = createAction(VALIDATE);
@@ -49,10 +51,14 @@ export const checkInterviewDates = (selectedTeams) => {
 }
 
 export default handleActions({
-  [INIT_STATE]: (state, action) => {
+  [INIT_STATE]: (_, action) => {
     return initialState
   },
-  [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
+  [INIT_DATE]: (state, action) => {
+    const { interviewDates, index } = action.payload;
+    return state.setIn(['interviewDates', index, 'date'], interviewDates[index].date);
+  },
+  [LOAD_SAVED_STATE]: (_, action) => state = fromJS(action.payload),
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
     const { date, time, index, checked } = action.payload;

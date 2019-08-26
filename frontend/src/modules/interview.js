@@ -58,7 +58,7 @@ export default handleActions({
     const { interviewDates, index } = action.payload;
     return state.setIn(['interviewDates', index, 'date'], interviewDates[index].date);
   },
-  [LOAD_SAVED_STATE]: (_, action) => state = fromJS(action.payload),
+  [LOAD_SAVED_STATE]: (state, action) => state = fromJS(action.payload),
   [CHANGE_CHECKED]: (state, action) => {
     const interviewDates = state.get('interviewDates');
     const { date, time, index, checked } = action.payload;

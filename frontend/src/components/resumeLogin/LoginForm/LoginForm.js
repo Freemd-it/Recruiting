@@ -35,7 +35,7 @@ const LoginForm = (props) => {
           required
         />
 
-        <FieldGroup
+        {/* <FieldGroup
           id="loginForm-password"
           type="password"
           placeholder="비밀번호를 입력하세요."
@@ -43,7 +43,7 @@ const LoginForm = (props) => {
           value={password}
           onChange={onInputChange('password')}
           required
-        />
+        /> */}
 
         <Button bsClass="btn btn-default login-form-button" type="submit">지원서 작성</Button>
       </form>

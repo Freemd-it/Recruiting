@@ -2,14 +2,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const cors = require('cors')
+const Sentry = require('@sentry/node');
 
 // config 불러오기 
 const {defaultConfig, envConfig} = require('./config/constants');
 const api = require('./src/routes/api');
 
 const app = express();
+
+
 const node_env = process.env.NODE_ENV
-const { MONGO_URL, JWT_SECRET } = envConfig(node_env)
+const { MONGO_URL, JWT_SECRET, SENTRY } = envConfig(node_env)
+
+// 에러 로그 수집을 위한 센트리 설정
+Sentry.init({ dsn: SENTRY });
+app.use(Sentry.Handlers.requestHandler());
 
 // 설정
 app.use(logger('dev'));
@@ -40,6 +47,14 @@ app.use((req, res, next) => {
 
 // /api요청 사용
 app.use('/api', api);
+
+// 센트리 테스트 API
+app.get('/debug-sentry', function mainHandler(req, res) {
+  throw new Error('My first Sentry error!');
+});
+
+// api 에서 에러 발생시 센트리로 메세지가 가도록 설정
+app.use(Sentry.Handlers.errorHandler());
 
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;

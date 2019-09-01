@@ -76,6 +76,21 @@ export default {
       message: '경력 시간 부분에 숫자만 입력해주세요.(ex: 200)',
       validationType: ValidationType.CAREER_TIME,
       checkLevel: CheckLevelType.ARRAY,
-    }]
+    },
+    {
+      arrayKey: 'career.detail',
+      valueKey: 'durationStart',
+      message: '경력 활동 시작 년월을 정확히 입력해 주세요.(ex: 2019/09)',
+      validationType: ValidationType.YEAR_MONTH,
+      checkLevel: CheckLevelType.ARRAY,
+    },
+    {
+      arrayKey: 'career.detail',
+      valueKey: 'durationEnd',
+      message: '경력 활동 종료 년월을 정확히 입력해 주세요.(ex: 2019/09)',
+      validationType: ValidationType.YEAR_MONTH,
+      checkLevel: CheckLevelType.ARRAY,
+    },
+  ]
   }
 }

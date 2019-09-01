@@ -13,6 +13,7 @@ import ApplyQuestionsPage from './pages/ApplyQuestionsPage';
 import InterviewChoicePage from './pages/InterviewChoicePage';
 import ResumeCompletePage from './pages/ResumeCompletePage';
 import NotFoundPage from './pages/NotFoundPage';
+import ApplyCompletePage from './pages/ApplyCompletePage';
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
           <Route path='/applyQuestions' component={ApplyQuestionsPage} />
           <Route path='/interviewChoice' component={InterviewChoicePage} />
           <Route path='/resumeComplete' component={ResumeCompletePage} />
+          <Route path='/applyComplete' component={ApplyCompletePage} />
           <Route component={NotFoundPage}/>
         </Switch>
       </div>
